@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-navbar color="dark">
+    <ion-title>oshidori</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+
+  <p>あなたのメールアドレスに招待状を送りました。
+    <br> 招待状に記載された確認コードを入力してください。
+  </p>
+  <form #confirmSignUpForm="ngForm" novalidate>
+
+    <ion-item>
+      <ion-label floating>確認コード</ion-label>
+      <ion-input [(ngModel)]="registrationCode.code" name="code" type="text" #code="ngModel" required></ion-input>
+    </ion-item>
+    <p [hidden]="code.valid || submitted == false" color="danger" padding-left>
+      確認コードは必須です
+    </p>
+
+  </form>
+
+  <button ion-button (click)="confirmSignUp(confirmSignUpForm)" type="submit" primary block>oshidoriに登録します</button>
+
+</ion-content>

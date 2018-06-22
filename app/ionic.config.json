@@ -1,0 +1,8 @@
+{
+  "name": "oshidori",
+  "app_id": "975d8806",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}

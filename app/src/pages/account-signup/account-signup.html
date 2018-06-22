@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-navbar color="dark">
+    <!--<button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>-->
+    <ion-title>登録</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+
+  <div text-center class="logo">
+    <img src="assets/img/oshidori_V2.png" />
+  </div>
+
+  <p *ngIf="submitted && (!username.valid || !password.valid)" style="color: #ea6153;">正しく入力されていません</p>
+
+  <form #signUpForm="ngForm" novalidate>
+    <ion-list>
+
+      <ion-item>
+        <ion-label floating>メールアドレス</ion-label>
+        <ion-input [(ngModel)]="userData.username" name="username" type="text" #username="ngModel" required></ion-input>
+      </ion-item>
+      <p [hidden]="username.valid || submitted == false" color="danger" padding-left>
+        メールアドレスを入力してください
+      </p>
+
+      <ion-item>
+        <ion-label floating>パスワード</ion-label>
+        <ion-input [(ngModel)]="userData.password" name="password" type="password" #password="ngModel" required></ion-input>
+      </ion-item>
+      <p [hidden]="password.valid || submitted == false" color="danger" padding-left>
+        パスワードを入力してください
+      </p>
+
+      <ion-item>
+        <ion-label>性別</ion-label>
+        <ion-select [(ngModel)]="userData.gender" name="gender" #gender="ngModel" required>
+          <ion-option *ngFor="let gender of genderList" value="{{gender.value}}">{{gender.text}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <p [hidden]="gender.valid || submitted == false" color="danger" padding-left>
+        性別を入力してください
+      </p>
+
+      <ion-item>
+        <ion-label>誕生日</ion-label>
+        <ion-datetime displayFormat="YYYY/MM/DD" [(ngModel)]="userData.birthDate" name="birthDate" #birthDate="ngModel" required></ion-datetime>
+      </ion-item>
+      <p [hidden]="birthDate.valid || submitted == false" color="danger" padding-left>
+        誕生日を入力してください
+      </p>
+
+    </ion-list>
+  </form>
+
+  <br>
+
+  <ion-row responsive-sm>
+    <ion-col>
+      <button ion-button (click)="onSignUp(signUpForm) " type="submit " primary block>登録</button>
+    </ion-col>
+    <!-- <ion-col>
+      <button ion-button (click)="navCtrl.pop() " block>キャンセル</button>
+    </ion-col> -->
+  </ion-row>
+
+</ion-content>

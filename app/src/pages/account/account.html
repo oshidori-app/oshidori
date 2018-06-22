@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>My Account</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <div *ngIf="globals.userId != ''">
+
+    <h5>あなたの画像</h5>
+    <div *ngIf="profileImageDisplay">
+      <img src="{{profileImageURI}}" width="200" border="1" />
+      <br/>
+    </div>
+
+    <!-- <div *ngIf="platform.is('cordova')">
+      nativeが動作しないので要調査
+      <button ion-button (click)="selectImage()" type="submit" color="primary">画像を選択する(cordova)</button>
+    </div> -->
+    <!-- <div *ngIf="!platform.is('cordova')"> -->
+    <input style='font-size:12px; width: 0.1px; height: 0.1px; opacity: 0; overflow: hidden; position: absolute; z-index: -1;'
+      id="imageUpload" type="file" accept="image/*">
+    <label ion-button (click)="attachImageUploadEventListener()" color="primary" style='none;display: inline-block;' for="imageUpload"
+      id="imageUploadLabel">画像を選択する(web)</label>
+    <button ion-button (click)="selectImage()" style='visibility:hidden; text-transform:none;' type="submit" color="primary"
+      id="imageUploadSubmit">アップロードする(web)</button>
+    <!-- </div> -->
+
+    <button ion-button (click)="goKeepDevPage()">キープ追加(dev)</button>
+    <br/>
+    <br/>
+
+    <h5>パスワードを変更する</h5>
+    <button ion-button [navPush]="accountChangePasswordPage" type="submit" color="primary">パスワード変更</button>
+    <br/>
+    <br/>
+  </div>
+
+</ion-content>

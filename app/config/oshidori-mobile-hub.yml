@@ -1,0 +1,60 @@
+--- !com.amazonaws.mobilehub.v0.Project
+features:
+  content-delivery: !com.amazonaws.mobilehub.v0.ContentDelivery
+    attributes:
+      enabled: true
+      visibility: public-global
+  database: !com.amazonaws.mobilehub.v0.Database
+    components:
+      database-nosql: !com.amazonaws.mobilehub.v0.NoSQLDatabase
+        tables:
+          - !com.amazonaws.mobilehub.v0.NoSQLTable
+            attributes:
+              description: S
+              created: N
+              taskId: S
+              category: S
+              userId: S
+            hashKeyName: userId
+            hashKeyType: S
+            indexes:
+              - !com.amazonaws.mobilehub.v0.NoSQLIndex
+                hashKeyName: userId
+                hashKeyType: S
+                indexName: DateSorted
+                rangeKeyName: created
+                rangeKeyType: N
+            rangeKeyName: taskId
+            rangeKeyType: S
+            tableName: oshidori
+            tablePrivacy: private
+  mobile-analytics: !com.amazonaws.mobilehub.v0.Pinpoint
+    components:
+      analytics: !com.amazonaws.mobilehub.v0.PinpointAnalytics {}
+      messaging: !com.amazonaws.mobilehub.v0.PinpointMessaging {}
+  sign-in: !com.amazonaws.mobilehub.v0.SignIn
+    attributes:
+      enabled: true
+      optional-sign-in: true
+    components:
+      sign-in-user-pools: !com.amazonaws.mobilehub.v0.UserPoolsIdentityProvider
+        attributes:
+          alias-attributes:
+            - email
+          mfa-configuration: OFF
+          name: userpool
+          password-policy: !com.amazonaws.mobilehub.ConvertibleMap
+            min-length: "8"
+            require-lower-case: true
+            require-numbers: false
+            require-symbols: false
+            require-upper-case: false
+  user-files: !com.amazonaws.mobilehub.v0.UserFiles
+    attributes:
+      enabled: true
+  user-profiles: !com.amazonaws.mobilehub.v0.UserSettings
+    attributes:
+      enabled: true
+name: oshidori
+region: ap-northeast-1
+

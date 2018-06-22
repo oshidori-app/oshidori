@@ -1,0 +1,30 @@
+<ion-header color="dark">
+  <ion-navbar color="dark">
+    <!-- <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button> -->
+    <ion-title>Ranking</ion-title>
+
+    <ion-buttons end>
+        <button color="primary" icon-end ion-button round block (click)="changeOrder($event)">{{sortLabel}}
+          <!-- <ion-icon name="options"></ion-icon> -->
+        </button>
+    </ion-buttons>
+
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <!-- <ion-item-group  reorder="true" (ionItemReorder)="$event.applyTo(items)"> -->
+    <ion-item-group reorder={{isSortable}} (ionItemReorder)="$event.applyTo(items)">
+      <ion-item *ngFor="let item of items">
+        <ion-icon name="{{item.icon}}" item-left></ion-icon>
+        {{item.title}}
+        <div class="item-note" item-right>
+          {{item.note}}
+        </div>
+      </ion-item>
+    </ion-item-group>
+  </ion-list>
+</ion-content>

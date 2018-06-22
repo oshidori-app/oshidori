@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-navbar color="dark">
+    <ion-title>
+      About
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form (submit)="getUser()">
+    <button ion-button>call API</button>
+  </form>
+
+  <pre>{{users | json}}</pre>
+
+</ion-content>

@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-navbar color="dark">
+    <!--<button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>-->
+    <ion-title>ログイン</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <div text-center class="logo">
+    <img src="assets/img/oshidori_V2.png" />
+  </div>
+
+  <!--
+  <p *ngIf="submitted" style="color: #ea6153;">Please fill out all details accurately.</p>-->
+  <div text-center class="logo-label">
+    <p>oshidori</p>
+  </div>
+  <ion-list>
+    <form #signInForm="ngForm" novalidate>
+
+      <ion-item>
+        <ion-label floating>メールアドレス</ion-label>
+        <ion-input [(ngModel)]="userData.username" ngControl="username" name="username" type="text" #username="ngModel" required></ion-input>
+      </ion-item>
+      <p [hidden]="username.valid || (!signInButtonClicked && !forgotPasswordButtonClicked)" color="danger" padding-left>
+        メールアドレスは必須です
+      </p>
+
+      <ion-item>
+        <ion-label floating>パスワード</ion-label>
+        <ion-input [(ngModel)]="userData.password" ngControl="password" name="password" type="password" #password="ngModel" required></ion-input>
+      </ion-item>
+      <p [hidden]="password.valid || !signInButtonClicked" color="danger" padding-left>
+        パスワードは必須です
+      </p>
+
+    </form>
+  </ion-list>
+
+  <br>
+
+  <ion-row responsive-sm>
+    <ion-col>
+      <button ion-button (click)="onSignIn(signInForm)" type="submit" primary block>ログイン</button>
+    </ion-col>
+  </ion-row>
+
+  <div padding text-center>
+    <p>
+      <a (click)="onSignUp()">初めての方</a>
+    </p>
+    <p>
+      <a (click)="onForgotPassword(signInForm)">パスワードお忘れの方</a>
+    </p>
+  </div>
+
+  <!--
+  <br/><br/>
+  <h5>Option 2: Sign-in via SAML</h5>
+
+  Alternatively, you can login using a corporate directory credentials using SAML-based authentication. Use the same Active Directory (AD) login and password that you use to login to your Windows work desktop or laptop. 
+
+  <ion-row responsive-sm>
+    <ion-col>
+      <button ion-button [navPush]="accountSigninUsingSAMLPage" type="submit" primary block>Sign In Using Corporate Credentials</button>
+    </ion-col>
+  </ion-row>
+  -->
+
+</ion-content>
