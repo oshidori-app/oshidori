@@ -56,7 +56,7 @@ export class KeepAddDevPage {
 
       this.globals.displayLoader("Adding...");
       // clientはIamAuthorizerClientを使用してください。
-      this.client.getClient().keppsList("234x19a").subscribe(
+      this.client.getClient().keepsList("234x19a").subscribe(
         (data) => {
           this.globals.dismissLoader();
           this.globals.displayToast(`正常に追加しました`);

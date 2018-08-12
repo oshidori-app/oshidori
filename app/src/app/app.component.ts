@@ -8,6 +8,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/login/login';
+import { HomePage } from '../pages/home/home';
 
 import { UserRegistrationService } from '../providers/account-management.service';
 import { GlobalStateService } from '../providers/global-state.service';
@@ -38,7 +39,10 @@ export class MyApp {
       //   this.rootPage = LoginPage;
       //   globalActions();
       // });
-      this.rootPage = AccountSigninPage;
+
+      // ログイン処理を実装するときはこっち
+      // this.rootPage = AccountSigninPage;
+      this.rootPage = HomePage;
     });
   }
 }
