@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { PanelPage } from '../panel/panel';
 
 /**
  * Generated class for the KeepListPage page.
@@ -38,5 +39,8 @@ export class KeepListPage {
     ];
   }
 
+  goToPanel(task){
+    this.navCtrl.push(PanelPage, {panel: task});
+  }
 }
 

@@ -1,24 +1,4 @@
-// .item ion-thumbnail {
-//     min-width: 100px;    
-//     min-height: 100px;
-//     img {
-//         max-width: 100px;    
-//         min-width: 100px;
-//         max-height: 100px;    
-//         min-height: 100px;
-//     }
-// }
-
-// .toolbar-ios {
-//     padding: 4px;
-//     min-height: 30px;
-// }
-
-// .item h2{
-//     font-size: 20px;
-//     font-weight: bold;
-// }
-
+page-keep-list {
 .KeepList{
     .taskTitle{
         font-size: 18px;
@@ -42,13 +22,6 @@
     font-size: 10px;
   }
 
-// .imageCardRow{
-//     height:130px;
-// }
-
-// .imageCardCol{
-//     width:130px;
-// }
     img{
         height: 130px;
         width: 130px;
@@ -74,4 +47,5 @@
     padding-top: 5px;
 }
 
+}
 }
