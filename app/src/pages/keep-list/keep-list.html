@@ -6,32 +6,50 @@
 -->
 
 <ion-header>
-  <ion-navbar color="dark">
-    <ion-title>キープリストだよ</ion-title>
+  <ion-navbar color="dark" navbar-ios-height="5">
+    <ion-title>dress</ion-title>
   </ion-navbar>
 </ion-header>
 
+<ion-content class="KeepList">
+  <p class="taskTitle">
+    挙式用のドレスを決める(๑•̀ㅂ•́)و✧
+  </p>
+<ion-grid>
+    <ion-row>
+      <ion-col col-auto *ngFor="let tag of taglist">
+        <div class="tag">{{tag}}</div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <h2 class="subtitle">KeepList</h2>
+  <ion-card *ngFor="let keep of keeplist">
+    <ion-row class="imageCardRow" (click)="goToPanel(keep)">
+      <ion-col no-padding col-auto>
+        <img src="{{keep.src}}" />
+      </ion-col>
+      <ion-col no-padding>
+        <ion-card-content>
+             <ion-card-title no-padding>
+              <ion-row no-padding class="imageCardTitle" >
+                <ion-col no-padding>
+                  <h2>{{keep.title}}</h2>
+                </ion-col>
+                <!-- <ion-col text-right no-padding >
+                  <button ion-button clear small color="{{keep.color}}" icon-start no-padding>
+                   <ion-icon name='heart' no-padding></ion-icon>
+                </button>
+                </ion-col> -->
+                <!-- <button ion-button clear item-end (click)="goToPanel(keep)"></button> -->
+              </ion-row>
+            </ion-card-title>
 
-<ion-content padding>
-  <ion-list>
-     <!--<ion-item-group  reorder="true" (ionItemReorder)="$event.applyTo(items)"> 
-    <ion-item-group>
-      <ion-item *ngFor="let keep of keeplist">
-           <img src="{{keep.src}}" />
-        {{keep.title}}
-        <div class="item-note" item-right>
-          {{keep.description}}
-        </div>-
-      </ion-item>
-    </ion-item-group>-->
-
-    <ion-item  *ngFor="let keep of keeplist">
-      <ion-thumbnail item-start>
-        <img src="{{keep.src}}">
-      </ion-thumbnail>
-      <h2>{{keep.title}}</h2>
-      <p>{{keep.description}}</p>
-      <button ion-button clear item-end (click)="goToPanel(keep)">View</button>
-    </ion-item>
-  </ion-list>
+            <p class="keepDescription">
+              {{keep.description}}
+            </p>
+ 
+        </ion-card-content>
+      </ion-col>
+    </ion-row>
+  </ion-card>
 </ion-content>
