@@ -21,6 +21,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { InputPanelPage } from '../pages/input-panel/input-panel';
 import { KeepListPage } from '../pages/keep-list/keep-list';
 import { KeepPage } from '../pages/keep/keep';
+import { InputKeepPage } from '../pages/input-keep/input-keep';
 import { InputTaskPage } from '../pages/input-task/input-task';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -46,7 +47,8 @@ import { KeepAddDevPage } from '../pages/keep-add-dev/keep-add-dev';
     KeepPage,
     InputPanelPage,
     KeepListPage,
-    InputTaskPage
+    InputTaskPage,
+    InputKeepPage
   ],
   imports: [
     HttpModule,
@@ -71,7 +73,8 @@ import { KeepAddDevPage } from '../pages/keep-add-dev/keep-add-dev';
     KeepPage,
     InputPanelPage,
     KeepListPage,
-    InputTaskPage
+    InputTaskPage,
+    InputKeepPage
   ],
   providers: [
     StatusBar,
