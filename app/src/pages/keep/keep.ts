@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
-
+import { IonicPage, NavController, NavParams, ActionSheetController, AlertController } from 'ionic-angular';
+import { KeepListPage } from '../keep-list/keep-list'
 /**
  * Generated class for the KeepPage page.
  *
@@ -16,7 +16,12 @@ import { IonicPage, NavController, NavParams, ActionSheetController } from 'ioni
 export class KeepPage {
 
   keep = {};
-  constructor(public navCtrl: NavController, public navParams: NavParams, public actionSheetCtrl: ActionSheetController) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public actionSheetCtrl: ActionSheetController,
+    public alertCtrl: AlertController
+  ) {
     this.keep = navParams.get('keep');
     this.keep['description'] = '色は暖色系の色味ではなかったけれど、家族・旦那さんが好きな色味でデザインとボリュームが今まで着たドレスの中で1番'
   }
@@ -37,7 +42,7 @@ export class KeepPage {
           text: '削除',
           role: 'destructive',
           handler: () => {
-            //todo
+            this.showConfirm()
           }
         },{
           text: 'キャンセル',
@@ -46,5 +51,30 @@ export class KeepPage {
       ]
     });
     actionSheet.present();
+  }
+
+  showConfirm() {
+    const confirm = this.alertCtrl.create({
+      message: '削除してよろしいですか?',
+      buttons: [
+        {
+          text: 'キャンセル',
+          handler: () => {
+            console.log('Disagree clicked');
+          }
+        },
+        {
+          text: '削除',
+          handler: () => {
+            this.goToKeepList();
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
+  goToKeepList() {
+    this.navCtrl.push(KeepListPage);
   }
 }
