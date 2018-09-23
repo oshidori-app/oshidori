@@ -2,7 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController} from 'ionic-angular';
 import { KeepListPage } from '../keep-list/keep-list';
 import { Platform } from 'ionic-angular';
-import { Task } from '../../models/task'
+import { Task } from '../../models/task' ;
+import { AccountPage } from '../account/account';
 
 @Component({
   selector: 'page-home',
@@ -70,5 +71,11 @@ export class HomePage {
     // APIにtaskでREST投げて返り値からKeepListを生成してページ遷移
     // this.navCtrl.push(PanelPage, {task: task});
     this.navCtrl.push(KeepListPage)
+  }
+
+  goToAccount(){
+    // APIにtaskでREST投げて返り値からKeepListを生成してページ遷移
+    // this.navCtrl.push(PanelPage, {task: task});
+    this.navCtrl.push(AccountPage)
   }
 }

@@ -13,7 +13,10 @@
       <button ion-fab color="dark">
         <ion-icon name="funnel"></ion-icon>
       </button>
-    </ion-fab-list>
+      <button ion-fab color="dark" (click)="goToAccount()">
+        <ion-icon name="settings"></ion-icon>
+      </button>
+  </ion-fab-list>
   </ion-fab>
   <ion-grid no-padding responsive-sm >
     <ion-row responsive-sm *ngFor="let row_tasks of tasks">
