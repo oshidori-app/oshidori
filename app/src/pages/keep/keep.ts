@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ActionSheetController, AlertController } from 'ionic-angular';
 import { KeepListPage } from '../keep-list/keep-list'
-import { InputKeepPage } from './../input-keep/input-keep';
+import { InputKeepPage } from '../input-keep/input-keep';
 
 /**
  * Generated class for the KeepPage page.
