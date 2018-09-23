@@ -1,10 +1,4 @@
 #home{
-  ion-row{
-    border-bottom: solid 1px white;
-  }
-  .border{
-    border-right: solid 1px white;
-  }
   .task{
     position: relative;
   }
@@ -49,5 +43,8 @@
   }
   .right{
     text-align: right;
+  }
+  .unfinished{
+    filter:grayscale(100%);
   }
 }

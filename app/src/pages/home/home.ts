@@ -27,15 +27,15 @@ export class HomePage {
   makeTasks(){
     let xNum = 2;
     let tasks = [
-      new Task(1,"dress",  "yyyy/MM/dd","assets/img/dress01.jpg",  "unfinished","shinpu"),
-      new Task(2,"present","yyyy/MM/dd","assets/img/present01.jpg","unfinished","shinro"),
+      new Task(1,"dress",  "yyyy/MM/dd","assets/img/dress01.jpg",  "finished","shinpu"),
+      new Task(2,"present","yyyy/MM/dd","assets/img/present01.jpg","finished","shinro"),
       new Task(3,"travel", "yyyy/MM/dd","assets/img/travel01.jpg", "unfinished","shinro"),
       new Task(4,"food",   "yyyy/MM/dd",null,                      "unfinished","shinro"),
-      new Task(5,"ring",   "yyyy/MM/dd","assets/img/ring01.jpg",   "unfinished","shinpu"),
+      new Task(5,"ring",   "yyyy/MM/dd","assets/img/ring01.jpg",   "finished","shinpu"),
       new Task(6,"place",  "yyyy/MM/dd","assets/img/place01.jpg",  "unfinished","shinpu"),
-      new Task(7,"tuxede", "yyyy/MM/dd","assets/img/tuxede01.jpg", "unfinished","shinro"),
-      new Task(8,"secret", "yyyy/MM/dd",null,                      "unfinished","shinpu"),
-      new Task(9,"dress",  "yyyy/MM/dd","assets/img/dress01.jpg",  "unfinished","shinpu"),
+      new Task(7,"tuxede", "yyyy/MM/dd","assets/img/tuxede01.jpg", "finished","shinro"),
+      new Task(8,"secret", "yyyy/MM/dd",null,                      "finished","shinpu"),
+      new Task(9,"dress",  "yyyy/MM/dd","assets/img/dress01.jpg",  "finished","shinpu"),
       new Task(10,"present","yyyy/MM/dd","assets/img/present01.jpg","unfinished","shinro"),
       new Task(11,"travel", "yyyy/MM/dd","assets/img/travel01.jpg", "unfinished","shinro"),
       new Task(12,"secret", "yyyy/MM/dd",null,                      "unfinished","shinro"),
@@ -54,11 +54,6 @@ export class HomePage {
   }
 
   ionViewDidLoad(){
-    // 奇数番のタスクのみ横にボーダーを設定
-    [].forEach.call(document.getElementsByTagName('ion-col'),function(task){
-      let id = (Number)(task.getElementsByClassName('task_id')[0].value); 
-      if(id % 2 == 1){ task.classList.add("border") }
-    });
   }
 
   taskInfoViewToggle() {
