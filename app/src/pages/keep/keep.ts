@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ActionSheetController, AlertController } from 'ionic-angular';
 import { KeepListPage } from '../keep-list/keep-list'
+import { InputKeepPage } from './../input-keep/input-keep';
+
 /**
  * Generated class for the KeepPage page.
  *
@@ -36,7 +38,7 @@ export class KeepPage {
         {
           text: '編集',
           handler: () => {
-            console.log('Destructive clicked');
+            this.goToInputKeep();
           }
         },{
           text: '削除',
@@ -76,5 +78,9 @@ export class KeepPage {
 
   goToKeepList() {
     this.navCtrl.push(KeepListPage);
+  }
+
+  goToInputKeep() {
+    this.navCtrl.push(InputKeepPage);
   }
 }
