@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ActionSheetController, AlertController } from 'ionic-angular';
 import { KeepListPage } from '../keep-list/keep-list'
+import { HomePage } from '../home/home'
 import { InputKeepPage } from '../input-keep/input-keep';
 
 /**
@@ -36,6 +37,11 @@ export class KeepPage {
     const actionSheet = this.actionSheetCtrl.create({
       buttons: [
         {
+          text: '決定',
+          handler: () => {
+            this.goToHome();
+          }
+        },{
           text: '編集',
           handler: () => {
             this.goToInputKeep();
@@ -74,6 +80,10 @@ export class KeepPage {
       ]
     });
     confirm.present();
+  }
+
+  goToHome() {
+    this.navCtrl.push(HomePage);
   }
 
   goToKeepList() {
