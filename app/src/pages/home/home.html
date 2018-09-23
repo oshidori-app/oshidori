@@ -21,7 +21,7 @@
         <ion-card class="task {{task.status}}" (click)="goToKeepList(task)">
           <div class="card-parent">
             <input class="task_id" type="hidden" value="{{task.id}}">
-            <img class="task_img" src={{task.src}} *ngIf="task.src != null"/>
+            <img class="task_img {{task.status}}" src={{task.src}} *ngIf="task.src != null"/>
             <div class="no_img" *ngIf="task.src == null">
               <div class="title">{{task.title}}</div>
             </div>
