@@ -54,11 +54,6 @@ export class HomePage {
   }
 
   ionViewDidLoad(){
-  //   // 奇数番のタスクのみ横にボーダーを設定
-  //   [].forEach.call(document.getElementsByTagName('ion-col'),function(task){
-  //     let id = (Number)(task.getElementsByClassName('task_id')[0].value); 
-  //     if(id % 2 == 1){ task.classList.add("border") }
-  //   });
   }
 
   taskInfoViewToggle() {
