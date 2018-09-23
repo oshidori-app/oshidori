@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { PanelPage } from '../panel/panel';
+import { KeepPage } from '../keep/keep';
 
 /**
  * Generated class for the KeepListPage page.
@@ -18,13 +18,13 @@ export class KeepListPage {
 //  keeplist = {};
   public keeplist = [];
   public taglist = [];
-  
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    //this.keeplist = navParams.get('panel'); 
+    //this.keeplist = navParams.get('panel');
     //this.keeplist['title'] = 'ドレスだよ'
 
   }
- 
+
   ionViewDidLoad() {
     // タグリストのデータ設定
     this.taglist = ["#ウェディングドレス","#白","#レース","#1着目","#チャペル"];
@@ -39,8 +39,8 @@ export class KeepListPage {
     ];
   }
 
-  goToPanel(task){
-    this.navCtrl.push(PanelPage, {panel: task});
+  goToKeep(task) {
+    this.navCtrl.push(KeepPage, {keep: task});
   }
 }
 

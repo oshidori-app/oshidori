@@ -24,7 +24,7 @@
   </ion-grid>
   <h2 class="subtitle">KeepList</h2>
   <ion-card *ngFor="let keep of keeplist">
-    <ion-row class="imageCardRow" (click)="goToPanel(keep)">
+    <ion-row class="imageCardRow" (click)="goToKeep(keep)">
       <ion-col no-padding col-auto>
         <img src="{{keep.src}}" />
       </ion-col>
@@ -47,7 +47,7 @@
             <p class="keepDescription">
               {{keep.description}}
             </p>
- 
+
         </ion-card-content>
       </ion-col>
     </ion-row>
