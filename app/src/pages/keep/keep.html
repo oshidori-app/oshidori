@@ -13,18 +13,14 @@
 </ion-header>
 
 
-<ion-content padding>
-  <ion-card class="my-card">
-    <div class="card-parent">
-      <img src="{{keep.src}}" />
-      <div class="card-title">{{keep.title}}</div>
-      <div class="card-subtitle">{{keep.subtitle}}</div>
-      <div class="item item-divider">
+<ion-content>
+  <ion-card>
+      <ion-item>
+          <p class="right" ><ion-icon name="more"></ion-icon></p>
+      </ion-item>
+        <img src="{{keep.src}}" />
+    <ion-card-content>
         {{keep.description}}
-      </div>
-      <button ion-button icon-only>
-        <ion-icon name="create"></ion-icon>
-      </button>
-    </div>
+    </ion-card-content>
   </ion-card>
 </ion-content>
