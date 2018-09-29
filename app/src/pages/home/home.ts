@@ -70,7 +70,6 @@ export class HomePage {
 
   goToKeepList(task){
     // APIにtaskでREST投げて返り値からKeepListを生成してページ遷移
-    // this.navCtrl.push(PanelPage, {task: task});
     this.navCtrl.push(KeepListPage)
   }
 

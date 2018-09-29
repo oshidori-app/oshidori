@@ -30,7 +30,7 @@ export class KeepPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad PanelPage');
+    console.log('ionViewDidLoad KeepPage');
   }
 
   showMenu() {

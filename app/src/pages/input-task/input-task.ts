@@ -26,10 +26,4 @@ export class InputTaskPage {
     console.log('ionViewDidLoad InputTaskPage');
   }
 
-  /*
-  goToPanelPage(Home1){
-    this.navCtrl.push(HomePage, {Home1: Home1});
-   }
-  */
-
 }
