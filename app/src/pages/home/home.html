@@ -16,6 +16,9 @@
       <button ion-fab color="dark" (click)="goToAccount()">
         <ion-icon name="settings"></ion-icon>
       </button>
+      <button ion-fab color="dark" (click)="gotoInputTask()">
+        <ion-icon name="add"></ion-icon>
+      </button>
   </ion-fab-list>
   </ion-fab>
   <ion-grid no-padding responsive-sm >
@@ -30,11 +33,11 @@
             </div>
             <div class="task_info animated fadeInUp" *ngIf="taskInfoVisible">
               <div class="card-title">{{task.title}}</div>
-              <div class="limt">{{task.limit}}</div>              
+              <div class="limt">{{task.limit}}</div>
               <div class="assign">
                 <div class="{{task.assign}} circle right"></div>
               </div>
-            </div>           
+            </div>
           </div>
         </ion-card>
       </ion-col>
