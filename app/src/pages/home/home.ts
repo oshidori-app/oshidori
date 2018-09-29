@@ -1,3 +1,4 @@
+import { InputTaskPage } from './../input-task/input-task';
 import { Component, ViewChild } from '@angular/core';
 import { NavController} from 'ionic-angular';
 import { KeepListPage } from '../keep-list/keep-list';
@@ -59,9 +60,9 @@ export class HomePage {
 
   taskInfoViewToggle() {
     this.taskInfoVisible = !this.taskInfoVisible;
-    if (this.taskInfoVisible){                
+    if (this.taskInfoVisible){
       [].forEach.call(document.getElementsByClassName('task_info'),function(taskinfo){
-        taskinfo.classList.remove('fadeOutDown');   
+        taskinfo.classList.remove('fadeOutDown');
         taskinfo.classList.add('fadeInUp');
       });
     }
@@ -75,5 +76,9 @@ export class HomePage {
 
   goToAccount(){
     this.navCtrl.push(AccountPage)
+  }
+
+  gotoInputTask() {
+    this.navCtrl.push(InputTaskPage)
   }
 }
