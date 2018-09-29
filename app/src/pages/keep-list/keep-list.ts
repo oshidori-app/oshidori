@@ -20,7 +20,6 @@ export class KeepListPage {
   public taglist = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    //this.keeplist = navParams.get('panel');
     //this.keeplist['title'] = 'ドレスだよ'
 
   }

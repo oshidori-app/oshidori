@@ -18,7 +18,6 @@ import { AboutPage } from '../pages/about/about';
 import { RankingPage } from '../pages/ranking/ranking';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
-import { InputPanelPage } from '../pages/input-panel/input-panel';
 import { KeepListPage } from '../pages/keep-list/keep-list';
 import { KeepPage } from '../pages/keep/keep';
 import { InputKeepPage } from '../pages/input-keep/input-keep';
@@ -45,7 +44,6 @@ import { KeepAddDevPage } from '../pages/keep-add-dev/keep-add-dev';
     HomePage,
     TabsPage,
     KeepPage,
-    InputPanelPage,
     KeepListPage,
     InputTaskPage,
     InputKeepPage
@@ -71,7 +69,6 @@ import { KeepAddDevPage } from '../pages/keep-add-dev/keep-add-dev';
     HomePage,
     TabsPage,
     KeepPage,
-    InputPanelPage,
     KeepListPage,
     InputTaskPage,
     InputKeepPage
