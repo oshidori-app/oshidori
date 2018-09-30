@@ -40,7 +40,6 @@ export class MyApp {
         this.rootPage = AccountSigninPage;
         globalActions();
       }
-
     });
   }
 }
