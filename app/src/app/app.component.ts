@@ -10,13 +10,13 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 
-import { UserRegistrationService } from '../providers/account-management.service';
+import { UserLoginService, UserRegistrationService , LocalStorage} from '../providers/account-management.service';
 import { GlobalStateService } from '../providers/global-state.service';
 import { Logger } from '../providers/logger.service';
 
 @Component({
   templateUrl: 'app.html',
-  providers: [UserRegistrationService, GlobalStateService, Logger]
+  providers: [UserRegistrationService, UserLoginService, LocalStorage, GlobalStateService, Logger]
 })
 export class MyApp {
   rootPage: any = null;
@@ -30,19 +30,17 @@ export class MyApp {
     };
 
     platform.ready().then(() => {
-      // user.isAuthenticated().then(() => {
-      //   console.log('you are authenticated!');
-      //   this.rootPage = TabsPage;
-      //   globalActions();
-      // }).catch(() => {
-      //   console.log('you are not authenticated..'); 
-      //   this.rootPage = LoginPage;
-      //   globalActions();
-      // });
+      console.log(LocalStorage.get("userTokens.awsSessionToken"));
+      if (LocalStorage.get("userTokens.awsSessionToken")) {
+        console.log('you are authenticated!');
+        this.rootPage = HomePage;
+        globalActions();
+      } else {
+        console.log('you are not authenticated..'); 
+        this.rootPage = AccountSigninPage;
+        globalActions();
+      }
 
-      // ログイン処理を実装するときはこっち
-      // this.rootPage = AccountSigninPage;
-      this.rootPage = HomePage;
     });
   }
 }

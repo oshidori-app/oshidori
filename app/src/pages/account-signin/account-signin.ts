@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { TabsPage } from '../tabs/tabs';
+import { HomePage } from '../home/home';
 import { AlertController } from 'ionic-angular';
 import { GlobalStateService } from '../../providers/global-state.service';
 import { AccountForgotPasswordPage } from '../account-forgot-password/account-forgot-password';
@@ -11,7 +11,6 @@ import {
   UserRegistrationService, CognitoUtil, Gender
 } from '../../providers/account-management.service';
 import { Logger } from '../../providers/logger.service';
-import { Config } from '../../config/config';
 
 @Component({
   selector: 'account-signin',
@@ -24,12 +23,11 @@ export class AccountSigninPage {
   accountSignupPage = AccountSignupPage;
   accountForgotPasswordPage = AccountForgotPasswordPage;
 
-  tabsPage = TabsPage;
   alertCtrl: AlertController = this.globals.getAlertController();
 
   public userData: IUserLogin = {
-    username: "tosa.shinichiro.nhs@gmail.com",
-    password: "NHS!user1"
+    username: "",
+    password: ""
   };
 
   signInButtonClicked: boolean = false;
@@ -77,7 +75,7 @@ export class AccountSigninPage {
           // this.globals.setViewAdminFeaturesOverride(this.globals.isAdminRole());
           this.navCtrl.popToRoot({ animate: false });
           this.allowButtonPresses = true;
-          this.navCtrl.push(TabsPage);
+          this.navCtrl.push(HomePage);
         });
       }).catch((err: Error): void => {
         // ログイン失敗
@@ -154,7 +152,7 @@ export class AccountSigninPage {
                   this.showLoginSuccessAlert(this.userData.username, () => {
                     this.globals.userId = this.globals.getUserId();
                     this.navCtrl.popToRoot({ animate: false });
-                    this.navCtrl.push(TabsPage);
+                    this.navCtrl.push(HomePage);
                   });
                 }).catch((err: Error): void => {
                   this.displayAlertError(err);
