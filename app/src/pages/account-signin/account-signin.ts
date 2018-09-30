@@ -1,29 +1,44 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { AlertController } from 'ionic-angular';
 import { GlobalStateService } from '../../providers/global-state.service';
 import { AccountForgotPasswordPage } from '../account-forgot-password/account-forgot-password';
 import { AccountSignupPage } from '../account-signup/account-signup';
+import { NavController, LoadingController } from 'ionic-angular';
+import { Auth, Logger } from 'aws-amplify';
 
 import {
   UserLoginService, IUserLogin, UserState,
   UserRegistrationService, CognitoUtil, Gender
 } from '../../providers/account-management.service';
-import { Logger } from '../../providers/logger.service';
+
+
+
+const logger = new Logger('SignIn');
+
+export class LoginDetails {
+  username: string;
+  password: string;
+}
 
 @Component({
   selector: 'account-signin',
   templateUrl: 'account-signin.html',
 })
-
 export class AccountSigninPage {
 
+  public loginDetails: LoginDetails;
+
+  constructor(public navCtrl: NavController,
+    private alertCtrl: AlertController,
+    public loadingCtrl: LoadingController) {
+    this.loginDetails = new LoginDetails();
+  }
+
   allowButtonPresses = true; // 複数ボタン押下抑制用
-  accountSignupPage = AccountSignupPage;
   accountForgotPasswordPage = AccountForgotPasswordPage;
 
-  alertCtrl: AlertController = this.globals.getAlertController();
+  // alertCtrl: AlertController = this.globals.getAlertController();
 
   public userData: IUserLogin = {
     username: "",
@@ -33,14 +48,39 @@ export class AccountSigninPage {
   signInButtonClicked: boolean = false;
   forgotPasswordButtonClicked: boolean = false;
 
-  onSignIn(form) {
-    this.signInButtonClicked = true;
-    this.forgotPasswordButtonClicked = false;
+  onSignIn() {
+    // let loading = this.loadingCtrl.create({
+    //   content: 'Please wait...'
+    // });
+    // loading.present();
 
-    if (form && form.valid) {
-      this.login();
-    }
+    // let details = this.loginDetails;
+    // logger.info('login..');
+    // Auth.signIn(details.username, details.password)
+    //   .then(user => {
+    //     logger.debug('signed in user', user);
+    //     if (user.challengeName === 'SMS_MFA') {
+    //       this.navCtrl.push(ConfirmSignInPage, { 'user': user });
+    //     } else {
+    //       this.navCtrl.setRoot(TabsPage);
+    //     }
+    //   })
+    //   .catch(err => logger.debug('errrror', err))
+    //   .then(() => loading.dismiss());
   }
+
+  onSignUp(): void {
+    this.navCtrl.push(AccountSignupPage);
+  }
+
+  // onSignIn(form) {
+  //   this.signInButtonClicked = true;
+  //   this.forgotPasswordButtonClicked = false;
+
+  //   if (form && form.valid) {
+  //     this.login();
+  //   }
+  // }
 
   onForgotPassword(form) {
     if (!this.allowButtonPresses) {
@@ -55,35 +95,35 @@ export class AccountSigninPage {
     }
   }
 
-  onSignUp(): void {
-    this.navCtrl.push(AccountSignupPage);
-  }
+  // onSignUp(): void {
+  //   this.navCtrl.push(AccountSignupPage);
+  // }
 
-  login(): void {
-    // 複数クリックを抑制
-    if (!this.allowButtonPresses) {
-      return;
-    }
-    this.allowButtonPresses = false;
-    this.globals.displayLoader('ログインしています...');
-    UserLoginService.signIn(this.userData)
-      .then(() => {
-        // ログイン成功
-        this.globals.dismissLoader();
-        this.showLoginSuccessAlert(this.userData.username, () => {
-          this.globals.userId = this.globals.getUserId();
-          // this.globals.setViewAdminFeaturesOverride(this.globals.isAdminRole());
-          this.navCtrl.popToRoot({ animate: false });
-          this.allowButtonPresses = true;
-          this.navCtrl.push(HomePage);
-        });
-      }).catch((err: Error): void => {
-        // ログイン失敗
-        this.globals.dismissLoader();
-        this.allowButtonPresses = true;
-        this.displayAlertError(err);
-      });
-  }
+  // login(): void {
+  //   // 複数クリックを抑制
+  //   if (!this.allowButtonPresses) {
+  //     return;
+  //   }
+  //   this.allowButtonPresses = false;
+  //   this.globals.displayLoader('ログインしています...');
+  //   UserLoginService.signIn(this.userData)
+  //     .then(() => {
+  //       // ログイン成功
+  //       this.globals.dismissLoader();
+  //       this.showLoginSuccessAlert(this.userData.username, () => {
+  //         this.globals.userId = this.globals.getUserId();
+  //         // this.globals.setViewAdminFeaturesOverride(this.globals.isAdminRole());
+  //         this.navCtrl.popToRoot({ animate: false });
+  //         this.allowButtonPresses = true;
+  //         this.navCtrl.push(HomePage);
+  //       });
+  //     }).catch((err: Error): void => {
+  //       // ログイン失敗
+  //       this.globals.dismissLoader();
+  //       this.allowButtonPresses = true;
+  //       this.displayAlertError(err);
+  //     });
+  // }
 
   displayAlertError(err: Error) {
     switch (CognitoUtil.getUserState()) {
@@ -150,7 +190,7 @@ export class AccountSigninPage {
                 // サインイン
                 UserLoginService.signIn(this.userData).then(() => {
                   this.showLoginSuccessAlert(this.userData.username, () => {
-                    this.globals.userId = this.globals.getUserId();
+                    // this.globals.userId = this.globals.getUserId();
                     this.navCtrl.popToRoot({ animate: false });
                     this.navCtrl.push(HomePage);
                   });
@@ -204,12 +244,4 @@ export class AccountSigninPage {
     alert.present();
   }
 
-  constructor(public navCtrl: NavController, private globals: GlobalStateService) {
-
-  }
-
-  ionViewDidEnter() {
-    Logger.banner("Sign-In");
-    this.allowButtonPresses = true;
-  }
 }
