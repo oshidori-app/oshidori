@@ -65,8 +65,8 @@ export class AccountSignupPage {
       let param = {
         username: details.username,
         password: details.password,
-        attribures: {
-          email: details.email,
+        attributes: {
+          email: details.username, // username same value
           gender: details.gender,
           birthdate: details.birthdate
         }
