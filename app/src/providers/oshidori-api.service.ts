@@ -2,7 +2,6 @@ import { Http, RequestOptions, RequestMethod } from '@angular/http';
 import { Injectable } from "@angular/core";
 import { DefaultApi } from "./oshidoriapi-sdk/api/DefaultApi";
 import { UserLoginService } from "./account-management.service";
-import { Config } from "../config/config";
 import { HttpService } from "./http-service";
 import { Logger } from "./logger.service";
 
@@ -18,7 +17,7 @@ export class CustomAuthorizerClient {
         UserLoginService.getIdToken());
       console.log('%cCustom Authorizer Request:\n', Logger.LeadInStyle, requestMethodToString(options.method), options.url, '\nHeaders:', options.headers.toJSON(), '\nBody:', options.body);
     });
-    this.client = new DefaultApi(<any>httpService, Config.API_ENDPOINT, null);
+    this.client = null;
   }
 
   public getClient(): DefaultApi {
@@ -33,7 +32,7 @@ export class IamAuthorizerClient {
     let httpService: HttpService = new HttpService(http);
     httpService.addInterceptor((options: RequestOptions) => {
       var awsSignConfig = {
-        region: Config.REGION,
+        region: null,
         service: 'execute-api',
         // AWS IAM credentials, here some temporary credentials with a session token
         accessKeyId: UserLoginService.getAwsAccessKey(),
@@ -59,7 +58,8 @@ export class IamAuthorizerClient {
       options.headers.set('x-amz-security-token', signed['x-amz-security-token']);
       console.log('%cIAM Authorization Request:\n', Logger.LeadInStyle, requestMethodToString(options.method), options.url, '\nHeaders:', options.headers.toJSON(), '\nBody:', options.body);
     });
-    this.client = new DefaultApi(<any>httpService, Config.API_ENDPOINT, null);
+    // this.client = new DefaultApi(<any>httpService, Config.API_ENDPOINT, null);
+    this.client = null;
   }
 
   public getClient(): DefaultApi {
@@ -78,7 +78,8 @@ export class UserPoolsAuthorizerClient {
         UserLoginService.getIdToken());
       console.log('%cUser Pools Authorizer Request:\n', Logger.LeadInStyle, requestMethodToString(options.method), options.url, '\nHeaders:', options.headers.toJSON(), '\nBody:', options.body);
     });
-    this.client = new DefaultApi(<any>httpService, Config.API_ENDPOINT, null);
+    // this.client = new DefaultApi(<any>httpService, Config.API_ENDPOINT, null);
+    this.client = null;
   }
 
   public getClient(): DefaultApi {
@@ -94,7 +95,8 @@ export class NoAuthorizationClient {
     httpService.addInterceptor((options: RequestOptions) => {
       console.log('%cRequest without authorization:\n', Logger.LeadInStyle, requestMethodToString(options.method), options.url, '\nHeaders:', options.headers.toJSON(), '\nBody:', options.body);
     });
-    this.client = new DefaultApi(<any>httpService, Config.API_ENDPOINT, null);
+    // this.client = new DefaultApi(<any>httpService, Config.API_ENDPOINT, null);
+    this.client = null;
   }
 
   public getClient(): DefaultApi {

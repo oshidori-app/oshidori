@@ -6,7 +6,6 @@ import { AccountChangePasswordPage } from '../account-change-password/account-ch
 import { GlobalStateService } from '../../providers/global-state.service';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { UserLoginService } from '../../providers/account-management.service';
-import { Config } from '../../config/config'
 import { Logger } from '../../providers/logger.service';
 import { Platform } from 'ionic-angular';
 import { KeepAddDevPage } from '../keep-add-dev/keep-add-dev';
@@ -22,7 +21,6 @@ export class AccountPage {
   accountChangePasswordPage = AccountChangePasswordPage;
 
   imageUploadEventListenerAttached = false;
-  profileImageURI = `https://s3-${Config.REGION}.amazonaws.com/${Config.PROFILE_IMAGES_S3_BUCKET}/test.jpg`;
   profileImageDisplay = false;
   submitted: boolean = false;
 

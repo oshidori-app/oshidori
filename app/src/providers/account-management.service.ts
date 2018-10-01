@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Config } from '../config/config'
 import { Logger } from './logger.service';
 import * as sjcl from '../assets/vendor/sjcl';
 
@@ -43,11 +42,10 @@ interface IUserAttribute {
 @Injectable()
 export class CognitoUtil {
 
-  private static _USER_POOL_ID = Config['USER_POOL_ID'];
-  private static _CLIENT_ID: string = Config['CLIENT_ID'];
-  private static _IDENTITY_POOL_ID: string = Config['IDENTITY_POOL_ID'];
-  private static _REGION: string = Config['REGION'];
-
+  private static _USER_POOL_ID = null;
+  private static _CLIENT_ID: string = null;
+  private static _IDENTITY_POOL_ID: string = null;
+  private static _REGION: string = null;
 
   public static getRegion(): string {
     return CognitoUtil._REGION;
