@@ -11,7 +11,6 @@ import {
   UserRegistrationService, CognitoUtil, Gender
 } from '../../providers/account-management.service';
 import { Logger } from '../../providers/logger.service';
-import { Config } from '../../config/config';
 
 @Component({
   selector: 'account-signin',
