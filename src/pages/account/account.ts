@@ -65,7 +65,7 @@ export class AccountPage {
 
   // 圧縮はionicのCameraOptionでやってみる
   uploadFileToS3(file, key) {
-    Logger.heading('Uploading image to S3');
+    // Logger.heading('Uploading image to S3');
     // this.globals.displayLoader('Uploading image to Amazon S3...', 10000);
     // let bucketName = Config.PROFILE_IMAGES_S3_BUCKET;
     // console.log(`A、ttempting image upload to ${bucketName}/${key}`);
