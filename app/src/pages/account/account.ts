@@ -66,27 +66,27 @@ export class AccountPage {
   // 圧縮はionicのCameraOptionでやってみる
   uploadFileToS3(file, key) {
     Logger.heading('Uploading image to S3');
-    this.globals.displayLoader('Uploading image to Amazon S3...', 10000);
-    let bucketName = Config.PROFILE_IMAGES_S3_BUCKET;
-    console.log(`A、ttempting image upload to ${bucketName}/${key}`);
-    let s3bucket = new AWS.S3({ region: Config.REGION, params: { Bucket: bucketName } });
-    let params = {
-      Key: key, Body: file
-    };
-    s3bucket.upload(params, (err, data) => {
-      this.globals.dismissLoader();
-      if (err) {
-        let errorMessage = `Error uploading image to S3: ${err}`
-        this.globals.displayAlert('Error encountered', errorMessage);
-        console.log(errorMessage);
-        console.log(err);
-      } else {
-        console.log(`Successfully uploaded image to S3.`);
-        this.profileImageURI = `https://s3.amazonaws.com/${Config.PROFILE_IMAGES_S3_BUCKET}/${key}`;
-        console.log(`Image can be viewed at: ${this.profileImageURI}`)
-        this.profileImageDisplay = true;
-      }
-    });
+    // this.globals.displayLoader('Uploading image to Amazon S3...', 10000);
+    // let bucketName = Config.PROFILE_IMAGES_S3_BUCKET;
+    // console.log(`A、ttempting image upload to ${bucketName}/${key}`);
+    // let s3bucket = new AWS.S3({ region: Config.REGION, params: { Bucket: bucketName } });
+    // let params = {
+    //   Key: key, Body: file
+    // };
+    // s3bucket.upload(params, (err, data) => {
+    //   this.globals.dismissLoader();
+    //   if (err) {
+    //     let errorMessage = `Error uploading image to S3: ${err}`
+    //     this.globals.displayAlert('Error encountered', errorMessage);
+    //     console.log(errorMessage);
+    //     console.log(err);
+    //   } else {
+    //     console.log(`Successfully uploaded image to S3.`);
+    //     this.profileImageURI = `https://s3.amazonaws.com/${Config.PROFILE_IMAGES_S3_BUCKET}/${key}`;
+    //     console.log(`Image can be viewed at: ${this.profileImageURI}`)
+    //     this.profileImageDisplay = true;
+    //   }
+    // });
   }
 
   selectImage() {
