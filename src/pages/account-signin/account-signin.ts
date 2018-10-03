@@ -12,8 +12,6 @@ import {
   UserRegistrationService, CognitoUtil, Gender
 } from '../../providers/account-management.service';
 
-
-
 const logger = new Logger('SignIn');
 
 export class LoginDetails {

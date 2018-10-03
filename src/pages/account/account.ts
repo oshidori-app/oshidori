@@ -6,7 +6,6 @@ import { AccountChangePasswordPage } from '../account-change-password/account-ch
 import { GlobalStateService } from '../../providers/global-state.service';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { UserLoginService } from '../../providers/account-management.service';
-import { Config } from '../../config/config'
 import { Logger } from '../../providers/logger.service';
 import { Platform } from 'ionic-angular';
 import { KeepAddDevPage } from '../keep-add-dev/keep-add-dev';
@@ -22,7 +21,6 @@ export class AccountPage {
   accountChangePasswordPage = AccountChangePasswordPage;
 
   imageUploadEventListenerAttached = false;
-  profileImageURI = `https://s3-${Config.REGION}.amazonaws.com/${Config.PROFILE_IMAGES_S3_BUCKET}/test.jpg`;
   profileImageDisplay = false;
   submitted: boolean = false;
 
@@ -67,28 +65,28 @@ export class AccountPage {
 
   // 圧縮はionicのCameraOptionでやってみる
   uploadFileToS3(file, key) {
-    Logger.heading('Uploading image to S3');
-    this.globals.displayLoader('Uploading image to Amazon S3...', 10000);
-    let bucketName = Config.PROFILE_IMAGES_S3_BUCKET;
-    console.log(`A、ttempting image upload to ${bucketName}/${key}`);
-    let s3bucket = new AWS.S3({ region: Config.REGION, params: { Bucket: bucketName } });
-    let params = {
-      Key: key, Body: file
-    };
-    s3bucket.upload(params, (err, data) => {
-      this.globals.dismissLoader();
-      if (err) {
-        let errorMessage = `Error uploading image to S3: ${err}`
-        this.globals.displayAlert('Error encountered', errorMessage);
-        console.log(errorMessage);
-        console.log(err);
-      } else {
-        console.log(`Successfully uploaded image to S3.`);
-        this.profileImageURI = `https://s3.amazonaws.com/${Config.PROFILE_IMAGES_S3_BUCKET}/${key}`;
-        console.log(`Image can be viewed at: ${this.profileImageURI}`)
-        this.profileImageDisplay = true;
-      }
-    });
+    // Logger.heading('Uploading image to S3');
+    // this.globals.displayLoader('Uploading image to Amazon S3...', 10000);
+    // let bucketName = Config.PROFILE_IMAGES_S3_BUCKET;
+    // console.log(`A、ttempting image upload to ${bucketName}/${key}`);
+    // let s3bucket = new AWS.S3({ region: Config.REGION, params: { Bucket: bucketName } });
+    // let params = {
+    //   Key: key, Body: file
+    // };
+    // s3bucket.upload(params, (err, data) => {
+    //   this.globals.dismissLoader();
+    //   if (err) {
+    //     let errorMessage = `Error uploading image to S3: ${err}`
+    //     this.globals.displayAlert('Error encountered', errorMessage);
+    //     console.log(errorMessage);
+    //     console.log(err);
+    //   } else {
+    //     console.log(`Successfully uploaded image to S3.`);
+    //     this.profileImageURI = `https://s3.amazonaws.com/${Config.PROFILE_IMAGES_S3_BUCKET}/${key}`;
+    //     console.log(`Image can be viewed at: ${this.profileImageURI}`)
+    //     this.profileImageDisplay = true;
+    //   }
+    // });
   }
 
   selectImage() {
