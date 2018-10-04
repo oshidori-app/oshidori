@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController } from 'ionic-angular';
-import { AlertController } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
+import { UtilService } from '../../providers/util.service';
 import { UserRegistrationService, IUserRegistration, Gender } from '../../providers/account-management.service';
 import { AccountConfirmationCodePage } from '../account-confirmation-code/account-confirmation-code';
 import { Auth, Logger } from 'aws-amplify';
-
 
 const logger = new Logger('SignUp');
 
@@ -26,9 +25,7 @@ export class AccountSignupPage {
 
   error: any;
 
-  constructor(public navCtrl: NavController,
-    private alertCtrl: AlertController,
-    public loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, public util: UtilService) {
     this.userDetails = new UserDetails();
   }
 
@@ -53,10 +50,7 @@ export class AccountSignupPage {
 
     if (form && form.valid) {
 
-      let loading = this.loadingCtrl.create({
-        content: 'Please wait...'
-      });
-      loading.present();
+      this.util.showLoader('登録しています...');
 
       let details = this.userDetails;
       this.error = null;
@@ -71,15 +65,16 @@ export class AccountSignupPage {
           birthdate: details.birthdate
         }
       }
+      
       Auth.signUp(param)
         .then(user => {
           this.navCtrl.push(AccountConfirmationCodePage, { username: details.username });
         })
         .catch(err => {
           this.error = err;
-          this.showAlert('登録に失敗しました', err.message);
+          this.util.showAlert('登録失敗', err.message);
         })
-        .then(() => loading.dismiss());
+        .then(() => this.util.dismissLoader());
     }
   }
   // onSignUp(form) {
@@ -97,19 +92,4 @@ export class AccountSignupPage {
   //   }
   // }
 
-  private showAlert(title: string, subTitle: string) {
-    let alert = this.alertCtrl.create({
-      title: title,
-      subTitle: subTitle,
-      buttons: [
-        {
-          text: 'OK',
-          handler: () => {
-            console.log('OK clicked');
-          }
-        }
-      ]
-    });
-    alert.present();
-  }
 }

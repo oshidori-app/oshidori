@@ -14,7 +14,7 @@
 
     <ion-item>
       <ion-label floating>確認コード</ion-label>
-      <ion-input [(ngModel)]="registrationCode.code" name="code" type="text" #code="ngModel" required></ion-input>
+      <ion-input [(ngModel)]="code" name="code" type="text" #code="ngModel" required></ion-input>
     </ion-item>
     <p [hidden]="code.valid || submitted == false" color="danger" padding-left>
       確認コードは必須です
@@ -24,4 +24,7 @@
 
   <button ion-button (click)="confirmSignUp(confirmSignUpForm)" type="submit" primary block>oshidoriに登録します</button>
 
+  <div padding>
+    <p>招待状が届いていませんか？ <a (click)="resendCode()">再送を試してみてください</a></p>
+  </div>
 </ion-content>

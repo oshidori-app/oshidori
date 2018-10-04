@@ -10,12 +10,13 @@ import { HomePage } from '../pages/home/home';
 
 import { UserLoginService, UserRegistrationService, LocalStorage } from '../providers/account-management.service';
 import { GlobalStateService } from '../providers/global-state.service';
+import { UtilService } from '../providers/util.service';
 import { Logger } from '../providers/logger.service';
 import { Auth } from 'aws-amplify';
 
 @Component({
   templateUrl: 'app.html',
-  providers: [UserRegistrationService, UserLoginService, LocalStorage, GlobalStateService, Logger]
+  providers: [UserRegistrationService, UserLoginService, LocalStorage, GlobalStateService, UtilService, Logger]
 })
 export class MyApp {
   rootPage: any = null;
@@ -36,14 +37,3 @@ export class MyApp {
     });
   }
 }
-    //   console.log(LocalStorage.get("userTokens.awsSessionToken"));
-    //   if (LocalStorage.get("userTokens.awsSessionToken")) {
-    //     console.log('you are authenticated!');
-    //     this.rootPage = HomePage;
-    //     globalActions();
-    //   } else {
-    //     console.log('you are not authenticated..'); 
-    //     this.rootPage = AccountSigninPage;
-    //     globalActions();
-    //   }
-    // });

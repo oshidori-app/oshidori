@@ -1,65 +1,46 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
-import { AlertController } from 'ionic-angular';
-import { UserRegistrationService } from '../../providers/account-management.service';
-import { GlobalStateService } from '../../providers/global-state.service';
-import { Logger } from '../../providers/logger.service';
+import { NavController, NavParams} from 'ionic-angular';
+import { UtilService } from '../../providers/util.service';
+import { Auth, Logger } from 'aws-amplify';
 
-
+const logger = new Logger('SignUpConfirm');
 @Component({
   templateUrl: 'account-confirmation-code.html',
 })
 export class AccountConfirmationCodePage {
 
-  public submitted: boolean = false;
+  public username: string;
+  public code: string;
 
-  public registrationCode = {
-    code: undefined
-  };
+  constructor(private navCtrl: NavController, public navParams: NavParams, public util: UtilService) {
+    this.username = navParams.get('username');
+  }
+
+  public submitted: boolean = false;
 
   confirmSignUp(form) {
     this.submitted = true;
     if (form && form.valid) {
-      UserRegistrationService.confirmSignUp(this.registrationCode.code.toString())
-        .then(() => {
-          this.showConfirmationSuccessAlert();
-        }).catch((err: Error) => {
-          console.error(err);
-          this.showConfirmationFailureAlert(err);
-        });
+      Auth.confirmSignUp(this.username, this.code)
+      .then(() => {
+        this.util.showAlert('登録完了', 'oshidoriへようこそ。', () => {
+          this.navCtrl.popToRoot({ animate: false });
+        })
+      })
+      .catch(err => {
+        logger.debug('confirm error', err);
+        this.util.showAlert('登録失敗', err.message);
+      });
     }
   }
 
-  showConfirmationSuccessAlert(): void {
-    let alert = this.alertCtrl.create({
-      title: '登録が完了しました！',
-      subTitle: `oshidoriへようこそ。`,
-      buttons: [{
-        text: 'OK',
-        handler: data => {
-          this.navCtrl.popToRoot({ animate: false });
-        }
-      }]
-    });
-    alert.present();
-  }
-
-  showConfirmationFailureAlert(err: Error): void {
-    let alert = this.alertCtrl.create({
-      title: '登録に失敗しました',
-      subTitle: err.message,
-      buttons: [{
-        text: 'OK',
-      }]
-    });
-    alert.present();
-  }
-
-  constructor(private navCtrl: NavController, private alertCtrl: AlertController, private globals: GlobalStateService) {
-
+  resendCode() {
+    Auth.resendSignUp(this.username)
+      .then(() => logger.debug('confirmation code re-send'))
+      .catch(err => logger.debug('send code error', err));
   }
 
   ionViewDidEnter() {
-    Logger.banner("Confirmation Code");
+   logger.info("Confirmation Code");
   }
 }

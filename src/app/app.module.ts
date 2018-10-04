@@ -29,6 +29,7 @@ import { CustomAuthorizerClient, IamAuthorizerClient, UserPoolsAuthorizerClient,
 import { KeepAddDevPage } from '../pages/keep-add-dev/keep-add-dev';
 
 import Amplify from 'aws-amplify';
+declare function require(arg:string): any;
 const aws_exports = require('../aws-exports').default;
 Amplify.configure(aws_exports);
 @NgModule({

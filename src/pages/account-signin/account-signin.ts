@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HomePage } from '../home/home';
 import { AlertController } from 'ionic-angular';
 import { GlobalStateService } from '../../providers/global-state.service';
+import { UtilService } from '../../providers/util.service';
 import { AccountForgotPasswordPage } from '../account-forgot-password/account-forgot-password';
 import { AccountConfirmationCodePage } from '../account-confirmation-code/account-confirmation-code';
 import { AccountSignupPage } from '../account-signup/account-signup';
@@ -31,6 +32,7 @@ export class AccountSigninPage {
   constructor(public navCtrl: NavController,
     private alertCtrl: AlertController,
     public loadingCtrl: LoadingController,
+    public util: UtilService,
     public globals: GlobalStateService) {
     this.signInDetails = new SignInDetails();
   }
@@ -73,7 +75,7 @@ export class AccountSigninPage {
     }
 
     this.allowButtonPresses = false;
-    this.globals.displayLoader('ログインしています...');
+    this.util.showLoader('ログインしています...');
 
     let details = this.signInDetails;
     logger.info('login..');
@@ -90,10 +92,10 @@ export class AccountSigninPage {
       })
       .catch(err => {
         logger.debug('errrror', err.message);
-        this.showLoginFailureAlert(err.message);
+        this.util.showAlert('ログイン失敗', err.message);
       })
       .then(() => {
-        this.globals.dismissLoader();
+        this.util.dismissLoader();
         this.allowButtonPresses = true;
       }
       );
@@ -218,23 +220,5 @@ export class AccountSigninPage {
   //   alert.present();
   // }
 
-
-  showLoginFailureAlert(message: String): void {
-    let alert = this.alertCtrl.create({
-      title: 'ログイン失敗',
-      subTitle: `${message}`,
-      buttons: [{ text: 'OK' }]
-    });
-    alert.present();
-  }
-
-  // showForgotPasswordFailureAlert(err): void {
-  //   let alert = this.alertCtrl.create({
-  //     title: 'エラー',
-  //     subTitle: `失敗しました: [${err}]. 再度お試しください。`,
-  //     buttons: [{ text: 'OK' }]
-  //   });
-  //   alert.present();
-  // }
 
 }
