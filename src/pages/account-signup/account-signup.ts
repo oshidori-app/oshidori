@@ -68,7 +68,7 @@ export class AccountSignupPage {
       
       Auth.signUp(param)
         .then(user => {
-          this.navCtrl.push(AccountConfirmationCodePage, { username: details.username });
+          this.navCtrl.setRoot(AccountConfirmationCodePage, { username: details.username, password: details.password});
         })
         .catch(err => {
           this.error = err;

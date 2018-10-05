@@ -26,8 +26,6 @@
     "@ionic-native/splash-screen": "3.12.1",
     "@ionic-native/status-bar": "3.12.1",
     "@ionic/storage": "2.0.1",
-    "@types/paho-mqtt": "^1.0.3",
-    "@types/zen-observable": "^0.8.0",
     "aws-amplify": "^1.1.5",
     "aws-amplify-angular": "^2.0.8",
     "aws-api-gateway-client": "0.2.9",
@@ -50,6 +48,7 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "^3.2.0",
+    "@types/node": "^10.11.4",
     "typescript": "2.3.4"
   },
   "description": "An Ionic project",

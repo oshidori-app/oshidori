@@ -14,9 +14,9 @@
 
     <ion-item>
       <ion-label floating>確認コード</ion-label>
-      <ion-input [(ngModel)]="code" name="code" type="text" #code="ngModel" required></ion-input>
+      <ion-input [(ngModel)]="code" name="confirmCode" type="text" #confirmCode="ngModel" required></ion-input>
     </ion-item>
-    <p [hidden]="code.valid || submitted == false" color="danger" padding-left>
+    <p [hidden]="confirmCode.valid || submitted == false" color="danger" padding-left>
       確認コードは必須です
     </p>
 

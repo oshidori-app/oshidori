@@ -82,17 +82,20 @@ export class AccountSigninPage {
     Auth.signIn(details.username, details.password)
       .then(user => {
         logger.debug('signed in user', user);
-        if (user.challengeName === 'SMS_MFA') {
-          this.navCtrl.push(AccountConfirmationCodePage, { 'user': user });
-        } else {
-          this.navCtrl.popToRoot({ animate: false });
-          this.allowButtonPresses = true;
-          this.navCtrl.push(HomePage);
-        }
+        this.navCtrl.popToRoot({ animate: false });
+        this.allowButtonPresses = true;
+        this.navCtrl.push(HomePage);
       })
       .catch(err => {
         logger.debug('errrror', err.message);
-        this.util.showAlert('ログイン失敗', err.message);
+
+        let goConfirm = () => {
+          if (err.code === 'UserNotConfirmedException') {
+            this.navCtrl.setRoot(AccountConfirmationCodePage, {username: details.username, password: details.password});
+          }
+        }
+        this.util.showAlert('ログイン失敗', err.message, goConfirm);
+
       })
       .then(() => {
         this.util.dismissLoader();
