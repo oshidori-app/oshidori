@@ -25,8 +25,8 @@
         <ion-label floating>メールアドレス</ion-label>
         <ion-input [(ngModel)]="signInDetails.username" ngControl="username" name="username" type="text" #username="ngModel" required></ion-input>
       </ion-item>
-      <p [hidden]="username.valid || (!signInButtonClicked && !forgotPasswordButtonClicked)" color="danger" padding-left>
-        メールアドレスは必須です
+      <p [hidden]="username.valid || !signInButtonClicked" color="danger" padding-left>
+        メールアドレスを入力してください
       </p>
 
       <ion-item>
@@ -34,7 +34,7 @@
         <ion-input [(ngModel)]="signInDetails.password" ngControl="password" name="password" type="password" #password="ngModel" required></ion-input>
       </ion-item>
       <p [hidden]="password.valid || !signInButtonClicked" color="danger" padding-left>
-        パスワードは必須です
+        パスワードを入力してください
       </p>
 
     </form>

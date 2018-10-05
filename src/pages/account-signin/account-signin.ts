@@ -55,18 +55,18 @@ export class AccountSigninPage {
     this.navCtrl.push(AccountSignupPage);
   }
 
-  // onForgotPassword(form) {
-  //   if (!this.allowButtonPresses) {
-  //     return;
-  //   }
-  //   this.signInButtonClicked = false;
-  //   this.forgotPasswordButtonClicked = true;
-  //   this.allowButtonPresses = false;
-  //   if (form && this.signInDetails.username != null) {
-  //     this.allowButtonPresses = true;
-  //     this.navCtrl.push(AccountForgotPasswordPage, { 'username': this.signInDetails.username });
-  //   }
-  // }
+  onForgotPassword(form): void {
+    if (!this.allowButtonPresses) {
+      return;
+    }
+    this.signInButtonClicked = false;
+    this.forgotPasswordButtonClicked = true;
+    this.allowButtonPresses = false;
+    if (form) {
+      this.allowButtonPresses = true;
+      this.navCtrl.push(AccountForgotPasswordPage);
+    }
+  }
 
   login(): void {
     // 複数クリックを抑制

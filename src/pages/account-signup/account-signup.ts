@@ -77,19 +77,4 @@ export class AccountSignupPage {
         .then(() => this.util.dismissLoader());
     }
   }
-  // onSignUp(form) {
-  //   this.submitted = true;
-
-  //   if (form && form.valid) {
-  //     UserRegistrationService.signUp(this.userData).then(() => {
-  //       // Sign-up successful. Redirect to confirm sign-up page.
-  //       this.navCtrl.push(this.accountConfirmationCodePage);
-
-  //     }).catch((err: Error) => {
-  //       this.showAlert('登録に失敗しました', err.message);
-  //       console.log(err);
-  //     });
-  //   }
-  // }
-
 }

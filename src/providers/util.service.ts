@@ -11,7 +11,7 @@ export class UtilService {
 
   private loader = null;
 
-  constructor(public alertCtrl: AlertController, public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
+  constructor(private alertCtrl: AlertController, private toastCtrl: ToastController, private loadingCtrl: LoadingController) {
   }
 
   showAlert(title: string, message: string, okCallbackFunction = null): void {
