@@ -1,47 +1,83 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { AccountSigninPage } from '../account-signin/account-signin';
-import { AccountSignupPage } from '../account-signup/account-signup';
+import { UtilService } from '../../providers/util.service';
 import { AccountChangePasswordPage } from '../account-change-password/account-change-password';
-import { GlobalStateService } from '../../providers/global-state.service';
-import { ImagePicker } from '@ionic-native/image-picker';
-import { UserLoginService } from '../../providers/account-management.service';
-import { Logger } from '../../providers/logger.service';
-import { Platform } from 'ionic-angular';
-import { KeepAddDevPage } from '../keep-add-dev/keep-add-dev';
-declare const AWS: any;
+import { Auth, Storage, Logger } from 'aws-amplify';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+import { AccountSigninPage } from '../account-signin/account-signin';
+
+const logger = new Logger('Account');
 
 @Component({
+  selector: 'page-account',
   templateUrl: 'account.html',
 })
 export class AccountPage {
 
+  @ViewChild('avatar') avatarInput;
+
+  public avatarPhoto: string;
+  public selectedPhoto: Blob;
+  public userId: string;
+  public username: string;
+  public attributes: any;
+
   viewAdminFeatures = false;
-  platform: Platform;
   accountChangePasswordPage = AccountChangePasswordPage;
 
   imageUploadEventListenerAttached = false;
   profileImageDisplay = false;
   submitted: boolean = false;
 
+  constructor(private navCtrl: NavController, public camera: Camera, public util: UtilService) {
+    this.attributes = [];
+    this.avatarPhoto = null;
+    this.selectedPhoto = null;
 
-  // code from: http://stackoverflow.com/questions/29644474/how-to-be-able-to-convert-image-to-base64-and-avoid-same-origin-policy
-  convertImgToBase64URL(url, callback, outputFormat) {
-    let img = new Image();
-    img.crossOrigin = 'Anonymous';
-    img.onload = function () {
-      let canvas = document.createElement('CANVAS');
-      let cvs = (<any>canvas);
-      let ctx = cvs.getContext('2d');
-      cvs.height = this.offsetHeight;
-      cvs.width = this.offsetWidth;
-      ctx.drawImage(this, 0, 0);
-      let dataURL = cvs.toDataURL(outputFormat);
-      callback(dataURL);
-      canvas = null;
-    };
-    img.src = url;
-    return url;
+    Auth.currentUserInfo()
+    .then(info => {
+      this.userId = info.id;
+      this.username = info.username;
+      this.attributes = [];
+      if (info.attributes['email']) { this.attributes.push({ name: 'email', value: info.attributes['email']}); }
+      if (info.attributes['birthdate']) { this.attributes.push({ name: 'birthdate', value: info.attributes['birthdate']}); }
+      if (info.attributes['gender']) { this.attributes.push({ name: 'gender', value: info.attributes['gender']}); }
+      this.refreshAvatar();
+    });
+  }
+
+  signOut() {
+    Auth.signOut()
+    .then(() => this.navCtrl.setRoot(AccountSigninPage));
+  }
+
+  changePassword() {
+    this.navCtrl.push(AccountChangePasswordPage);
+  }
+  refreshAvatar() {
+    Storage.get(this.userId + '/avatar')
+      .then(url => this.avatarPhoto = (url as string));
+  }
+
+  selectAvatar() {
+    const options: CameraOptions = {
+      quality: 100,
+      targetHeight: 200,
+      targetWidth: 200,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    }
+
+    this.camera.getPicture(options).then((imageData) => {
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64:
+      this.selectedPhoto  = this.dataURItoBlob('data:image/jpeg;base64,' + imageData);
+      this.upload();
+    }, (err) => {
+      this.avatarInput.nativeElement.click();
+      // Handle error
+    });
   }
 
   dataURItoBlob(dataURI) {
@@ -54,173 +90,31 @@ export class AccountPage {
     return new Blob([new Uint8Array(array)], { type: 'image/jpeg' });
   };
 
-  generateHash(str) {
-    // code adapted from: https://github.com/darkskyapp/string-hash
-    let hash = 5381, i = str.length
-    while (i) {
-      hash = (hash * 33) ^ str.charCodeAt(--i)
+  uploadFromFile(event) {
+    const files = event.target.files;
+    logger.debug('Uploading', files)
+
+    const file = files[0];
+    const { type } = file;
+    Storage.put(this.userId + '/avatar', file, { contentType: type })
+      .then(() => this.refreshAvatar())
+      .catch(err => logger.error(err));
+  }
+
+  upload() {
+    if (this.selectedPhoto) {
+
+      this.util.showLoader('アップロードしています...')
+
+      Storage.put(this.userId + '/avatar', this.selectedPhoto, { contentType: 'image/jpeg' })
+        .then(() => {
+          this.refreshAvatar()
+          this.util.dismissLoader();
+        })
+        .catch(err => {
+          logger.error(err)
+          this.util.dismissLoader();
+        });
     }
-    return hash >>> 0;
-  }
-
-  // 圧縮はionicのCameraOptionでやってみる
-  uploadFileToS3(file, key) {
-    // Logger.heading('Uploading image to S3');
-    // this.globals.displayLoader('Uploading image to Amazon S3...', 10000);
-    // let bucketName = Config.PROFILE_IMAGES_S3_BUCKET;
-    // console.log(`A、ttempting image upload to ${bucketName}/${key}`);
-    // let s3bucket = new AWS.S3({ region: Config.REGION, params: { Bucket: bucketName } });
-    // let params = {
-    //   Key: key, Body: file
-    // };
-    // s3bucket.upload(params, (err, data) => {
-    //   this.globals.dismissLoader();
-    //   if (err) {
-    //     let errorMessage = `Error uploading image to S3: ${err}`
-    //     this.globals.displayAlert('Error encountered', errorMessage);
-    //     console.log(errorMessage);
-    //     console.log(err);
-    //   } else {
-    //     console.log(`Successfully uploaded image to S3.`);
-    //     this.profileImageURI = `https://s3.amazonaws.com/${Config.PROFILE_IMAGES_S3_BUCKET}/${key}`;
-    //     console.log(`Image can be viewed at: ${this.profileImageURI}`)
-    //     this.profileImageDisplay = true;
-    //   }
-    // });
-  }
-
-  selectImage() {
-    // display a different FileSelector experience,
-    // depending on whether the app is running on a mobile phone or a web browser
-    // if (this.platform.is('cordova')) {
-    //   this.selectImageUsingNativeImageSelector();
-    // } else {
-    this.selectImageUsingBrowserFileSelector();
-    // }
-  }
-
-  selectImageUsingBrowserFileSelector() {
-    let selectedFiles: any = document.getElementById('imageUpload');
-    let files = selectedFiles.files;
-    if (selectedFiles.value !== '' && files.length > 0) {
-      let filename = this.generateUniqueFilenameForS3Upload(files[0].name);
-      this.uploadFileToS3(files[0], filename);
-    } else {
-      this.globals.dismissLoader();
-      let errorMessage = 'Please select an image to upload first.';
-      this.globals.displayAlert('Error encountered', errorMessage);
-      console.log(errorMessage);
-    }
-    // reset the file selector UI
-    let imageUploadFormSubmit: any = document.getElementById('imageUploadSubmit');
-    imageUploadFormSubmit.style.visibility = 'hidden';
-  }
-
-  generateUniqueFilenameForS3Upload(originalFilename): string {
-    console.log(originalFilename);
-    return `protected/${this.globals.getUnencodedUserId()}/${this.generateHash(originalFilename)}-${(new Date()).getTime()}.${originalFilename.split('.').pop()}`;
-  }
-  selectImageUsingNativeImageSelector() {
-    Logger.heading('Displaying ImageSelector');
-    // this.profileImageURI = 'https://s3-${Config.PROFILE_IMAGES_S3_BUCKET_REGION}.amazonaws.com/${Config.PROFILE_IMAGES_S3_BUCKET}/test.jpg'; // TODO
-    try {
-      let options = {
-        maximumImagesCount: 1,
-        width: 200,
-        height: 200,
-        quality: 100
-      }
-      // code adapted from: http://blog.ionic.io/ionic-native-accessing-ios-photos-and-android-gallery-part-2/
-
-      this.platform.ready().then(() => {
-        new ImagePicker().getPictures(options)
-          .then(
-          file_uris => {
-            try {
-              if (file_uris !== null && file_uris !== '' && (file_uris.length > 0)) {
-                console.log(`Image selected: [${file_uris}]`);
-                console.log(`Converting to Base64 image`);
-                this.convertImgToBase64URL(file_uris[0], base64Img => {
-                  // console.log(base64Img);
-                  console.log('Converting to Blob');
-                  let blob = this.dataURItoBlob(base64Img);
-                  // generate a unique filename
-                  let filename = this.generateUniqueFilenameForS3Upload(file_uris[0]);
-                  this.uploadFileToS3(blob, filename);
-                }, null);
-              }
-            } catch (err) {
-              throw (err);
-            }
-          },
-          err => {
-            throw err;
-          }
-          );
-      });
-
-    } catch (err) {
-      this.globals.dismissLoader();
-      let errorMessage = 'Could not retrieve an image using the ImagePicker';
-      this.globals.displayAlert('Error encountered', errorMessage);
-      console.log(errorMessage);
-      console.log(err);
-    }
-  }
-
-  attachImageUploadEventListener() {
-    // if (this.platform.is('cordova')) {
-    // Check If Cordova/Mobile. If it's mobile, then exit,
-    // since this feature only applies to the Web experience, not mobile.
-    // This event listener is a browser UI workaround, so that
-    // we don't have to use the browser's standard, non-attractive FileSelector control
-    // return;
-    // }
-    // check if the eventListener was already previously attached
-    if (this.imageUploadEventListenerAttached) {
-      return;
-    }
-    // console.log("Attaching event listener...");
-    let imageUploadFormField: any = document.getElementById('imageUpload');
-    let imageUploadFormSubmit: any = document.getElementById('imageUploadSubmit');
-
-    // try again later if the DOM isn't fully ready yet
-    if (imageUploadFormField == null) {
-      return;
-    }
-    this.imageUploadEventListenerAttached = true;
-    imageUploadFormField.addEventListener('change', function (e) {
-      let fileName = e.target.value.split('\\').pop();
-      if (fileName === null || fileName === '') {
-        // reset the file selector UI
-        let imageUploadFormSubmit: any = document.getElementById('imageUploadSubmit');
-        imageUploadFormSubmit.style.visibility = 'hidden';
-      } else {
-        // select your implementation approach (show upload button or not?)
-        let showUploadButton = false;
-        if (showUploadButton) {
-          imageUploadFormSubmit.querySelector('span').innerHTML = `UPLOAD (${fileName})`;
-          imageUploadFormSubmit.style.visibility = 'visible';
-        } else {
-          // simulate the Upload button being selected
-          var evObj = document.createEvent('Events');
-          evObj.initEvent('click', true, false);
-          imageUploadFormSubmit.dispatchEvent(evObj)
-        }
-      }
-    });
-  }
-
-  goKeepDevPage() {
-    this.navCtrl.push(KeepAddDevPage);
-  }
-  constructor(private navCtrl: NavController, public globals: GlobalStateService, platform: Platform) {
-    this.platform = platform
-  }
-
-  ionViewDidEnter() {
-    Logger.banner("Account");
-    this.attachImageUploadEventListener();
-    this.viewAdminFeatures = this.globals.getViewAdminFeaturesOverride();
   }
 }

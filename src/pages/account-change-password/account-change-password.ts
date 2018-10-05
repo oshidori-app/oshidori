@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { GlobalStateService } from '../../providers/global-state.service';
-import { UserLoginService } from '../../providers/account-management.service';
-import { Logger } from '../../providers/logger.service';
+import { Auth, Logger } from 'aws-amplify';
+import { UtilService } from '../../providers/util.service';
+
+const logger = new Logger('AccountChangePassword');
 
 @Component({
   templateUrl: 'account-change-password.html',
@@ -17,36 +18,23 @@ export class AccountChangePasswordPage {
 
   submitted: boolean = false;
 
+  constructor(public navCtrl: NavController, public util: UtilService) {
+  }
   onSubmit(form) {
     this.submitted = true;
 
     if (form && form.valid) {
-      console.log('Form User data' + this.formData);
-      UserLoginService.changePassword(this.formData.currentPassword, this.formData.newPassword)
+      let user = Auth.currentAuthenticatedUser();
+      Auth.changePassword(user, this.formData.currentPassword, this.formData.newPassword)
         .then((data) => {
-          // Success
-          console.log("Password successfully changed");
-          let handler = () => {
-            // go back to the Signin screen
+          let callback = () => {
             this.navCtrl.pop();
           }
-          this.globals.displayAlert('Password changed',
-            'Your password has been successfully changed.', handler);
+          this.util.showAlert('パスワード変更', '新しいパスワードに変更しました。', callback);
         }).catch((err: Error) => {
-          // Failure
-          console.log('Failure when attempting to change password', err);
-          console.log(err);
-          this.globals.displayAlert('Error encountered',
-            `There was a problem changing your password: [${err.name}. ${err.message}]. Please try again.`, null);
+          logger.error(err.message);
+          this.util.showAlert('失敗しました', 'パスワード変更できませんでした。もう一度お試しください。', null);
         });
     }
-  }
-
-  constructor(public navCtrl: NavController, private globals: GlobalStateService) {
-    // empty
-  }
-
-  ionViewDidEnter() {
-    Logger.banner("Change Password");
   }
 }

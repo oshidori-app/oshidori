@@ -6,35 +6,27 @@
 
 <ion-content padding>
 
-  <div *ngIf="globals.userId != ''">
+  <div padding text-center>
+    <div *ngIf="avatarPhoto" class="avatar" [style.background-image]="'url('+ avatarPhoto +')'"></div>
 
-    <h5>あなたの画像</h5>
-    <div *ngIf="profileImageDisplay">
-      <img src="{{profileImageURI}}" width="200" border="1" />
-      <br/>
-    </div>
+    <button ion-button clear (click)="selectAvatar()">Change photo</button>
 
-    <!-- <div *ngIf="platform.is('cordova')">
-      nativeが動作しないので要調査
-      <button ion-button (click)="selectImage()" type="submit" color="primary">画像を選択する(cordova)</button>
-    </div> -->
-    <!-- <div *ngIf="!platform.is('cordova')"> -->
-    <input style='font-size:12px; width: 0.1px; height: 0.1px; opacity: 0; overflow: hidden; position: absolute; z-index: -1;'
-      id="imageUpload" type="file" accept="image/*">
-    <label ion-button (click)="attachImageUploadEventListener()" color="primary" style='none;display: inline-block;' for="imageUpload"
-      id="imageUploadLabel">画像を選択する(web)</label>
-    <button ion-button (click)="selectImage()" style='visibility:hidden; text-transform:none;' type="submit" color="primary"
-      id="imageUploadSubmit">アップロードする(web)</button>
-    <!-- </div> -->
+    <input #avatar class="avatar-input" type="file" (change)="uploadFromFile($event)" />
+  </div>
+  <div>
+    <ion-list>
+      <ion-item *ngFor="let attr of attributes">
+        <strong>{{ attr.name }}</strong> {{ attr.value }}
+      </ion-item>
+    </ion-list>
+  </div>
 
-    <button ion-button (click)="goKeepDevPage()">キープ追加(dev)</button>
-    <br/>
-    <br/>
+  <div padding text-center>
+    <button ion-button round outline (click)='signOut()'>サインアウト</button>
+  </div>
 
-    <h5>パスワードを変更する</h5>
-    <button ion-button [navPush]="accountChangePasswordPage" type="submit" color="primary">パスワード変更</button>
-    <br/>
-    <br/>
+  <div padding text-center>
+    <button ion-button round outline (click)='changePassword()'>パスワード変更</button>
   </div>
 
 </ion-content>
