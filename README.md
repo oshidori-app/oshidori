@@ -2,15 +2,46 @@ oshidoriアプリのリポジトリです。
 
 ## 動かす
 
-* npmのプロキシを設定すること
+1. awsmobileのインストール
 
-```cmd
-$ cd app
-$ npm install -g ionic cordova
-$ ionic serve
-```
+   ```bash
+   $ npm install -g awsmobile-cli
+   ```
+
+2. IAM認証情報の設定 ※認証情報は別途提供
+
+   ```bash
+   $ awsmobile configure
+   
+   ? accessKeyId:  <アクセスキー>
+   ? secretAccessKey:  <シークレット>
+   ? region:  ap-northeast-1
+   
+   ```
+
+3. 初期化
+
+   ```
+   awsmobile init 1db3c98e-7ae0-4818-8178-16079fcdf8bd
+   ```
+
+   ※上記で認証ファイルをダウンロードできない場合は以下のファイルを直接修正してIAM認証情報を設定し、再度initすること
+
+   ```bash
+   /Users/<your user name>/.awsmobilejs/aws-config.json
+   ```
+
+4. アプリケーションの起動
+
+   ```bash
+   $ cd app
+   $ npm install -g ionic cordova
+   $ ionic serve
+   ```
+
 
 ## Dockerで環境を立ち上げる
+
 dockerコンテナで環境立ち上がるようにしました。
 ※Docker for Macでしか動作確認出来てないです(；・∀・)
 
