@@ -28,6 +28,10 @@ import { HttpService } from '../providers/http-service';
 import { CustomAuthorizerClient, IamAuthorizerClient, UserPoolsAuthorizerClient, NoAuthorizationClient } from '../providers/oshidori-api.service';
 import { KeepAddDevPage } from '../pages/keep-add-dev/keep-add-dev';
 
+import Amplify from 'aws-amplify';
+const aws_exports = require('../aws-exports').default;
+Amplify.configure(aws_exports);
+
 @NgModule({
   declarations: [
     MyApp,

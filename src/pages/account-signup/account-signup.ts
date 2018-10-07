@@ -1,24 +1,34 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { AlertController } from 'ionic-angular';
+import { UtilService } from '../../providers/util.service';
 import { UserRegistrationService, IUserRegistration, Gender } from '../../providers/account-management.service';
 import { AccountConfirmationCodePage } from '../account-confirmation-code/account-confirmation-code';
-import { GlobalStateService } from '../../providers/global-state.service';
-import { Logger } from '../../providers/logger.service';
+import { Auth, Logger } from 'aws-amplify';
+
+const logger = new Logger('SignUp');
+
+export class UserDetails {
+  username: string;
+  password: string;
+  email: string;
+  gender: string;
+  birthdate: string;
+}
 
 @Component({
   selector: 'account-signup',
   templateUrl: 'account-signup.html'
 })
 export class AccountSignupPage {
-  accountConfirmationCodePage = AccountConfirmationCodePage;
 
-  public userData: IUserRegistration = {
-    username: '',
-    password: '',
-    gender: '',
-    birthDate: '',
-  };
+  public userDetails: UserDetails;
+
+  error: any;
+
+  constructor(public navCtrl: NavController, public util: UtilService) {
+    this.userDetails = new UserDetails();
+  }
+
   public genderList = [
     {
       value: Gender.Male,
@@ -35,40 +45,36 @@ export class AccountSignupPage {
   public submitted: boolean = false;
 
   onSignUp(form) {
+
     this.submitted = true;
 
     if (form && form.valid) {
-      UserRegistrationService.signUp(this.userData).then(() => {
-        // Sign-up successful. Redirect to confirm sign-up page.
-        this.navCtrl.push(this.accountConfirmationCodePage);
 
-      }).catch((err: Error) => {
-        this.showAlert('登録に失敗しました', err.message);
-        console.log(err);
-      });
-    }
-  }
+      this.util.showLoader('登録しています...');
 
-  private showAlert(title: string, subTitle: string) {
-    let alert = this.alertCtrl.create({
-      title: title,
-      subTitle: subTitle,
-      buttons: [
-        {
-          text: 'OK',
-          handler: () => {
-            console.log('OK clicked');
-          }
+      let details = this.userDetails;
+      this.error = null;
+      logger.debug('register');
+
+      let param = {
+        username: details.username,
+        password: details.password,
+        attributes: {
+          email: details.username, // username same value
+          gender: details.gender,
+          birthdate: details.birthdate
         }
-      ]
-    });
-    alert.present();
-  }
-
-  constructor(public navCtrl: NavController, private alertCtrl: AlertController, private userRegistrationService: UserRegistrationService, private globals: GlobalStateService) {
-  }
-
-  ionViewDidEnter() {
-    Logger.banner("Register");
+      }
+      
+      Auth.signUp(param)
+        .then(user => {
+          this.navCtrl.setRoot(AccountConfirmationCodePage, { username: details.username, password: details.password});
+        })
+        .catch(err => {
+          this.error = err;
+          this.util.showAlert('登録失敗', err.message);
+        })
+        .then(() => this.util.dismissLoader());
+    }
   }
 }

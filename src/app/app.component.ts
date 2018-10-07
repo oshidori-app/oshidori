@@ -1,22 +1,22 @@
 import { AccountConfirmationCodePage } from './../pages/account-confirmation-code/account-confirmation-code';
 import { AccountSignupPage } from './../pages/account-signup/account-signup';
-import { AccountSigninPage } from './../pages/account-signin/account-signin';
+import { AccountSigninPage } from '../pages/account-signin/account-signin';
 import { Component } from '@angular/core';
 import { Config, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { TabsPage } from '../pages/tabs/tabs';
-import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 
-import { UserRegistrationService } from '../providers/account-management.service';
+import { UserLoginService, UserRegistrationService, LocalStorage } from '../providers/account-management.service';
 import { GlobalStateService } from '../providers/global-state.service';
+import { UtilService } from '../providers/util.service';
 import { Logger } from '../providers/logger.service';
+import { Auth } from 'aws-amplify';
 
 @Component({
   templateUrl: 'app.html',
-  providers: [UserRegistrationService, GlobalStateService, Logger]
+  providers: [UserRegistrationService, UserLoginService, LocalStorage, GlobalStateService, UtilService, Logger]
 })
 export class MyApp {
   rootPage: any = null;
@@ -30,19 +30,10 @@ export class MyApp {
     };
 
     platform.ready().then(() => {
-      // user.isAuthenticated().then(() => {
-      //   console.log('you are authenticated!');
-      //   this.rootPage = TabsPage;
-      //   globalActions();
-      // }).catch(() => {
-      //   console.log('you are not authenticated..'); 
-      //   this.rootPage = LoginPage;
-      //   globalActions();
-      // });
-
-      // ログイン処理を実装するときはこっち
-      // this.rootPage = AccountSigninPage;
-      this.rootPage = HomePage;
+      Auth.currentAuthenticatedUser()
+        .then(() => { this.rootPage = HomePage; })
+        .catch(() => { this.rootPage = AccountSigninPage; })
+        .then(() => globalActions());
     });
   }
 }
