@@ -7,24 +7,16 @@
 
 <ion-content padding>
 
-  <p>あなたのメールアドレスに招待状を送りました。
-    <br> 招待状に記載された確認コードを入力してください。
+  <p>あなたのメールアドレスに招待状を送りました。メールに記載されたURLをクリックして登録を完了してください。
+    <br> ↓URLクリック済みの方は以下のボタンを押してください。（開発用です）
   </p>
-  <form #confirmSignUpForm="ngForm" novalidate>
 
-    <ion-item>
-      <ion-label floating>確認コード</ion-label>
-      <ion-input [(ngModel)]="code" name="confirmCode" type="text" #confirmCode="ngModel" required></ion-input>
-    </ion-item>
-    <p [hidden]="confirmCode.valid || submitted == false" color="danger" padding-left>
-      確認コードは必須です
+  <form #confirm="ngForm" novalidate></form>
+
+    <button ion-button (click)="confirmVerify(confirm)" type="submit" primary block>認証確認（開発用）</button>
+    <p>
+      招待状が届いていませんか？
     </p>
+    <button ion-button (click)="resendEmail(confirm)" type="submit" primary block>再送を試してみてください</button>
 
-  </form>
-
-  <button ion-button (click)="confirmSignUp(confirmSignUpForm)" type="submit" primary block>oshidoriに登録します</button>
-
-  <div padding>
-    <p>招待状が届いていませんか？ <a (click)="resendCode()">再送を試してみてください</a></p>
-  </div>
 </ion-content>
