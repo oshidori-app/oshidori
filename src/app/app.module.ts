@@ -25,9 +25,16 @@ import { InputTaskPage } from '../pages/input-task/input-task';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { HttpService } from '../providers/http-service';
+import { AuthService } from '../providers/auth.service';
 import { CustomAuthorizerClient, IamAuthorizerClient, UserPoolsAuthorizerClient, NoAuthorizationClient } from '../providers/oshidori-api.service';
 import { KeepAddDevPage } from '../pages/keep-add-dev/keep-add-dev';
 
+// firebase
+import { environment } from "../environments/environment";
+import { AngularFireModule } from "@angular/fire";
+import { AngularFireAuthModule } from "@angular/fire/auth";
+
+// mobile-hub
 import Amplify from 'aws-amplify';
 const aws_exports = require('../aws-exports').default;
 Amplify.configure(aws_exports);
@@ -55,7 +62,9 @@ Amplify.configure(aws_exports);
   imports: [
     HttpModule,
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -82,6 +91,7 @@ Amplify.configure(aws_exports);
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     Camera,
+    AuthService,
     { provide: HttpService, useClass: HttpService },
     { provide: CustomAuthorizerClient, useClass: CustomAuthorizerClient },
     { provide: IamAuthorizerClient, useClass: IamAuthorizerClient },

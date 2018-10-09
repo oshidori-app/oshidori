@@ -7,6 +7,8 @@ import { AccountForgotPasswordPage } from '../account-forgot-password/account-fo
 import { AccountConfirmationCodePage } from '../account-confirmation-code/account-confirmation-code';
 import { AccountSignupPage } from '../account-signup/account-signup';
 import { NavController, LoadingController } from 'ionic-angular';
+import { AuthService } from '../../providers/auth.service';
+
 import { Auth, Logger } from 'aws-amplify';
 
 import {
@@ -30,8 +32,8 @@ export class AccountSigninPage {
   public signInDetails: SignInDetails;
 
   constructor(public navCtrl: NavController,
-    private alertCtrl: AlertController,
     public loadingCtrl: LoadingController,
+    public auth: AuthService,
     public util: UtilService,
     public globals: GlobalStateService) {
     this.signInDetails = new SignInDetails();
@@ -79,9 +81,17 @@ export class AccountSigninPage {
 
     let details = this.signInDetails;
     logger.info('login..');
-    Auth.signIn(details.username, details.password)
-      .then(user => {
-        logger.debug('signed in user', user);
+    this.auth.signIn({ email: details.username, password: details.password })
+      .then(res => {
+        logger.debug('signed in user', res);
+
+        // メール未検証
+        if (!res.user.emailVerified) {
+          this.util.showAlert('ログイン失敗', '認証が完了していません。', () => {
+            this.navCtrl.setRoot(AccountConfirmationCodePage);
+          });
+          return;
+        }
         this.navCtrl.popToRoot({ animate: false });
         this.allowButtonPresses = true;
         this.navCtrl.push(HomePage);
@@ -89,13 +99,13 @@ export class AccountSigninPage {
       .catch(err => {
         logger.debug('errrror', err.message);
 
-        let goConfirm = () => {
-          if (err.code === 'UserNotConfirmedException') {
-            this.navCtrl.setRoot(AccountConfirmationCodePage, { username: details.username, password: details.password });
-          }
+        let message = ''
+        if (err.code === 'auth/wrong-password') {
+          message = 'メールアドレスかパスワードが間違っています';
+        } else {
+          message = 'ログインできませんでした。もう一度お試しください。'
         }
-        this.util.showAlert('ログイン失敗', err.message, goConfirm);
-
+        this.util.showAlert('ログイン失敗', message);
       })
       .then(() => {
         this.util.dismissLoader();
