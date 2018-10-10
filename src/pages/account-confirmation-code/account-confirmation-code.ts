@@ -15,7 +15,7 @@ export class AccountConfirmationCodePage {
 
   public username: string;
 
-  constructor(private navCtrl: NavController, private auth: AuthService, public util: UtilService) {
+  constructor(private navCtrl: NavController, private auth: AuthService, private util: UtilService) {
   }
 
   resendEmail(form) {

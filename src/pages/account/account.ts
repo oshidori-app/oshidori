@@ -29,7 +29,7 @@ export class AccountPage {
   profileImageDisplay = false;
   submitted: boolean = false;
 
-  constructor(private navCtrl: NavController, public camera: Camera, public util: UtilService) {
+  constructor(private navCtrl: NavController, private camera: Camera, private util: UtilService) {
     this.attributes = [];
     this.avatarPhoto = null;
     this.selectedPhoto = null;

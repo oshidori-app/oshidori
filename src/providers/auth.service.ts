@@ -28,7 +28,7 @@ export class AuthService {
     })
   }
 
-  isVerified() {
+  isVerified(): boolean {
       return this.afAuth.auth.currentUser.emailVerified;
   }
 
@@ -43,7 +43,7 @@ export class AuthService {
     })
   }
 
-  signOut() {
+  signOut(): Promise<any> {
     return new Promise((resolve, reject) => {
       if (this.afAuth.auth.currentUser) {
         // this.afStore.firestore.disableNetwork();
@@ -57,6 +57,17 @@ export class AuthService {
     })
   }
 
+  resetPassword(email: string): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      this.afAuth.auth.sendPasswordResetEmail(email)
+        .then(res => {
+          resolve(res);
+        }).catch(err => {
+          reject(err);
+        });
+    })
+  }
+  
   getUser() {
     return this.afAuth.auth.currentUser;
   }
