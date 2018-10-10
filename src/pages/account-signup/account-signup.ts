@@ -24,7 +24,7 @@ export class AccountSignupPage {
 
   public userDetails: UserDetails;
 
-  constructor(public navCtrl: NavController, public auth: AuthService, public util: UtilService) {
+  constructor(private navCtrl: NavController, private auth: AuthService, private util: UtilService) {
     this.userDetails = new UserDetails();
   }
 

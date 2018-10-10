@@ -19,7 +19,7 @@ export class AccountChangePasswordPage {
 
   submitted: boolean = false;
 
-  constructor(public navCtrl: NavController, public util: UtilService) {
+  constructor(private navCtrl: NavController, private util: UtilService) {
   }
   onSubmit(form) {
     this.submitted = true;

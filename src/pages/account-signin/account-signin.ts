@@ -31,11 +31,11 @@ export class AccountSigninPage {
 
   public signInDetails: SignInDetails;
 
-  constructor(public navCtrl: NavController,
-    public loadingCtrl: LoadingController,
-    public auth: AuthService,
-    public util: UtilService,
-    public globals: GlobalStateService) {
+  constructor(private navCtrl: NavController,
+    private loadingCtrl: LoadingController,
+    private auth: AuthService,
+    private util: UtilService,
+    private globals: GlobalStateService) {
     this.signInDetails = new SignInDetails();
   }
 
