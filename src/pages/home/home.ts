@@ -1,5 +1,5 @@
 import { InputTaskPage } from './../input-task/input-task';
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController} from 'ionic-angular';
 import { KeepListPage } from '../keep-list/keep-list';
 import { Platform } from 'ionic-angular';
