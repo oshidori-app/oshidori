@@ -1,8 +1,11 @@
 import { HomePage } from '../home/home';
 import { Component } from '@angular/core';
-import { NavController, NavParams} from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { UtilService } from '../../providers/util.service';
 import { Auth, Logger } from 'aws-amplify';
+import { AuthService } from '../../providers/auth.service';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AccountSigninPage } from '../account-signin/account-signin';
 
 const logger = new Logger('AccountConfirm');
 @Component({
@@ -11,51 +14,33 @@ const logger = new Logger('AccountConfirm');
 export class AccountConfirmationCodePage {
 
   public username: string;
-  private password: string;
-  public code: string;
 
-  constructor(private navCtrl: NavController, public navParams: NavParams, public util: UtilService) {
-    this.username = navParams.get('username');
-    this.password = navParams.get('password');
+  constructor(private navCtrl: NavController, private auth: AuthService, private util: UtilService) {
   }
 
-  public submitted: boolean = false;
-
-  confirmSignUp(form) {
-    this.submitted = true;
+  resendEmail(form) {
     if (form && form.valid) {
-      Auth.confirmSignUp(this.username, this.code)
-      .then(() => {
-        this.util.showAlert('登録完了', 'oshidoriへようこそ。', () => {
-          Auth.signIn(this.username, this.password)
-          .then(user => {
-            logger.debug('signed in user', user);
-            this.navCtrl.popToRoot({ animate: false });
-            this.navCtrl.push(HomePage);
-          })
-          .catch(err => {
-            logger.debug('errrror', err.message);
-          })
-          .then(() => {
-            this.util.dismissLoader();
-          }
-          );
+      this.auth.mailVerify()
+        .then(res => {
+          logger.debug(res);
         })
-      })
-      .catch(err => {
-        logger.debug('confirm error', err);
-        this.util.showAlert('登録失敗', err.message);
-      });
+        .catch(err => {
+          this.util.showAlert('エラー', err.message);
+          logger.error(err);
+        })
     }
   }
 
-  resendCode() {
-    Auth.resendSignUp(this.username)
-      .then(() => logger.debug('confirmation code re-send'))
-      .catch(err => logger.debug('send code error', err));
+  // Dynamic Linkでverifyしたい
+  confirmVerify(form) {
+    if (form && form.valid) {
+      this.auth.getUser().reload().then(user => {
+        if(this.auth.getUser().emailVerified) {
+          this.navCtrl.setRoot(HomePage);
+        } else {
+          logger.info('verification not completed');
+        }
+      });
   }
-
-  ionViewDidEnter() {
-   logger.info("Confirmation Code");
-  }
+}
 }

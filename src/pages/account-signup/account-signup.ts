@@ -4,6 +4,7 @@ import { UtilService } from '../../providers/util.service';
 import { UserRegistrationService, IUserRegistration, Gender } from '../../providers/account-management.service';
 import { AccountConfirmationCodePage } from '../account-confirmation-code/account-confirmation-code';
 import { Auth, Logger } from 'aws-amplify';
+import { AuthService } from '../../providers/auth.service';
 
 const logger = new Logger('SignUp');
 
@@ -23,9 +24,7 @@ export class AccountSignupPage {
 
   public userDetails: UserDetails;
 
-  error: any;
-
-  constructor(public navCtrl: NavController, public util: UtilService) {
+  constructor(private navCtrl: NavController, private auth: AuthService, private util: UtilService) {
     this.userDetails = new UserDetails();
   }
 
@@ -53,7 +52,6 @@ export class AccountSignupPage {
       this.util.showLoader('登録しています...');
 
       let details = this.userDetails;
-      this.error = null;
       logger.debug('register');
 
       let param = {
@@ -65,13 +63,22 @@ export class AccountSignupPage {
           birthdate: details.birthdate
         }
       }
-      
-      Auth.signUp(param)
-        .then(user => {
-          this.navCtrl.setRoot(AccountConfirmationCodePage, { username: details.username, password: details.password});
+
+      this.auth.signUp({ email: details.username, password: details.password })
+        .then(res => {
+          this.auth.mailVerify()
+            .then(res => {
+              logger.debug(res);
+            })
+            .catch(err => {
+              this.util.showAlert('エラー', err.message);
+              logger.error(err);
+            })
+          this.navCtrl.setRoot(AccountConfirmationCodePage);
+          logger.info(res);
         })
         .catch(err => {
-          this.error = err;
+          logger.error(err);
           this.util.showAlert('登録失敗', err.message);
         })
         .then(() => this.util.dismissLoader());

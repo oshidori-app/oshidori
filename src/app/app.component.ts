@@ -10,6 +10,8 @@ import { HomePage } from '../pages/home/home';
 
 import { UtilService } from '../providers/util.service';
 import { Auth } from 'aws-amplify';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AccountConfirmationCodePage } from '../pages/account-confirmation-code/account-confirmation-code';
 
 @Component({
   templateUrl: 'app.html',
@@ -17,23 +19,43 @@ import { Auth } from 'aws-amplify';
 })
 export class MyApp {
   rootPage: any = null;
-  
+
   public showSplash: boolean = true;
 
-  constructor(private platform: Platform, private statusBar: StatusBar, private splashScreen: SplashScreen) {
+  constructor(private platform: Platform, private statusBar: StatusBar, private afAuth: AngularFireAuth, private splashScreen: SplashScreen) {
     let globalActions = () => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      timer(3000).subscribe(() => this.showSplash = false)
+      timer(1000).subscribe(() => this.showSplash = false)
     };
 
     platform.ready().then(() => {
-      Auth.currentAuthenticatedUser()
-        .then(() => { this.rootPage = HomePage; })
-        .catch(() => { this.rootPage = AccountSigninPage; })
-        .then(() => globalActions());
-    });
+      const unsubscribe = afAuth.auth.onAuthStateChanged(user => {
+        let page;
+        if (!user) {
+          page = AccountSigninPage;
+          unsubscribe();
+        } else {
+          // 未検証
+          if (!user.emailVerified) {
+            page = AccountConfirmationCodePage;
+            unsubscribe();
+          } else {
+            page = HomePage;
+            unsubscribe();
+          }
+        }
+        this.rootPage = page;
+      });
+
+      //   Auth.currentAuthenticatedUser()
+      //     .then(() => { this.rootPage = HomePage; })
+      //     .catch(() => { this.rootPage = AccountSigninPage; })
+      //     .then(() => globalActions());
+      // });
+    })
+      .then(() => globalActions());
   }
 }
