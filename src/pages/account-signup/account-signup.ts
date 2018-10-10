@@ -3,10 +3,7 @@ import { NavController } from 'ionic-angular';
 import { UtilService } from '../../providers/util.service';
 import { UserRegistrationService, IUserRegistration, Gender } from '../../providers/account-management.service';
 import { AccountConfirmationCodePage } from '../account-confirmation-code/account-confirmation-code';
-import { Auth, Logger } from 'aws-amplify';
 import { AuthService } from '../../providers/auth.service';
-
-const logger = new Logger('SignUp');
 
 export class UserDetails {
   username: string;
@@ -52,7 +49,6 @@ export class AccountSignupPage {
       this.util.showLoader('登録しています...');
 
       let details = this.userDetails;
-      logger.debug('register');
 
       let param = {
         username: details.username,
@@ -68,17 +64,13 @@ export class AccountSignupPage {
         .then(res => {
           this.auth.mailVerify()
             .then(res => {
-              logger.debug(res);
             })
             .catch(err => {
               this.util.showAlert('エラー', err.message);
-              logger.error(err);
             })
           this.navCtrl.setRoot(AccountConfirmationCodePage);
-          logger.info(res);
         })
         .catch(err => {
-          logger.error(err);
           this.util.showAlert('登録失敗', err.message);
         })
         .then(() => this.util.dismissLoader());

@@ -2,11 +2,9 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { UtilService } from '../../providers/util.service';
 import { AccountChangePasswordPage } from '../account-change-password/account-change-password';
-import { Auth, Storage, Logger } from 'aws-amplify';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { AccountSigninPage } from '../account-signin/account-signin';
 
-const logger = new Logger('Account');
 
 @Component({
   selector: 'page-account',
@@ -34,29 +32,29 @@ export class AccountPage {
     this.avatarPhoto = null;
     this.selectedPhoto = null;
 
-    Auth.currentUserInfo()
-    .then(info => {
-      this.userId = info.id;
-      this.username = info.username;
-      this.attributes = [];
-      if (info.attributes['email']) { this.attributes.push({ name: 'email', value: info.attributes['email']}); }
-      if (info.attributes['birthdate']) { this.attributes.push({ name: 'birthdate', value: info.attributes['birthdate']}); }
-      if (info.attributes['gender']) { this.attributes.push({ name: 'gender', value: info.attributes['gender']}); }
-      this.refreshAvatar();
-    });
+    // Auth.currentUserInfo()
+    // .then(info => {
+    //   this.userId = info.id;
+    //   this.username = info.username;
+    //   this.attributes = [];
+    //   if (info.attributes['email']) { this.attributes.push({ name: 'email', value: info.attributes['email']}); }
+    //   if (info.attributes['birthdate']) { this.attributes.push({ name: 'birthdate', value: info.attributes['birthdate']}); }
+    //   if (info.attributes['gender']) { this.attributes.push({ name: 'gender', value: info.attributes['gender']}); }
+    //   this.refreshAvatar();
+    // });
   }
 
   signOut() {
-    Auth.signOut()
-    .then(() => this.navCtrl.setRoot(AccountSigninPage));
+    // Auth.signOut()
+    // .then(() => this.navCtrl.setRoot(AccountSigninPage));
   }
 
   changePassword() {
     this.navCtrl.push(AccountChangePasswordPage);
   }
   refreshAvatar() {
-    Storage.get(this.userId + '/avatar')
-      .then(url => this.avatarPhoto = (url as string));
+    // Storage.get(this.userId + '/avatar')
+    //   .then(url => this.avatarPhoto = (url as string));
   }
 
   selectAvatar() {
@@ -91,30 +89,30 @@ export class AccountPage {
   };
 
   uploadFromFile(event) {
-    const files = event.target.files;
-    logger.debug('Uploading', files)
+    // const files = event.target.files;
+    // logger.debug('Uploading', files)
 
-    const file = files[0];
-    const { type } = file;
-    Storage.put(this.userId + '/avatar', file, { contentType: type })
-      .then(() => this.refreshAvatar())
-      .catch(err => logger.error(err));
+    // const file = files[0];
+    // const { type } = file;
+    // Storage.put(this.userId + '/avatar', file, { contentType: type })
+    //   .then(() => this.refreshAvatar())
+    //   .catch(err => logger.error(err));
   }
 
   upload() {
-    if (this.selectedPhoto) {
+    // if (this.selectedPhoto) {
 
-      this.util.showLoader('アップロードしています...')
+    //   this.util.showLoader('アップロードしています...')
 
-      Storage.put(this.userId + '/avatar', this.selectedPhoto, { contentType: 'image/jpeg' })
-        .then(() => {
-          this.refreshAvatar()
-          this.util.dismissLoader();
-        })
-        .catch(err => {
-          logger.error(err)
-          this.util.dismissLoader();
-        });
-    }
+    //   Storage.put(this.userId + '/avatar', this.selectedPhoto, { contentType: 'image/jpeg' })
+    //     .then(() => {
+    //       this.refreshAvatar()
+    //       this.util.dismissLoader();
+    //     })
+    //     .catch(err => {
+    //       logger.error(err)
+    //       this.util.dismissLoader();
+    //     });
+    // }
   }
 }

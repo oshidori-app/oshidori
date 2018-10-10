@@ -34,11 +34,6 @@ import { environment } from "../environments/environment";
 import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
 
-// mobile-hub
-import Amplify from 'aws-amplify';
-const aws_exports = require('../aws-exports').default;
-Amplify.configure(aws_exports);
-
 @NgModule({
   declarations: [
     MyApp,

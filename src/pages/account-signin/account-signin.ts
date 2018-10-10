@@ -9,14 +9,10 @@ import { AccountSignupPage } from '../account-signup/account-signup';
 import { NavController, LoadingController } from 'ionic-angular';
 import { AuthService } from '../../providers/auth.service';
 
-import { Auth, Logger } from 'aws-amplify';
-
 import {
   UserLoginService, IUserLogin, UserState,
   UserRegistrationService, CognitoUtil, Gender
 } from '../../providers/account-management.service';
-
-const logger = new Logger('SignIn');
 
 export class SignInDetails {
   username: string;
@@ -80,10 +76,8 @@ export class AccountSigninPage {
     this.util.showLoader('ログインしています...');
 
     let details = this.signInDetails;
-    logger.info('login..');
     this.auth.signIn({ email: details.username, password: details.password })
       .then(res => {
-        logger.debug('signed in user', res);
 
         // メール未検証
         if (!res.user.emailVerified) {
@@ -97,8 +91,6 @@ export class AccountSigninPage {
         this.navCtrl.push(HomePage);
       })
       .catch(err => {
-        logger.debug('errrror', err.message);
-
         let message = ''
         if (err.code === 'auth/wrong-password') {
           message = 'メールアドレスかパスワードが間違っています';
