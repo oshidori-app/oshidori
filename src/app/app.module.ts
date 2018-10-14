@@ -26,6 +26,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { HttpService } from '../providers/http-service';
 import { AuthService } from '../providers/auth.service';
+import { DisplayUtilService } from '../providers/display-util.service';
 import { CustomAuthorizerClient, IamAuthorizerClient, UserPoolsAuthorizerClient, NoAuthorizationClient } from '../providers/oshidori-api.service';
 import { KeepAddDevPage } from '../pages/keep-add-dev/keep-add-dev';
 
@@ -87,6 +88,7 @@ import { AngularFireAuthModule } from "@angular/fire/auth";
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     Camera,
     AuthService,
+    DisplayUtilService,
     { provide: HttpService, useClass: HttpService },
     { provide: CustomAuthorizerClient, useClass: CustomAuthorizerClient },
     { provide: IamAuthorizerClient, useClass: IamAuthorizerClient },

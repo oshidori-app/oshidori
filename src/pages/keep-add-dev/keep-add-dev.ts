@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
-import { GlobalStateService } from '../../providers/global-state.service';
 import { IamAuthorizerClient } from "../../providers/oshidori-api.service";
 import { Logger } from '../../providers/logger.service';
 
@@ -54,17 +53,17 @@ export class KeepAddDevPage {
         taskId: `${(new Date()).getTime()}`
       };
 
-      this.globals.displayLoader("Adding...");
+      // this.globals.displayLoader("Adding...");
       // clientはIamAuthorizerClientを使用してください。
       this.client.getClient().keepsList("234x19a").subscribe(
         (data) => {
-          this.globals.dismissLoader();
-          this.globals.displayToast(`正常に追加しました`);
+          // this.globals.dismissLoader();
+          // this.globals.displayToast(`正常に追加しました`);
           this.apiresult = data;
         },
         (err) => {
-          this.globals.dismissLoader();
-          this.globals.displayAlert('エラー', 'コンソール見て');
+          // this.globals.dismissLoader();
+          // this.globals.displayAlert('エラー', 'コンソール見て');
           console.error(err);
         }
 
@@ -72,10 +71,7 @@ export class KeepAddDevPage {
     }
   }
 
-  constructor(public navCtrl: NavController, private globals: GlobalStateService, private client: IamAuthorizerClient) {
+  constructor(public navCtrl: NavController, private client: IamAuthorizerClient) {
   }
 
-  ionViewDidEnter() {
-    Logger.banner("(開発)キープ追加");
-  }
 }

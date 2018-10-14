@@ -1,8 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { UtilService } from '../../providers/util.service';
 import { AccountChangePasswordPage } from '../account-change-password/account-change-password';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { DisplayUtilService } from '../../providers/display-util.service';
+import { AuthService } from '../../providers/auth.service';
 import { AccountSigninPage } from '../account-signin/account-signin';
 
 
@@ -27,7 +28,7 @@ export class AccountPage {
   profileImageDisplay = false;
   submitted: boolean = false;
 
-  constructor(private navCtrl: NavController, private camera: Camera, private util: UtilService) {
+  constructor(private navCtrl: NavController, private camera: Camera, private auth: AuthService, private dutil: DisplayUtilService) {
     this.attributes = [];
     this.avatarPhoto = null;
     this.selectedPhoto = null;
@@ -45,8 +46,15 @@ export class AccountPage {
   }
 
   signOut() {
-    // Auth.signOut()
-    // .then(() => this.navCtrl.setRoot(AccountSigninPage));
+    this.auth.signOut()
+     .then(() => {
+       this.navCtrl.setRoot(AccountSigninPage);
+       this.dutil.showToast('サインアウトしました。');
+      })
+     .catch(err => {
+       this.dutil.showToast('失敗しました。もう一度お試しください。');
+       console.log(err);
+    });
   }
 
   changePassword() {

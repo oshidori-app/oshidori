@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { UtilService } from '../../providers/util.service';
-import { UserRegistrationService, IUserRegistration, Gender } from '../../providers/account-management.service';
 import { AccountConfirmationCodePage } from '../account-confirmation-code/account-confirmation-code';
 import { AuthService } from '../../providers/auth.service';
+import { DisplayUtilService } from '../../providers/display-util.service';
 
 export class UserDetails {
   username: string;
@@ -21,22 +20,22 @@ export class AccountSignupPage {
 
   public userDetails: UserDetails;
 
-  constructor(private navCtrl: NavController, private auth: AuthService, private util: UtilService) {
+  constructor(private navCtrl: NavController, private auth: AuthService, private dutil: DisplayUtilService) {
     this.userDetails = new UserDetails();
   }
 
-  public genderList = [
-    {
-      value: Gender.Male,
-      text: Gender[Gender.Male]
-    }, {
-      value: Gender.Female,
-      text: Gender[Gender.Female]
-    }, {
-      value: Gender.Other,
-      text: Gender[Gender.Other]
-    }
-  ]
+  // public genderList = [
+  //   {
+  //     value: Gender.Male,
+  //     text: Gender[Gender.Male]
+  //   }, {
+  //     value: Gender.Female,
+  //     text: Gender[Gender.Female]
+  //   }, {
+  //     value: Gender.Other,
+  //     text: Gender[Gender.Other]
+  //   }
+  // ]
 
   public submitted: boolean = false;
 
@@ -46,7 +45,7 @@ export class AccountSignupPage {
 
     if (form && form.valid) {
 
-      this.util.showLoader('登録しています...');
+      this.dutil.showLoader('登録しています...');
 
       let details = this.userDetails;
 
@@ -66,14 +65,14 @@ export class AccountSignupPage {
             .then(res => {
             })
             .catch(err => {
-              this.util.showAlert('エラー', err.message);
+              this.dutil.showAlert('エラー', err.message);
             })
           this.navCtrl.setRoot(AccountConfirmationCodePage);
         })
         .catch(err => {
-          this.util.showAlert('登録失敗', err.message);
+          this.dutil.showAlert('登録失敗', err.message);
         })
-        .then(() => this.util.dismissLoader());
+        .then(() => this.dutil.dismissLoader());
     }
   }
 }

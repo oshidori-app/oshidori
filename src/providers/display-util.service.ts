@@ -7,7 +7,7 @@ import { Logger } from 'aws-amplify';
 const logger = new Logger('Util');
 
 @Injectable()
-export class UtilService {
+export class DisplayUtilService {
 
   private loader = null;
 
