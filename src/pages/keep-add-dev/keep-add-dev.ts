@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
-import { IamAuthorizerClient } from "../../providers/oshidori-api.service";
 import { Logger } from '../../providers/logger.service';
 
 @Component({
@@ -55,23 +54,23 @@ export class KeepAddDevPage {
 
       // this.globals.displayLoader("Adding...");
       // clientはIamAuthorizerClientを使用してください。
-      this.client.getClient().keepsList("234x19a").subscribe(
-        (data) => {
-          // this.globals.dismissLoader();
-          // this.globals.displayToast(`正常に追加しました`);
-          this.apiresult = data;
-        },
-        (err) => {
-          // this.globals.dismissLoader();
-          // this.globals.displayAlert('エラー', 'コンソール見て');
-          console.error(err);
-        }
+      // this.client.getClient().keepsList("234x19a").subscribe(
+      //   (data) => {
+      //     // this.globals.dismissLoader();
+      //     // this.globals.displayToast(`正常に追加しました`);
+      //     this.apiresult = data;
+      //   },
+      //   (err) => {
+      //     // this.globals.dismissLoader();
+      //     // this.globals.displayAlert('エラー', 'コンソール見て');
+      //     console.error(err);
+      //   }
 
-      );
+      // );
     }
   }
 
-  constructor(public navCtrl: NavController, private client: IamAuthorizerClient) {
+  constructor(public navCtrl: NavController) {
   }
 
 }

@@ -3,7 +3,7 @@ import { NavController } from 'ionic-angular';
 import { AccountConfirmationCodePage } from '../account-confirmation-code/account-confirmation-code';
 import { AuthService } from '../../providers/auth.service';
 import { DisplayUtilService } from '../../providers/display-util.service';
-
+import { Logger } from '../../providers/logger.service';
 export class UserDetails {
   username: string;
   password: string;
@@ -71,6 +71,7 @@ export class AccountSignupPage {
         })
         .catch(err => {
           this.dutil.showAlert('登録失敗', err.message);
+          Logger.debug(err);
         })
         .then(() => this.dutil.dismissLoader());
     }

@@ -6,11 +6,7 @@ import { AccountSignupPage } from '../account-signup/account-signup';
 import { NavController, LoadingController } from 'ionic-angular';
 import { AuthService } from '../../providers/auth.service';
 import { DisplayUtilService } from '../../providers/display-util.service';
-
-import {
-  UserLoginService, IUserLogin, UserState,
-  UserRegistrationService, CognitoUtil, Gender
-} from '../../providers/account-management.service';
+import { Logger } from '../../providers/logger.service';
 
 export class SignInDetails {
   username: string;
@@ -95,6 +91,7 @@ export class AccountSigninPage {
           message = 'ログインできませんでした。もう一度お試しください。'
         }
         this.dutil.showAlert('ログイン失敗', message);
+        Logger.debug(err);
       })
       .then(() => {
         this.dutil.dismissLoader();
