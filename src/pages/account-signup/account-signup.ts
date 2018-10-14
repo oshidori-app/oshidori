@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { UtilService } from '../../providers/util.service';
-import { UserRegistrationService, IUserRegistration, Gender } from '../../providers/account-management.service';
 import { AccountConfirmationCodePage } from '../account-confirmation-code/account-confirmation-code';
 import { AuthService } from '../../providers/auth.service';
+import { DisplayUtilService } from '../../providers/display-util.service';
+import { Logger } from '../../providers/logger.service';
 
+import { User, Gender } from "../../models/user";
+import * as firebase from 'firebase';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 export class UserDetails {
   username: string;
   password: string;
@@ -21,7 +24,10 @@ export class AccountSignupPage {
 
   public userDetails: UserDetails;
 
-  constructor(private navCtrl: NavController, private auth: AuthService, private util: UtilService) {
+  private user: User;
+  private userCollection: AngularFirestoreCollection<User>;
+
+  constructor(private navCtrl: NavController, private auth: AuthService, private afStore: AngularFirestore, private dutil: DisplayUtilService) {
     this.userDetails = new UserDetails();
   }
 
@@ -46,7 +52,7 @@ export class AccountSignupPage {
 
     if (form && form.valid) {
 
-      this.util.showLoader('登録しています...');
+      this.dutil.showLoader('登録しています...');
 
       let details = this.userDetails;
 
@@ -62,18 +68,40 @@ export class AccountSignupPage {
 
       this.auth.signUp({ email: details.username, password: details.password })
         .then(res => {
+          let uid = res.user.uid;
+
+          // User情報の保存。モデル側に処理を移動する予定
+          this.user = {
+            firebaseId: uid,
+            gender: details.gender,
+            birthdate: details.birthdate,
+            created: firebase.firestore.FieldValue.serverTimestamp(),
+            updated: firebase.firestore.FieldValue.serverTimestamp()
+          };
+          this.afStore.collection('users').add(this.user)
+            .then((docRef) => {
+              this.navCtrl.setRoot(AccountConfirmationCodePage);
+            })
+            .catch(err => {
+              // TODO 失敗したらfbauthからも消す。
+              this.dutil.showToast(err);
+              Logger.error(err);
+              return; 
+            });
+          
           this.auth.mailVerify()
             .then(res => {
             })
             .catch(err => {
-              this.util.showAlert('エラー', err.message);
+              this.dutil.showToast(err);
+              Logger.error(err);
             })
-          this.navCtrl.setRoot(AccountConfirmationCodePage);
         })
         .catch(err => {
-          this.util.showAlert('登録失敗', err.message);
+          this.dutil.showAlert('登録失敗', err.message);
+          Logger.debug(err);
         })
-        .then(() => this.util.dismissLoader());
+        .then(() => this.dutil.dismissLoader());
     }
   }
 }

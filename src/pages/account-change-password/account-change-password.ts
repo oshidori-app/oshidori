@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { UtilService } from '../../providers/util.service';
-import { AccountSigninPage } from '../account-signin/account-signin';
-
+import { DisplayUtilService } from '../../providers/display-util.service';
+import { Logger } from '../../providers/logger.service';
 @Component({
   templateUrl: 'account-change-password.html',
 })
@@ -16,7 +15,7 @@ export class AccountChangePasswordPage {
 
   submitted: boolean = false;
 
-  constructor(private navCtrl: NavController, private util: UtilService) {
+  constructor(private navCtrl: NavController, private dutil: DisplayUtilService) {
   }
   onSubmit(form) {
     this.submitted = true;

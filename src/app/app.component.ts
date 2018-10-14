@@ -4,18 +4,14 @@ import { Component } from '@angular/core';
 import { Config, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { GlobalStateService } from '../providers/global-state.service';
 
 import { HomePage } from '../pages/home/home';
 
-import { UtilService } from '../providers/util.service';
-import { Auth } from 'aws-amplify';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AccountConfirmationCodePage } from '../pages/account-confirmation-code/account-confirmation-code';
 
 @Component({
-  templateUrl: 'app.html',
-  providers: [GlobalStateService, UtilService]
+  templateUrl: 'app.html'
 })
 export class MyApp {
   rootPage: any = null;
@@ -38,7 +34,7 @@ export class MyApp {
           page = AccountSigninPage;
           unsubscribe();
         } else {
-          // 未検証
+          // メール未検証の場合は確認画面
           if (!user.emailVerified) {
             page = AccountConfirmationCodePage;
             unsubscribe();
@@ -49,12 +45,6 @@ export class MyApp {
         }
         this.rootPage = page;
       });
-
-      //   Auth.currentAuthenticatedUser()
-      //     .then(() => { this.rootPage = HomePage; })
-      //     .catch(() => { this.rootPage = AccountSigninPage; })
-      //     .then(() => globalActions());
-      // });
     })
       .then(() => globalActions());
   }

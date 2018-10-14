@@ -1,9 +1,9 @@
 import { HomePage } from '../home/home';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { UtilService } from '../../providers/util.service';
 import { AuthService } from '../../providers/auth.service';
-
+import { DisplayUtilService } from '../../providers/display-util.service';
+import { Logger } from '../../providers/logger.service';
 @Component({
   templateUrl: 'account-confirmation-code.html',
 })
@@ -11,7 +11,7 @@ export class AccountConfirmationCodePage {
 
   public username: string;
 
-  constructor(private navCtrl: NavController, private auth: AuthService, private util: UtilService) {
+  constructor(private navCtrl: NavController, private auth: AuthService, private dutil: DisplayUtilService) {
   }
 
   resendEmail(form) {
@@ -20,7 +20,8 @@ export class AccountConfirmationCodePage {
         .then(res => {
         })
         .catch(err => {
-          this.util.showAlert('エラー', err.message);
+          this.dutil.showAlert('エラー', err.message);
+          Logger.error(err);
         })
     }
   }
@@ -32,7 +33,7 @@ export class AccountConfirmationCodePage {
         if(this.auth.getUser().emailVerified) {
           this.navCtrl.setRoot(HomePage);
         } else {
-          console.log('verification not completed');
+          Logger.error('verification not completed');
         }
       });
   }

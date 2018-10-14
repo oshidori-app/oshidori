@@ -1,18 +1,12 @@
 import { Component } from '@angular/core';
 import { HomePage } from '../home/home';
-import { AlertController } from 'ionic-angular';
-import { GlobalStateService } from '../../providers/global-state.service';
-import { UtilService } from '../../providers/util.service';
 import { AccountForgotPasswordPage } from '../account-forgot-password/account-forgot-password';
 import { AccountConfirmationCodePage } from '../account-confirmation-code/account-confirmation-code';
 import { AccountSignupPage } from '../account-signup/account-signup';
 import { NavController, LoadingController } from 'ionic-angular';
 import { AuthService } from '../../providers/auth.service';
-
-import {
-  UserLoginService, IUserLogin, UserState,
-  UserRegistrationService, CognitoUtil, Gender
-} from '../../providers/account-management.service';
+import { DisplayUtilService } from '../../providers/display-util.service';
+import { Logger } from '../../providers/logger.service';
 
 export class SignInDetails {
   username: string;
@@ -30,8 +24,7 @@ export class AccountSigninPage {
   constructor(private navCtrl: NavController,
     private loadingCtrl: LoadingController,
     private auth: AuthService,
-    private util: UtilService,
-    private globals: GlobalStateService) {
+    private dutil: DisplayUtilService) {
     this.signInDetails = new SignInDetails();
   }
 
@@ -73,7 +66,7 @@ export class AccountSigninPage {
     }
 
     this.allowButtonPresses = false;
-    this.util.showLoader('ログインしています...');
+    this.dutil.showLoader('ログインしています...');
 
     let details = this.signInDetails;
     this.auth.signIn({ email: details.username, password: details.password })
@@ -81,7 +74,7 @@ export class AccountSigninPage {
 
         // メール未検証
         if (!res.user.emailVerified) {
-          this.util.showAlert('ログイン失敗', '認証が完了していません。', () => {
+          this.dutil.showAlert('ログイン失敗', '認証が完了していません。', () => {
             this.navCtrl.setRoot(AccountConfirmationCodePage);
           });
           return;
@@ -97,10 +90,11 @@ export class AccountSigninPage {
         } else {
           message = 'ログインできませんでした。もう一度お試しください。'
         }
-        this.util.showAlert('ログイン失敗', message);
+        this.dutil.showAlert('ログイン失敗', message);
+        Logger.debug(err);
       })
       .then(() => {
-        this.util.dismissLoader();
+        this.dutil.dismissLoader();
         this.allowButtonPresses = true;
       }
       );

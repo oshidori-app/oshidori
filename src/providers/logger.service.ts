@@ -1,19 +1,49 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../environments/environment';
+
+export enum LogLevel {
+  Error,
+  Warning,
+  Info
+}
 
 @Injectable()
 export class Logger {
 
-  // For more formatting options:
-  // https://developers.google.com/web/tools/chrome-devtools/console/console-reference?utm_source=dcc&utm_medium=redirect&utm_campaign=2016q3#dir
-
-  public static LeadInStyle = 'font-weight:bold; color:green';
-
-  public static banner(text): void {
-    console.log(`%c  ${text}  `, "color: white; font-size:15px; background-color: #666666; width: 100%");
+  /**
+   * Same as info
+   */
+  public static debug(...objects: any[]) {
+    this.log(console.info, LogLevel.Info, objects);
   }
 
-  public static heading(text): void {
-    console.log(`%c  ${text}  `, "color: white; color: #666666; background-color: #F2F2F2; width: 100%");
+  /**
+   * Logs messages or objects  with the info level.
+   * Works the same as console.info().
+   */
+  public static info(...objects: any[]) {
+    this.log(console.info, LogLevel.Info, objects);
   }
 
+  /**
+   * Logs messages or objects  with the warning level.
+   * Works the same as console.warn().
+   */
+  public static warn(...objects: any[]) {
+    this.log(console.warn, LogLevel.Warning, objects);
+  }
+
+  /**
+   * Logs messages or objects  with the error level.
+   * Works the same as console.error().
+   */
+  public static error(...objects: any[]) {
+    this.log(console.error, LogLevel.Error, objects);
+  }
+
+  private static log(func: Function, level: LogLevel, objects: any[]) {
+    if (!environment.production || (environment.production && level === LogLevel.Error)) {
+      func.apply(console, objects);
+    }
+  }
 }
