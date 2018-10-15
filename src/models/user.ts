@@ -1,9 +1,16 @@
-export interface User {
-    firebaseId: string,
-    gender: string,
-    birthdate: string,
-    created: any,
-    updated: any
+export class User {
+
+    public firebaseId: string
+    public gender: string
+    public birthdate: string
+
+    constructor(init?: Partial<User>) {
+        Object.assign(this, init);
+    }
+
+    public getEntityName() {
+        return 'users'
+    }
 }
 
 export var Gender = {

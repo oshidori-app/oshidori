@@ -36,6 +36,10 @@ import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { AngularFirestoreModule } from "@angular/fire/firestore";
 
+// dataStore
+import { UserRepository } from '../repository/user.repository';
+import { StoreService } from '../providers/store.service';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -91,6 +95,8 @@ import { AngularFirestoreModule } from "@angular/fire/firestore";
     Camera,
     AuthService,
     DisplayUtilService,
+    StoreService,
+    UserRepository,
     Logger,
     { provide: HttpService, useClass: HttpService }
   ]

@@ -6,8 +6,7 @@ import { DisplayUtilService } from '../../providers/display-util.service';
 import { Logger } from '../../providers/logger.service';
 
 import { User, Gender } from "../../models/user";
-import * as firebase from 'firebase';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { UserRepository } from '../../repository/user.repository';
 export class UserDetails {
   username: string;
   password: string;
@@ -25,9 +24,8 @@ export class AccountSignupPage {
   public userDetails: UserDetails;
 
   private user: User;
-  private userCollection: AngularFirestoreCollection<User>;
 
-  constructor(private navCtrl: NavController, private auth: AuthService, private afStore: AngularFirestore, private dutil: DisplayUtilService) {
+  constructor(private navCtrl: NavController, private auth: AuthService, private userRepo: UserRepository, private dutil: DisplayUtilService) {
     this.userDetails = new UserDetails();
   }
 
@@ -56,30 +54,20 @@ export class AccountSignupPage {
 
       let details = this.userDetails;
 
-      let param = {
-        username: details.username,
-        password: details.password,
-        attributes: {
-          email: details.username, // username same value
-          gender: details.gender,
-          birthdate: details.birthdate
-        }
-      }
-
       this.auth.signUp({ email: details.username, password: details.password })
         .then(res => {
           let uid = res.user.uid;
 
-          // User情報の保存。モデル側に処理を移動する予定
-          this.user = {
+          // モデル生成
+          let user = new User({
             firebaseId: uid,
             gender: details.gender,
-            birthdate: details.birthdate,
-            created: firebase.firestore.FieldValue.serverTimestamp(),
-            updated: firebase.firestore.FieldValue.serverTimestamp()
-          };
-          this.afStore.collection('users').add(this.user)
-            .then((docRef) => {
+            birthdate: details.birthdate
+          });
+
+          // データ永続化
+          this.userRepo.add(user)
+            .then(() => {
               this.navCtrl.setRoot(AccountConfirmationCodePage);
             })
             .catch(err => {
