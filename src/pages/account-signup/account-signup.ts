@@ -60,7 +60,7 @@ export class AccountSignupPage {
 
           // モデル生成
           let user = new User({
-            firebaseId: uid,
+            userId: uid,
             gender: details.gender,
             birthdate: details.birthdate
           });

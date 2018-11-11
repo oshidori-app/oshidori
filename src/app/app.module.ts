@@ -29,6 +29,7 @@ import { AuthService } from '../providers/auth.service';
 import { DisplayUtilService } from '../providers/display-util.service';
 import { Logger } from '../providers/logger.service';
 import { KeepAddDevPage } from '../pages/keep-add-dev/keep-add-dev';
+import { TestRegistrationPage } from '../pages/test-registration/test-registration';
 
 // firebase
 import { environment } from "../environments/environment";
@@ -37,8 +38,11 @@ import { AngularFireAuthModule } from "@angular/fire/auth";
 import { AngularFirestoreModule } from "@angular/fire/firestore";
 
 // dataStore
-import { UserRepository } from '../repository/user.repository';
 import { StoreService } from '../providers/store.service';
+import { UserRepository } from '../repository/user.repository';
+import { TaskRepository } from '../repository/task.repository';
+import { TestRepository } from '../repository/test.repository';
+import { TestListPage } from '../pages/test-list/test-list';
 
 @NgModule({
   declarations: [
@@ -58,7 +62,9 @@ import { StoreService } from '../providers/store.service';
     KeepPage,
     KeepListPage,
     InputTaskPage,
-    InputKeepPage
+    InputKeepPage,
+    TestRegistrationPage,
+    TestListPage
   ],
   imports: [
     HttpModule,
@@ -86,7 +92,9 @@ import { StoreService } from '../providers/store.service';
     KeepPage,
     KeepListPage,
     InputTaskPage,
-    InputKeepPage
+    InputKeepPage,
+    TestRegistrationPage,
+    TestListPage
   ],
   providers: [
     StatusBar,
@@ -97,6 +105,8 @@ import { StoreService } from '../providers/store.service';
     DisplayUtilService,
     StoreService,
     UserRepository,
+    TaskRepository,
+    TestRepository,
     Logger,
     { provide: HttpService, useClass: HttpService }
   ]

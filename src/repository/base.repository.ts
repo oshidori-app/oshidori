@@ -1,6 +1,7 @@
 import { Injectable, Injector } from '@angular/core';
 import { Repository } from "./repository";
 import { StoreService } from '../providers/store.service';
+import { Observable } from "rxjs";
 
 @Injectable()
 export abstract class BaseRepository<T> implements Repository<T> {
@@ -22,11 +23,15 @@ export abstract class BaseRepository<T> implements Repository<T> {
         });
     }
 
-    update(user: T): void {
+    update(model: T): void {
         throw new Error('not implemented');
     }
 
-    delete(user: T): void {
+    delete(model: T): void {
         throw new Error('not implemented');
     }
-}
+
+    filterByOwnGroup(model: T): Observable<{}[]> {
+        return this.store.filterByOwnGroup(model)
+    }
+ }

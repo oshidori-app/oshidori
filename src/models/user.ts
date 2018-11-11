@@ -1,6 +1,6 @@
 export class User {
 
-    public firebaseId: string
+    public userId: string
     public gender: string
     public birthdate: string
 

@@ -5,6 +5,8 @@ import { KeepListPage } from '../keep-list/keep-list';
 import { Platform } from 'ionic-angular';
 import { Task } from '../../models/task' ;
 import { AccountPage } from '../account/account';
+import { TestRegistrationPage } from '../test-registration/test-registration';
+import { TestListPage } from '../test-list/test-list';
 
 @Component({
   selector: 'page-home',
@@ -79,5 +81,11 @@ export class HomePage {
 
   gotoInputTask() {
     this.navCtrl.push(InputTaskPage)
+  }
+  gotoTestRegistration() {
+    this.navCtrl.push(TestRegistrationPage)
+  }
+  gotoTestList() {
+    this.navCtrl.push(TestListPage)
   }
 }
