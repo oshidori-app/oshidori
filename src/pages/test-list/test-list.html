@@ -1,0 +1,47 @@
+<ion-content padding>
+  <ion-card class="singlePost" *ngFor="let test of testListVms">
+    <ion-item>
+      <h2 padding-vertical>{{test.title}}</h2>
+    </ion-item>
+    <ion-card-content>
+      <div>{{test.description}}</div>
+      <ion-row>
+        <ion-col>
+          <button ion-button icon-start clear small>
+            <ion-icon name="text"></ion-icon>
+            <div>コメント</div>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-start clear small>
+            <ion-icon name="create"></ion-icon>
+            <div>編集</div>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-start clear small>
+            <ion-icon name="trash"></ion-icon>
+            <div>削除</div>
+          </button>
+        </ion-col>
+        <ion-col class="postedTime">
+          <ion-note>
+            {{test.createdDate}}
+          </ion-note>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<!-- <ion-list>
+  <ion-item>
+    <ion-lbale [(ngModel)]="testListVm.title" type="text" name="title">
+      </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label [(ngModel)]="testListVm.description" type="text" name="description">
+      </ion-textarea>
+  </ion-item>
+</ion-list> -->
+

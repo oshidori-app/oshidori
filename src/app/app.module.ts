@@ -29,12 +29,20 @@ import { AuthService } from '../providers/auth.service';
 import { DisplayUtilService } from '../providers/display-util.service';
 import { Logger } from '../providers/logger.service';
 import { KeepAddDevPage } from '../pages/keep-add-dev/keep-add-dev';
+import { TestRegistrationPage } from '../pages/test-registration/test-registration';
 
 // firebase
 import { environment } from "../environments/environment";
 import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { AngularFirestoreModule } from "@angular/fire/firestore";
+
+// dataStore
+import { StoreService } from '../providers/store.service';
+import { UserRepository } from '../repository/user.repository';
+import { TaskRepository } from '../repository/task.repository';
+import { TestRepository } from '../repository/test.repository';
+import { TestListPage } from '../pages/test-list/test-list';
 
 @NgModule({
   declarations: [
@@ -54,7 +62,9 @@ import { AngularFirestoreModule } from "@angular/fire/firestore";
     KeepPage,
     KeepListPage,
     InputTaskPage,
-    InputKeepPage
+    InputKeepPage,
+    TestRegistrationPage,
+    TestListPage
   ],
   imports: [
     HttpModule,
@@ -82,7 +92,9 @@ import { AngularFirestoreModule } from "@angular/fire/firestore";
     KeepPage,
     KeepListPage,
     InputTaskPage,
-    InputKeepPage
+    InputKeepPage,
+    TestRegistrationPage,
+    TestListPage
   ],
   providers: [
     StatusBar,
@@ -91,6 +103,10 @@ import { AngularFirestoreModule } from "@angular/fire/firestore";
     Camera,
     AuthService,
     DisplayUtilService,
+    StoreService,
+    UserRepository,
+    TaskRepository,
+    TestRepository,
     Logger,
     { provide: HttpService, useClass: HttpService }
   ]
