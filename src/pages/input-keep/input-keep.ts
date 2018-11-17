@@ -15,11 +15,15 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class InputKeepPage {
 
+  public tasks = [];
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad InputKeepPage');
+    this.tasks = [
+      { name: 'hoge' },
+      { name: 'fuga' }
+    ];
   }
-
 }
