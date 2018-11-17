@@ -8,7 +8,10 @@
 
 <ion-header>
     <ion-navbar color="instagram">
-        <ion-title center >ウェディングドレス</ion-title>
+        <ion-title >
+          タスクの名称
+          <!-- {{task.title}} -->
+        </ion-title>
     </ion-navbar>
   </ion-header>
 
@@ -16,7 +19,9 @@
     <ion-grid no-padding> 
         <ion-row *ngFor="let keeps of keeplist">
           <ion-col *ngFor="let keep of keeps" (click)="goToKeep(keep)">
-              <img src="{{keep.src}}" />
+              <ion-icon class="ribbon" name="ios-ribbon" color="danger" ></ion-icon>
+             
+            <img src="{{keep.src}}" />
           </ion-col>
         </ion-row>
     </ion-grid>
