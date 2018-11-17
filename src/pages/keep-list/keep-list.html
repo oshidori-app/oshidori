@@ -7,25 +7,28 @@
 
 
 <ion-header>
-    <ion-navbar color="instagram">
-        <ion-title >
-          タスクの名称
-          <!-- {{task.title}} -->
-        </ion-title>
-    </ion-navbar>
-  </ion-header>
-
+  <ion-navbar color="instagram">
+    <ion-title>
+      タスクの名称
+      <!-- {{task.title}} -->
+    </ion-title>
+  </ion-navbar>
+</ion-header>
 <ion-content class="KeepList">
-    <ion-grid no-padding> 
-        <ion-row *ngFor="let keeps of keeplist">
-          <ion-col *ngFor="let keep of keeps" (click)="goToKeep(keep)">
-              <ion-icon class="ribbon" name="ios-ribbon" color="danger" ></ion-icon>
-             
-            <img src="{{keep.src}}" />
-          </ion-col>
-        </ion-row>
-    </ion-grid>
-    <ion-fab right bottom>
-            <button ion-fab color="instagram"><ion-icon name="add"></ion-icon></button>
-      </ion-fab>
+  <!-- todo taskを渡す -->
+  <input-keep-button [task]="dress"></input-keep-button>
+  <ion-grid no-padding>
+    <ion-row *ngFor="let keeps of keeplist">
+      <ion-col *ngFor="let keep of keeps" (click)="goToKeep(keep)">
+        <ion-icon class="ribbon" name="ios-ribbon" color="danger"></ion-icon>
+
+        <img src="{{keep.src}}" />
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-fab right bottom>
+    <button ion-fab color="instagram">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>

@@ -7,11 +7,10 @@
 <ion-header>
 
   <ion-navbar color="dark">
-      <ion-title>候補登録</ion-title>
+      <ion-title>キープ登録</ion-title>
   </ion-navbar>
 
 </ion-header>
-
 
 <ion-content>
   <img src="assets/img/noimage.png" />
@@ -19,5 +18,13 @@
     <ion-label stacked>MEMO</ion-label>
     <ion-textarea></ion-textarea>
   </ion-item>
+  <ion-list>
+    <!-- todo Segments のほうがよさげ -->
+    <ion-item *ngFor="let task of tasks">
+      <ion-icon name="leaf" item-start></ion-icon>
+        {{ task.name }}
+      <ion-icon item-end></ion-icon>
+    </ion-item>
+  </ion-list>
   <button ion-button block color="dark">追加</button>
 </ion-content>
