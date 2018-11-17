@@ -16,9 +16,9 @@ import { HttpModule } from "@angular/http";
 import { TasksCreatePage } from '../pages/tasks-create/tasks-create';
 import { AboutPage } from '../pages/about/about';
 import { RankingPage } from '../pages/ranking/ranking';
-import { HomePage } from '../pages/home/home';
+import { HomePageModule } from '../pages/home/home.module';
 import { TabsPage } from '../pages/tabs/tabs';
-import { KeepListPage } from '../pages/keep-list/keep-list';
+import { KeepListPageModule } from '../pages/keep-list/keep-list.module';
 import { KeepPage } from '../pages/keep/keep';
 import { InputKeepPage } from '../pages/input-keep/input-keep';
 import { InputTaskPage } from '../pages/input-task/input-task';
@@ -57,10 +57,8 @@ import { TestListPage } from '../pages/test-list/test-list';
     TasksCreatePage,
     AboutPage,
     RankingPage,
-    HomePage,
     TabsPage,
     KeepPage,
-    KeepListPage,
     InputTaskPage,
     InputKeepPage,
     TestRegistrationPage,
@@ -72,7 +70,9 @@ import { TestListPage } from '../pages/test-list/test-list';
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    HomePageModule,
+    KeepListPageModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -87,10 +87,8 @@ import { TestListPage } from '../pages/test-list/test-list';
     TasksCreatePage,
     AboutPage,
     RankingPage,
-    HomePage,
     TabsPage,
     KeepPage,
-    KeepListPage,
     InputTaskPage,
     InputKeepPage,
     TestRegistrationPage,

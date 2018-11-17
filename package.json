@@ -65,7 +65,9 @@
       "com.synconset.imagepicker": {
         "PHOTO_LIBRARY_USAGE_DESCRIPTION": "test message"
       }
-    },
+      "cordova-plugin-photo-library": {
+        "PHOTO_LIBRARY_USAGE_DESCRIPTION": "To choose photos"
+      },
     "platforms": [
       "android",
       "browser",
