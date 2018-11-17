@@ -1,3 +1,8 @@
+<ion-header>
+  <ion-navbar color="dark">
+    <ion-title>Test登録ページ</ion-title>
+  </ion-navbar>
+</ion-header>
 <ion-content padding>
 
   <form #registrationForm="ngForm" novalidate>
@@ -9,8 +14,21 @@
       <ion-item>
         <ion-textarea [(ngModel)]="testRegistrationVm.description" type="text" name="description" placeholder="Description"></ion-textarea>
       </ion-item>
-    </ion-list>
+      <ion-item>
+        <button ion-button color="secondary" (click)="onClickCameraSelection()">カメラから画像取得</button>
+      </ion-item>
+      <ion-item>
+        <div>{{ uploadPercent | async }}</div>
+      </ion-item>
 
+    </ion-list>
+    <input color="secondary" type="file" (change)="onChangeFileSelection($event)"/>
+
+    <div *ngIf="downloadURL | async as url">
+      <h3>Results!</h3>
+      <img [src]="url"><br>
+      <a [href]="url" target="_blank" rel="noopener">Download Me!</a>
+    </div> 
   </form>
   <button ion-button (click)="onClickRegistration(registrationForm)" type="submit">登録</button>
 

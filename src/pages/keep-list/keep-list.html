@@ -5,52 +5,30 @@
   Ionic pages and navigation.
 -->
 
+
 <ion-header>
-  <ion-navbar color="dark" navbar-ios-height="5">
-    <ion-title>dress</ion-title>
+  <ion-navbar color="instagram">
+    <ion-title>
+      タスクの名称
+      <!-- {{task.title}} -->
+    </ion-title>
   </ion-navbar>
 </ion-header>
-
 <ion-content class="KeepList">
-  <p class="taskTitle">
-    挙式用のドレスを決める(๑•̀ㅂ•́)و✧
-  </p>
-<ion-grid>
-    <ion-row>
-      <ion-col col-auto *ngFor="let tag of taglist">
-        <div class="tag">{{tag}}</div>
+  <!-- todo taskを渡す -->
+  <input-keep-button [task]="dress"></input-keep-button>
+  <ion-grid no-padding>
+    <ion-row *ngFor="let keeps of keeplist">
+      <ion-col *ngFor="let keep of keeps" (click)="goToKeep(keep)">
+        <ion-icon class="ribbon" name="ios-ribbon" color="danger"></ion-icon>
+
+        <img src="{{keep.src}}" />
       </ion-col>
     </ion-row>
   </ion-grid>
-  <h2 class="subtitle">KeepList</h2>
-  <ion-card *ngFor="let keep of keeplist">
-    <ion-row class="imageCardRow" (click)="goToKeep(keep)">
-      <ion-col no-padding col-auto>
-        <img src="{{keep.src}}" />
-      </ion-col>
-      <ion-col no-padding>
-        <ion-card-content>
-             <ion-card-title no-padding>
-              <ion-row no-padding class="imageCardTitle" >
-                <ion-col no-padding>
-                  <h2>{{keep.title}}</h2>
-                </ion-col>
-                <!-- <ion-col text-right no-padding >
-                  <button ion-button clear small color="{{keep.color}}" icon-start no-padding>
-                   <ion-icon name='heart' no-padding></ion-icon>
-                </button>
-                </ion-col> -->
-              </ion-row>
-            </ion-card-title>
-
-            <p class="keepDescription">
-              {{keep.description}}
-            </p>
-
-        </ion-card-content>
-      </ion-col>
-    </ion-row>
-  </ion-card>
-  <!-- todo taskを渡す -->
-  <input-keep-button [task]="dress"></input-keep-button>
+  <ion-fab right bottom>
+    <button ion-fab color="instagram">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>
