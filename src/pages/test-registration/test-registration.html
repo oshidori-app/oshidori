@@ -1,3 +1,8 @@
+<ion-header>
+  <ion-navbar color="dark">
+    <ion-title>Test登録ページ</ion-title>
+  </ion-navbar>
+</ion-header>
 <ion-content padding>
 
   <form #registrationForm="ngForm" novalidate>
@@ -9,6 +14,13 @@
       <ion-item>
         <ion-textarea [(ngModel)]="testRegistrationVm.description" type="text" name="description" placeholder="Description"></ion-textarea>
       </ion-item>
+      <ion-item>
+        <button ion-button color="secondary" (click)="onClickImageSelection()">画像を選択</button>
+      </ion-item>
+      <ion-item>
+        <div>{{ uploadPercent | async }}</div>
+      </ion-item>
+
     </ion-list>
 
   </form>
