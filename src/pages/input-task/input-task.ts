@@ -1,3 +1,4 @@
+import { HomePage } from './../home/home';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
@@ -18,12 +19,21 @@ export class InputTaskPage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
-  public event = {
-    month: new Date().toISOString(),
-  }
-
   ionViewDidLoad() {
     console.log('ionViewDidLoad InputTaskPage');
   }
+  gotoHome() {
+    this.navCtrl.push(HomePage)
+  }
+  tasktitle: string;
 
+  addTask(){
+    localStorage.setItem('tasktitle', JSON.stringify(this.tasktitle))
+    this.tasktitle = "";
+  }
+  ionViewWillEnter(){
+   if(localStorage.getItem('tasktitle')){
+     this.tasktitle = JSON.parse(localStorage.getItem('tasktitle'));
+   }
+  }
 }
