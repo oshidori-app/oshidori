@@ -13,14 +13,13 @@
 
 <ion-content>
   <ion-card>
-        <img src="{{keep.src}}" />
+<!--        <img src="{{keep.src}}" />-->
         <ion-item>
             <p class="right" (click)="showMenu()"><ion-icon name="more"></ion-icon></p>
         </ion-item>
     <ion-card-content>
-        {{keep.description}}
+<!--        {{keep.description}}-->
     </ion-card-content>
-  </ion-card>
 
   <button ion-button icon-only color="danger" clear (click)="manFavChange()">
         <ion-icon name="heart" ></ion-icon>
@@ -43,4 +42,5 @@
     </ion-list>
     <button type="submit" ion-button block>追加</button>
   </form>
+</ion-card>
 </ion-content>
