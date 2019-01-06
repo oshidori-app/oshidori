@@ -31,8 +31,6 @@ jobs:
 
       - run:
           name: 'Deploy to Hosting'
-          command: >- 
-              ln -s ./node_modules/firebase-tools/bin/firebase . &&
-              ./firebase deploy --only hosting --project "$FIREBASE_PJ" --token "$FIREBASE_TOKEN"
+          command: ./node_modules/.bin/firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
       # - store_artifacts:
           # path: platforms/android/build/outputs/apk/android-debug.apk
