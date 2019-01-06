@@ -15,8 +15,6 @@
   </ion-navbar>
 </ion-header>
 <ion-content class="KeepList">
-  <!-- todo taskを渡す -->
-  <input-keep-button [task]="dress"></input-keep-button>
   <ion-grid no-padding>
     <ion-row *ngFor="let keeps of keeplist">
       <ion-col *ngFor="let keep of keeps" (click)="goToKeep(keep)">
@@ -27,8 +25,7 @@
     </ion-row>
   </ion-grid>
   <ion-fab right bottom>
-    <button ion-fab color="instagram">
-      <ion-icon name="add"></ion-icon>
-    </button>
+    <!-- todo taskを渡す -->
+    <input-keep-button color="instagram" [task]="dress"></input-keep-button>
   </ion-fab>
 </ion-content>

@@ -13,17 +13,20 @@
 </ion-header>
 
 <ion-content>
+  <!-- todo 画像 URL を渡す -->
   <img src="assets/img/noimage.png" />
   <ion-item>
     <ion-label stacked>MEMO</ion-label>
     <ion-textarea></ion-textarea>
   </ion-item>
-  <ion-list>
-    <!-- todo Segments のほうがよさげ -->
+  <ion-list radio-group>
     <ion-item *ngFor="let task of tasks">
-      <ion-icon name="leaf" item-start></ion-icon>
-        {{ task.name }}
-      <ion-icon item-end></ion-icon>
+      <ion-label>
+        <ion-icon name="leaf" item-start></ion-icon>
+          {{ task.name }}
+      </ion-label>
+      <!-- checked="true" をもらう -->
+      <ion-radio></ion-radio>
     </ion-item>
   </ion-list>
   <button ion-button block color="dark">追加</button>
