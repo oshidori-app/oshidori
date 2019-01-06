@@ -74,10 +74,11 @@
       "cordova-plugin-photo-library": {
         "PHOTO_LIBRARY_USAGE_DESCRIPTION": "To choose photos"
       },
-    "platforms": [
-      "android",
-      "browser",
-      "ios"
-    ]
+      "platforms": [
+        "android",
+        "browser",
+        "ios"
+      ]
+    }
   }
 }
