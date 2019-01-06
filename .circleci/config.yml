@@ -5,6 +5,8 @@ jobs:
       - image: beevelop/ionic
     branches:
       only:
+        - master
+        - develop
         - testdeploy
     steps:
       - checkout
