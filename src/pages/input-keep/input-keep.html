@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar color="dark">
-      <ion-title>キープ登録</ion-title>
+    <ion-title>キープ登録</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -22,11 +22,11 @@
   <ion-list radio-group>
     <ion-item *ngFor="let task of tasks">
       <ion-label>
-        <ion-icon name="leaf" item-start></ion-icon>
-          {{ task.name }}
+        <ion-img [src]="task.src !== null ? task.src : ''"></ion-img>
+          {{ task.title }}
       </ion-label>
-      <!-- checked="true" をもらう -->
-      <ion-radio></ion-radio>
+      <!-- todo checked="true" をもらう -->
+      <ion-radio [checked]="selectedTask === task.id"></ion-radio>
     </ion-item>
   </ion-list>
   <button ion-button block color="dark">追加</button>

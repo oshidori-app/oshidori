@@ -34,13 +34,13 @@ export class InputKeepButtonComponent {
           text: 'カメラで撮影する',
           handler: () => {
             // todo this.takePhoto();
-            this.navCtrl.push(InputKeepPage);
+            this.navCtrl.push(InputKeepPage, {selectedTask: this.task});
           }
         },{
           text: 'ライブラリから選択する',
           handler: () => {
             // todo this.library();
-            this.navCtrl.push(InputKeepPage);
+            this.navCtrl.push(InputKeepPage, {selectedTask: this.task});
           }
         },{
           text: 'キャンセル',
