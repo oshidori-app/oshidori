@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Toast, ToastController } from 'ionic-angular';
 import { Task } from '../../models/task';
 
 /**
@@ -18,7 +18,7 @@ export class InputKeepPage {
   public tasks = [];
   public selectedTask;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private toastCtrl: ToastController) {
     this.selectedTask = navParams.get('selectedTask');
   }
 
@@ -41,5 +41,11 @@ export class InputKeepPage {
       new Task(15,"tuxede", "yyyy/MM/dd","assets/img/tuxede01.jpg", "unfinished","shinro"),
       new Task(16,"food",   "yyyy/MM/dd",null,                      "unfinished","shinro"),
     ];
+  }
+
+  input() {
+    //todo repository 呼び出して書き込み
+    this.toastCtrl.create({ message: '候補を追加しました！', position: 'top' }).present();
+    this.navCtrl.pop();
   }
 }
