@@ -1,0 +1,36 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: beevelop/ionic
+    branches:
+      only:
+        - master
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      # - restore_cache:
+      #     keys:
+      #     - v1-dependencies-{{ checksum "package.json" }}
+      #     # fallback to using the latest cache if no exact match is found
+      #     - v1-dependencies-
+
+      - run:
+          name: 'Install Dependecies'
+          command: npm install --save-dev firebase-tools
+      
+      # - save_cache:
+      #     paths:
+      #       - node_modules
+      #     key: v1-dependencies-{{ checksum "package.json" }}
+
+      - run:
+          name: Build For Web
+          command: ionic build
+
+      - run:
+          name: 'Deploy to Hosting'
+          command: ./node_modules/.bin/firebase deploy --token=$FIREBASE_DEPLOY_TOKEN
+      # - store_artifacts:
+          # path: platforms/android/build/outputs/apk/android-debug.apk

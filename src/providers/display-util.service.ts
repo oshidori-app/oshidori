@@ -2,9 +2,6 @@ import { Injectable } from '@angular/core';
 import { AlertController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
-import { Logger } from 'aws-amplify';
-
-const logger = new Logger('Util');
 
 @Injectable()
 export class DisplayUtilService {

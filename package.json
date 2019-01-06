@@ -24,9 +24,12 @@
     "@ionic-native/camera": "3.13.0",
     "@ionic-native/core": "3.12.1",
     "@ionic-native/image-picker": "^3.14.0",
+    "@ionic-native/photo-library": "^4.17.0",
     "@ionic-native/splash-screen": "3.12.1",
     "@ionic-native/status-bar": "3.12.1",
     "@ionic/storage": "2.0.1",
+    "@types/uuid": "^3.4.4",
+    "angular2-uuid": "^1.1.1",
     "angularfire2": "^5.0.2",
     "com.synconset.imagepicker": "~2.1.8",
     "cordova-android": "^6.2.3",
@@ -34,6 +37,7 @@
     "cordova-ios": "^4.5.5",
     "cordova-plugin-console": "^1.1.0",
     "cordova-plugin-device": "^1.1.6",
+    "cordova-plugin-photo-library": "^2.1.1",
     "cordova-plugin-splashscreen": "^4.0.3",
     "cordova-plugin-statusbar": "^2.2.3",
     "cordova-plugin-telerik-imagepicker": "^2.1.8",
@@ -64,12 +68,15 @@
       "ionic-plugin-keyboard": {},
       "com.synconset.imagepicker": {
         "PHOTO_LIBRARY_USAGE_DESCRIPTION": "test message"
-      }
-    },
-    "platforms": [
-      "android",
-      "browser",
-      "ios"
-    ]
+      },
+      "cordova-plugin-photo-library": {
+        "PHOTO_LIBRARY_USAGE_DESCRIPTION": "To choose photos"
+      },
+      "platforms": [
+        "android",
+        "browser",
+        "ios"
+      ]
+    }
   }
 }
