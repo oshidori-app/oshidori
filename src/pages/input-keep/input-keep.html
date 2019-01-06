@@ -25,9 +25,8 @@
         <ion-img [src]="task.src !== null ? task.src : ''"></ion-img>
           {{ task.title }}
       </ion-label>
-      <!-- todo checked="true" をもらう -->
       <ion-radio [checked]="selectedTask === task.id"></ion-radio>
     </ion-item>
   </ion-list>
-  <button ion-button block color="dark">追加</button>
+  <button ion-button block color="dark" (click)="input()">追加</button>
 </ion-content>
