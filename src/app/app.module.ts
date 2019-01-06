@@ -20,7 +20,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { KeepListPageModule } from '../pages/keep-list/keep-list.module';
 import { KeepPage } from '../pages/keep/keep';
 import { InputKeepPage } from '../pages/input-keep/input-keep';
-import { InputTaskPage } from '../pages/input-task/input-task';
+import { InputTaskPageModule } from '../pages/input-task/input-task.module';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { HttpService } from '../providers/http-service';
@@ -59,7 +59,6 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     RankingPage,
     TabsPage,
     KeepPage,
-    InputTaskPage,
     InputKeepPage,
     TestRegistrationPage,
     TestListPage
@@ -72,6 +71,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     AngularFireAuthModule,
     AngularFirestoreModule,
     HomePageModule,
+    InputTaskPageModule,
     KeepListPageModule,
     AngularFireStorageModule
   ],
@@ -89,7 +89,6 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     RankingPage,
     TabsPage,
     KeepPage,
-    InputTaskPage,
     InputKeepPage,
     TestRegistrationPage,
     TestListPage
