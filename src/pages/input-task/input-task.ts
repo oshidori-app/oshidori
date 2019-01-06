@@ -1,5 +1,7 @@
+import { TaskRepository } from './../../repository/task.repository';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Task } from '../../models/task';
 
 /**
  * Generated class for the InputTaskPage page.
@@ -15,7 +17,11 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class InputTaskPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  private TaskRepository: TaskRepository;
+  public title="";
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private taskRepository: TaskRepository) {
+    this.TaskRepository = taskRepository;
   }
 
   public event = {
@@ -26,4 +32,8 @@ export class InputTaskPage {
     console.log('ionViewDidLoad InputTaskPage');
   }
 
+  input() {
+    const id = Math.random() * 10000
+    this.TaskRepository.add(new Task(id, this.title, null, null, 'unfinished', null));
+  }
 }

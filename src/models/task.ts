@@ -1,5 +1,9 @@
-export class Task {   
-    public id:    Number;
+import { Entity } from './entity';
+export class Task implements Entity {
+    getEntityName(): string {
+        return 'tasks';
+    }   
+    public id:    Number; // todo guid にしたいなぁ
     public title: string;
     public limit: Date;
     public src:   string;
