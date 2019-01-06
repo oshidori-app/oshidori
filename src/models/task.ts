@@ -1,4 +1,5 @@
-import { Entity } from './entity';
+import { Entity } from "./entity";
+
 export class Task implements Entity {
     getEntityName(): string {
         return 'tasks';
