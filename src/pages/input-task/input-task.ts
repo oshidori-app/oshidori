@@ -1,14 +1,7 @@
 import { TaskRepository } from './../../repository/task.repository';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { Task } from '../../models/task';
-
-/**
- * Generated class for the InputTaskPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -17,11 +10,9 @@ import { Task } from '../../models/task';
 })
 export class InputTaskPage {
 
-  private TaskRepository: TaskRepository;
-  public title="";
+  public title = "";
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private taskRepository: TaskRepository) {
-    this.TaskRepository = taskRepository;
+  constructor(public navCtrl: NavController, public navParams: NavParams, private taskRepository: TaskRepository, private toastCtrl: ToastController) {
   }
 
   public event = {
@@ -33,7 +24,12 @@ export class InputTaskPage {
   }
 
   input() {
-    const id = Math.random() * 10000
-    this.TaskRepository.add(new Task(id, this.title, null, null, 'unfinished', null));
+    const id =  Math.round(Math.random() * 10000);
+    this.taskRepository.add(new Task(id, this.title, null, null, 'unfinished', null)).then(() => {
+      this.toastCtrl.create({ message: 'タスクを登録しました！', position: 'top', duration: 2000 }).present();
+      this.navCtrl.pop();
+    }).catch(() => {
+      this.toastCtrl.create({ message: 'タスク登録に失敗しました。時間をおいて再度試してください。', position: 'top', duration: 2000 }).present();
+    });
   }
 }
