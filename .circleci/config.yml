@@ -6,8 +6,6 @@ jobs:
     branches:
       only:
         - master
-        - develop
-        - testdeploy
     steps:
       - checkout
 
