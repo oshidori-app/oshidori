@@ -1,0 +1,15 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: beevelop/ionic
+    steps:
+      - checkout
+      - run:
+          name: Install node modules
+          command: npm install
+      - run:
+          name: Building web
+          command: ionic build
+      # - store_artifacts:
+          # path: platforms/android/build/outputs/apk/android-debug.apk
