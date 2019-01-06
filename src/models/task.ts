@@ -7,8 +7,8 @@ export class Task implements Entity {
     public title: string;
     public limit: Date;
     public src:   string;
-    public status: string;
-    public assign: string;
+    public status: string; // todo boolean にしたいなぁ
+    public assign: string; // todo assignedTo にしたいなぁ
 
     constructor(id, title, limit, src, status, assign){
         this.id    = id;

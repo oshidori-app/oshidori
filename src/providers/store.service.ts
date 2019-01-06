@@ -34,8 +34,8 @@ export class StoreService {
              .where('groupId', '==', model['groupId'])
              .orderBy('updated', 'desc')
             );
-            // データに変更があったら受け取る
-            return collection.valueChanges();
+        // データに変更があったら受け取る
+        return collection.valueChanges();
     }
 
     // 現在のfirebaseではcustom objectを引数としてサポートしていないので、
