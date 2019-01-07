@@ -26,8 +26,123 @@ export class KeepPage {
     public alertCtrl: AlertController
   ) {
     this.keep = navParams.get('keep');
+    this.keep['title'] = 'キープ詳細'
     this.keep['description'] = '色は暖色系の色味ではなかったけれど、家族・旦那さんが好きな色味でデザインとボリュームが今まで着たドレスの中で1番'
   }
+
+  manfav: Boolean;
+  manFavChange(){
+    if (this.manfav == true)
+    {
+      this.manfav = false;
+    }
+    else
+    {
+      this.manfav = true;
+    }
+    localStorage.setItem('manfav', JSON.stringify(this.manfav))
+  }
+
+  womanfav: Boolean;
+  womanFavChange(){
+    if (this.womanfav == true)
+    {
+      this.womanfav = false;
+    }
+    else
+    {
+      this.womanfav = true;
+    }
+    localStorage.setItem('womanfav', JSON.stringify(this.womanfav))
+  }
+
+  decidestatus: Boolean;
+  decideStatusChange(){
+    if (this.decidestatus == true)
+    {
+      this.decidestatus = false;
+    }
+    else
+    {
+      this.decidestatus = true;
+    }
+    localStorage.setItem('decidestatus', JSON.stringify(this.decidestatus))
+  }
+
+  chats: { name: string }[] = [];
+  chat: string;
+  addChat(){
+    this.chats.push({
+      name: this.chat
+    });
+    localStorage.setItem('chats', JSON.stringify(this.chats))
+    this.chat = '';
+  }
+
+  ionViewWillEnter(){
+    if(localStorage.getItem('chats')){
+      this.chats = JSON.parse(localStorage.getItem('chats'));
+    }
+    if(localStorage.getItem('manfav')){
+      this.manfav = JSON.parse(localStorage.getItem('manfav'));
+    }
+    if(localStorage.getItem('womanfav')){
+      this.womanfav = JSON.parse(localStorage.getItem('womanfav'));
+    }
+    if(localStorage.getItem('decidestatus')){
+      this.decidestatus = JSON.parse(localStorage.getItem('decidestatus'));
+    }
+  }
+
+  changeChat(index: number){
+    let actionSheet = this.actionSheetCtrl.create({
+      buttons:[
+        {
+          text: '削除',
+          role: 'destructive',
+          handler:() => {
+            this.chats.splice(index, 1)
+            localStorage.setItem('chats', JSON.stringify(this.chats));
+          }
+        },{
+          text: '変更',
+          handler:() => {
+            this._modifyChat(index);
+          }
+        },{
+          text: '閉じる',
+          handler:() => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    })
+    actionSheet.present();
+  }
+  _modifyChat(index: number){
+    let prompt = this.alertCtrl.create({
+      inputs:[
+        {
+          name: 'chat',
+          placeholder: 'チャット',
+          value: this.chats[index].name
+        }
+      ],
+      buttons:[
+        {
+          text: '閉じる'
+        },
+        {
+          text: '保存',
+          handler: data =>{
+            this.chats[index] = {name:data.chat};
+          localStorage.setItem('chats', JSON.stringify(this.chats));
+          }
+        }
+      ]
+    })
+    prompt.present();
+  }  
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad KeepPage');
@@ -37,11 +152,6 @@ export class KeepPage {
     const actionSheet = this.actionSheetCtrl.create({
       buttons: [
         {
-          text: '決定',
-          handler: () => {
-            this.goToHome();
-          }
-        },{
           text: '編集',
           handler: () => {
             this.goToInputKeep();
