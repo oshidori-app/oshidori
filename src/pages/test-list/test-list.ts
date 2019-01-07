@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { DisplayUtilService } from '../../providers/display-util.service';
 import { TestRepository } from '../../repository/test.repository';
-import { Logger } from '../../providers/logger.service';
 import { Test } from '../../models/test';
 import { AuthService } from '../../providers/auth.service';
+import { Logger } from '../../logger';
 
 export class TestListVm {
   title?: string

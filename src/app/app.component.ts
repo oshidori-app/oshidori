@@ -28,6 +28,7 @@ export class MyApp {
     };
 
     platform.ready().then(() => {
+      // TODO auth.serviceに切り出し
       const unsubscribe = afAuth.auth.onAuthStateChanged(user => {
         let page;
         if (!user) {

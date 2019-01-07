@@ -7,6 +7,7 @@ import { Task } from '../../models/task' ;
 import { AccountPage } from '../account/account';
 import { TestRegistrationPage } from '../test-registration/test-registration';
 import { TestListPage } from '../test-list/test-list';
+import { Logger } from '../../logger';
 
 @Component({
   selector: 'page-home',

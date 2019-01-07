@@ -26,7 +26,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HttpService } from '../providers/http-service';
 import { AuthService } from '../providers/auth.service';
 import { DisplayUtilService } from '../providers/display-util.service';
-import { Logger } from '../providers/logger.service';
 import { KeepAddDevPage } from '../pages/keep-add-dev/keep-add-dev';
 import { TestRegistrationPage } from '../pages/test-registration/test-registration';
 
@@ -105,7 +104,6 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     UserRepository,
     TaskRepository,
     TestRepository,
-    Logger,
     { provide: HttpService, useClass: HttpService }
   ]
 })
