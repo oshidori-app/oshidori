@@ -7,24 +7,26 @@
 <ion-header>
 
   <ion-navbar color="dark">
-      <ion-title>キープ登録</ion-title>
+    <ion-title>キープ登録</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 <ion-content>
+  <!-- todo 画像 URL を渡す -->
   <img src="assets/img/noimage.png" />
   <ion-item>
     <ion-label stacked>MEMO</ion-label>
     <ion-textarea></ion-textarea>
   </ion-item>
-  <ion-list>
-    <!-- todo Segments のほうがよさげ -->
+  <ion-list radio-group>
     <ion-item *ngFor="let task of tasks">
-      <ion-icon name="leaf" item-start></ion-icon>
-        {{ task.name }}
-      <ion-icon item-end></ion-icon>
+      <ion-label>
+        <ion-img [src]="task.src !== null ? task.src : ''"></ion-img>
+          {{ task.title }}
+      </ion-label>
+      <ion-radio [checked]="selectedTask === task.id"></ion-radio>
     </ion-item>
   </ion-list>
-  <button ion-button block color="dark">追加</button>
+  <button ion-button block color="dark" (click)="input()">追加</button>
 </ion-content>

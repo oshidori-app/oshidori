@@ -1,7 +1,8 @@
 import { Component, Input, NgModule, ElementRef } from '@angular/core';
-import { NavParams, ActionSheetController } from 'ionic-angular';
+import { NavParams, ActionSheetController, NavController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { PhotoLibrary } from '@ionic-native/photo-library';
+import { InputKeepPage } from '../../pages/input-keep/input-keep';
 /**
  * Generated class for the InputKeepButtonComponent component.
  *
@@ -17,23 +18,29 @@ export class InputKeepButtonComponent {
 
   public selectedPhoto: Blob;
 
-  constructor(public actionSheetCtrl: ActionSheetController, private camera: Camera, public photoLibrary: PhotoLibrary) {
+  constructor(
+    public navCtrl: NavController, 
+    public actionSheetCtrl: ActionSheetController, 
+    private camera: Camera, 
+    public photoLibrary: PhotoLibrary)
+  {
     console.log(this.task);
   }
 
-  // todo カメラ起動 or ライブラリから選択
   showMenu() {
     const actionSheet = this.actionSheetCtrl.create({
       buttons: [
         {
           text: 'カメラで撮影する',
           handler: () => {
-            this.takePhoto();
+            // todo this.takePhoto();
+            this.navCtrl.push(InputKeepPage, {selectedTask: this.task});
           }
         },{
           text: 'ライブラリから選択する',
           handler: () => {
-            this.library();
+            // todo this.library();
+            this.navCtrl.push(InputKeepPage, {selectedTask: this.task});
           }
         },{
           text: 'キャンセル',
