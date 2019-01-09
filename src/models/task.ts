@@ -1,10 +1,15 @@
-export class Task {   
-    public id:    Number;
+import { Entity } from "./entity";
+
+export class Task implements Entity {
+    getEntityName(): string {
+        return 'tasks';
+    }   
+    public id:    Number; // todo guid にしたいなぁ
     public title: string;
     public limit: Date;
     public src:   string;
-    public status: string;
-    public assign: string;
+    public status: string; // todo boolean にしたいなぁ
+    public assign: string; // todo assignedTo にしたいなぁ
 
     constructor(id, title, limit, src, status, assign){
         this.id    = id;
