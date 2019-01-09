@@ -2,31 +2,6 @@
 </ion-header>
 
 <ion-content class="card-background-page" id="home">
-<ion-fab bottom right class="tool">
-    <button ion-fab color="dark" class="">
-        <ion-icon name="hammer"></ion-icon>
-    </button>
-    <ion-fab-list side="top">
-      <button ion-fab color="dark" (click)="taskInfoViewToggle()">
-        <ion-icon name="information-circle"></ion-icon>
-      </button>
-      <button ion-fab color="dark">
-        <ion-icon name="funnel"></ion-icon>
-      </button>
-      <button ion-fab color="dark" (click)="goToAccount()">
-        <ion-icon name="settings"></ion-icon>
-      </button>
-      <button ion-fab color="dark" (click)="gotoInputTask()">
-        <ion-icon name="add"></ion-icon>
-      </button>
-      <button ion-fab color="dark" (click)="gotoTestRegistration()">
-        <ion-icon name="sad"></ion-icon>
-      </button>
-      <button ion-fab color="dark" (click)="gotoTestList()">
-        <ion-icon name="sad"></ion-icon>
-      </button>
-  </ion-fab-list>
-  </ion-fab>
   <ion-grid no-padding responsive-sm >
     <ion-row responsive-sm *ngFor="let row_tasks of tasks">
       <ion-col *ngFor="let task of row_tasks">
@@ -49,5 +24,7 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <input-keep-button [task]="dress"></input-keep-button>
+  <ion-fab right bottom>
+    <input-keep-button color="instagram"></input-keep-button>
+  </ion-fab>
 </ion-content>

@@ -1,3 +1,4 @@
+import { Task } from './../../models/task';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ActionSheetController, AlertController } from 'ionic-angular';
 import { KeepPage } from '../keep/keep';
@@ -15,10 +16,9 @@ import { KeepPage } from '../keep/keep';
   templateUrl: 'keep-list.html',
 })
 export class KeepListPage {
-//  keeplist = {};
   public keeplist = [];
   public taglist = [];
-  public task = "";
+  public task;
 
   constructor(
     public navCtrl: NavController,
@@ -26,7 +26,7 @@ export class KeepListPage {
     public actionSheetCtrl: ActionSheetController,
     public alertCtrl: AlertController
     ) {
-    this.task = navParams.get('task');
+      this.task = navParams.get('task');
     }
 
   ionViewDidLoad() {

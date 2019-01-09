@@ -15,10 +15,6 @@ export class InputTaskPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private taskRepository: TaskRepository, private toastCtrl: ToastController) {
   }
 
-  public event = {
-    month: new Date().toISOString(),
-  }
-
   ionViewDidLoad() {
     console.log('ionViewDidLoad InputTaskPage');
   }
