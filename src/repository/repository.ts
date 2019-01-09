@@ -1,4 +1,6 @@
-export interface Repository<T> {
+import { Entity } from "../models/entity";
+
+export interface Repository<T extends Entity>{
     
     add(item: T) : void
 

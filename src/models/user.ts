@@ -1,4 +1,6 @@
-export class User {
+import { Entity } from "./entity";
+
+export class User implements Entity {
 
     public userId: string
     public gender: string

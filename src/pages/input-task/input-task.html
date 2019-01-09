@@ -14,15 +14,15 @@
 
 <ion-content padding>
 
+  <ion-list> 
+    <ion-item>
+      <ion-label color="primary" stacked></ion-label>
+      <ion-input type="text" placeholder="タイトル" [(ngModel)]="title"></ion-input>
+    </ion-item>
+  </ion-list>
+    
   <br>
-  <form padding (submit)="addTask()">
-    <ion-list> 
-      <ion-item>
-        <ion-input type="text" [(ngModel)]="tasktitle" name="tasktitle" placeholder="タイトル"></ion-input>
-      </ion-item>
-    </ion-list>      
-    <br>
-    <button type="submit" ion-button block color="light" (click)="gotoHome()" >追加</button>
-  </form>
-
+  <!-- todo 処理中は非活性にするなどしたい -->
+  <button ion-button block color="light" (click)="input()">追加</button>
+  
 </ion-content>
