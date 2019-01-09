@@ -43,6 +43,7 @@ import { TaskRepository } from '../repository/task.repository';
 import { TestRepository } from '../repository/test.repository';
 import { TestListPage } from '../pages/test-list/test-list';
 import { AngularFireStorageModule } from '@angular/fire/storage';
+import { DevMenuPage } from '../pages/develop/develop-menu';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     KeepPage,
     InputKeepPage,
     TestRegistrationPage,
-    TestListPage
+    TestListPage,
+    DevMenuPage
   ],
   imports: [
     HttpModule,
@@ -90,7 +92,8 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     KeepPage,
     InputKeepPage,
     TestRegistrationPage,
-    TestListPage
+    TestListPage,
+    DevMenuPage
   ],
   providers: [
     StatusBar,
