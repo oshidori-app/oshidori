@@ -18,13 +18,13 @@
         <button ion-button color="secondary" (click)="onClickCameraSelection()">カメラから画像取得</button>
       </ion-item>
       <ion-item>
-        <div>{{ uploadPercent | async }}</div>
+        <div>{{ testRegistrationVm.uploadPercent | async }}</div>
       </ion-item>
 
     </ion-list>
     <input color="secondary" type="file" (change)="onChangeFileSelection($event)"/>
 
-    <div *ngIf="downloadURL | async as url">
+    <div *ngIf="testRegistrationVm.downloadUrl | async as url">
       <h3>Results!</h3>
       <img [src]="url"><br>
       <a [href]="url" target="_blank" rel="noopener">Download Me!</a>

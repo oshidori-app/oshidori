@@ -4,13 +4,22 @@ import { AngularFireStorage } from '@angular/fire/storage';
 @Injectable()
 export class StorageService {
 
-    constructor(private afStorage: AngularFireStorage) { }
+    private readonly APP_ROOT_PREFIX: string = 'content';
 
-    public uploadBlob(blob: Blob, fileName: string) {
+    constructor(private afStorage: AngularFireStorage) {
+    }
 
-        const ref = this.afStorage.ref('content/' + fileName);
+    public uploadBlob(blob: Blob, fileName: string): {
+        fullPath: string,
+        ref: any,
+        percentageChanges: any,
+        snapshotChanges: any
+    } {
+        let fullPath = this.APP_ROOT_PREFIX + '/' + fileName;
+        const ref = this.afStorage.ref(fullPath);
         const task = ref.put(blob);
         let ret = {
+            fullPath: 'content/' + fileName,
             ref: ref,
             percentageChanges: task.percentageChanges,
             snapshotChanges: task.snapshotChanges
@@ -18,10 +27,18 @@ export class StorageService {
         return ret;
     }
 
-    public uploadFile(file: File, fileName: string) {
-        const ref = this.afStorage.ref('content/' + fileName);
-        const task = this.afStorage.upload('content/' + fileName, file);
+    public uploadFile(file: File, fileName: string): {
+        fullPath: string,
+        ref: any,
+        percentageChanges: any,
+        snapshotChanges: any
+    } {
+        let fullPath = this.APP_ROOT_PREFIX + '/' + fileName;
+
+        const ref = this.afStorage.ref(fullPath);
+        const task = this.afStorage.upload(fullPath, file);
         let ret = {
+            fullPath: fullPath,
             ref: ref,
             percentageChanges: task.percentageChanges,
             snapshotChanges: task.snapshotChanges
