@@ -36,6 +36,11 @@
           </ion-note>
         </ion-col>
       </ion-row>
+      <ion-row>
+          <div *ngIf="test.downloadUrl | async as url">
+              <img [src]="url"><br>
+          </div>
+      </ion-row>
     </ion-card-content>
   </ion-card>
 </ion-content>

@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { AngularFireStorage } from '@angular/fire/storage';
+import { Observable } from "rxjs";
 
 @Injectable()
 export class StorageService {
@@ -46,4 +47,8 @@ export class StorageService {
         return ret;
     }
 
+    public getDownloadURL(fullPath: string): Observable<string> {
+        const downloadUrl = this.afStorage.ref(fullPath);
+        return downloadUrl.getDownloadURL();
+    }
 }
