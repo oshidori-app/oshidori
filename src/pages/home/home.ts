@@ -7,6 +7,7 @@ import { Task } from '../../models/task' ;
 import { AccountPage } from '../account/account';
 import { TestRegistrationPage } from '../test-registration/test-registration';
 import { TestListPage } from '../test-list/test-list';
+import { Logger } from '../../providers/logger.service';
 
 @Component({
   selector: 'page-home',
@@ -58,6 +59,7 @@ export class HomePage {
   }
 
   ionViewDidLoad(){
+    Logger.debug("ionViewDidLoad: homepage")
   }
 
   taskInfoViewToggle() {
