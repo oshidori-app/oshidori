@@ -38,21 +38,9 @@
       </ion-row>
       <ion-row>
           <div *ngIf="test.downloadUrl | async as url">
-              <img [src]="url"><br>
+              <img-loader [src]="url" useImg></img-loader><br>
           </div>
       </ion-row>
     </ion-card-content>
   </ion-card>
 </ion-content>
-
-<!-- <ion-list>
-  <ion-item>
-    <ion-lbale [(ngModel)]="testListVm.title" type="text" name="title">
-      </ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label [(ngModel)]="testListVm.description" type="text" name="description">
-      </ion-textarea>
-  </ion-item>
-</ion-list> -->
-

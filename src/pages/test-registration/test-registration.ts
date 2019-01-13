@@ -24,9 +24,7 @@ export class TestRegistrationPage {
     downloadUrl?: Observable<string>,
   } = {};
 
-  // public uploadPercent;
   private selectedPhoto: Blob;
-  // public downloadURL: Observable<string>;
   private imgRef: string;
 
   constructor(public navCtrl: NavController, private testRepo: TestRepository, private auth: AuthService, private storage: StorageService, private dutil: DisplayUtilService, private camera: Camera) {
@@ -75,8 +73,8 @@ export class TestRegistrationPage {
 
       let user = this.auth.getUser();
       let test = new Test({
-        groupId: user.uid, //TODO 認証成功したらグローバル変数から取得したい
-        userId: user.uid, //TODO 認証成功したらグローバル変数から取得したい
+        groupId: user.uid,
+        userId: user.uid,
         title: this.testRegistrationVm.title,
         description: this.testRegistrationVm.description,
         imgUrl: this.imgRef

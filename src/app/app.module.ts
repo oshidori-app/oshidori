@@ -12,6 +12,7 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { Camera } from '@ionic-native/camera';
 import { MyApp } from './app.component';
 import { HttpModule } from "@angular/http";
+import { IonicImageLoader } from 'ionic-image-loader';
 
 import { TasksCreatePage } from '../pages/tasks-create/tasks-create';
 import { RankingPage } from '../pages/ranking/ranking';
@@ -74,7 +75,8 @@ import { DevMenuPage } from '../pages/develop/develop-menu';
     HomePageModule,
     InputTaskPageModule,
     KeepListPageModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    IonicImageLoader.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [

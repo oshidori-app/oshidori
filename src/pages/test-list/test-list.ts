@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { DisplayUtilService } from '../../providers/display-util.service';
 import { TestRepository } from '../../repository/test.repository';
@@ -7,6 +7,7 @@ import { AuthService } from '../../providers/auth.service';
 import { Logger } from '../../logger';
 import { StorageService } from '../../providers/storage.service';
 import { Observable } from 'rxjs';
+import { IonicImageLoader } from 'ionic-image-loader';
 
 export class TestListVm {
   title?: string
@@ -17,6 +18,11 @@ export class TestListVm {
 @Component({
   selector: 'page-test-list',
   templateUrl: 'test-list.html',
+})
+@NgModule({
+  imports:[
+    IonicImageLoader
+  ]
 })
 export class TestListPage {
 
@@ -36,7 +42,7 @@ export class TestListPage {
 
         testList.forEach((test, i) => {
           let imgUrl =  this.storage.getDownloadURL(test.imgUrl);
-          this.testListVms[i].downloadUrl = imgUrl;
+            this.testListVms[i].downloadUrl = imgUrl;
         });
       });
   }
@@ -45,6 +51,5 @@ export class TestListPage {
     Logger.debug("ionViewWillEnter: TeltListPage");
     this.dutil.showLoader("データを読み込んでいます...");
     this.getTests();
-    this.dutil.dismissLoader();
   }
 }
