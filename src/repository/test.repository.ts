@@ -22,7 +22,7 @@ export class TestRepository extends BaseRepository<Test> {
         throw new Error('not implemented');
     }
 
-    getList(test: Test): Observable<{}[]> {
-        return super.filterByOwnGroup(test);
+    getList(test: Test): Observable<Test[]> {
+        return super.filterByOwnGroup(test) as Observable<Test[]>;
     }
 }
