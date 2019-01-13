@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { DisplayUtilService } from '../../providers/display-util.service';
 import { TestRepository } from '../../repository/test.repository';
-import { Logger } from '../../providers/logger.service';
 import { Test } from '../../models/test';
 import { AuthService } from '../../providers/auth.service';
 import { CameraOptions, Camera } from '@ionic-native/camera';
@@ -10,6 +9,7 @@ import { v4 as uuid } from 'uuid';
 import { StorageService } from '../../providers/storage.service';
 import { finalize } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
+import { Logger } from '../../logger';
 
 @Component({
   selector: 'page-test-registration',

@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-navbar color="dark">
+    <ion-title>開発テスト機能メニュー</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list class="list list-ios" no-lines>
+    <ion-list-header class="item item-ios list-header list-header-ios">
+      <ion-label class="label label-ios">認証</ion-label>
+    </ion-list-header>
+    <button class="item item-block item-ios" ion-item (click)="goAccountPage()">
+      <ion-label class="label label-ios">アカウント</ion-label>
+    </button>
+
+    <br>
+    <ion-list-header class="item item-ios list-header list-header-ios">
+      <ion-label class="label label-ios">Firebase連携サンプル</ion-label>
+    </ion-list-header>
+    <button class="item item-block item-ios" ion-item (click)="goTestListPage()">
+      <ion-label class="label label-ios">テストエンティティ一覧</ion-label>
+    </button>
+    <button class="item item-block item-ios" ion-item (click)="goTestRegistrationPage()">
+      <ion-label class="label label-ios">テストエンティティ登録</ion-label>
+    </button>
+  </ion-list>
+</ion-content>
+
+<!-- <ion-list>
+  <ion-item>
+    <ion-lbale [(ngModel)]="testListVm.title" type="text" name="title">
+      </ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label [(ngModel)]="testListVm.description" type="text" name="description">
+      </ion-textarea>
+  </ion-item>
+</ion-list> -->

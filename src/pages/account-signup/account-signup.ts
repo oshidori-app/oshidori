@@ -3,10 +3,9 @@ import { NavController } from 'ionic-angular';
 import { AccountConfirmationCodePage } from '../account-confirmation-code/account-confirmation-code';
 import { AuthService } from '../../providers/auth.service';
 import { DisplayUtilService } from '../../providers/display-util.service';
-import { Logger } from '../../providers/logger.service';
-
 import { User, Gender } from "../../models/user";
 import { UserRepository } from '../../repository/user.repository';
+import { Logger } from '../../logger';
 export class UserDetails {
   username: string;
   password: string;

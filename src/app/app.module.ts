@@ -26,7 +26,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HttpService } from '../providers/http-service';
 import { AuthService } from '../providers/auth.service';
 import { DisplayUtilService } from '../providers/display-util.service';
-import { Logger } from '../providers/logger.service';
 import { KeepAddDevPage } from '../pages/keep-add-dev/keep-add-dev';
 import { TestRegistrationPage } from '../pages/test-registration/test-registration';
 
@@ -44,6 +43,7 @@ import { TaskRepository } from '../repository/task.repository';
 import { TestRepository } from '../repository/test.repository';
 import { TestListPage } from '../pages/test-list/test-list';
 import { AngularFireStorageModule } from '@angular/fire/storage';
+import { DevMenuPage } from '../pages/develop/develop-menu';
 
 @NgModule({
   declarations: [
@@ -61,7 +61,8 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     KeepPage,
     InputKeepPage,
     TestRegistrationPage,
-    TestListPage
+    TestListPage,
+    DevMenuPage
   ],
   imports: [
     HttpModule,
@@ -91,7 +92,8 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     KeepPage,
     InputKeepPage,
     TestRegistrationPage,
-    TestListPage
+    TestListPage,
+    DevMenuPage
   ],
   providers: [
     StatusBar,
@@ -105,7 +107,6 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     UserRepository,
     TaskRepository,
     TestRepository,
-    Logger,
     { provide: HttpService, useClass: HttpService }
   ]
 })

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { AuthService } from '../../providers/auth.service';
 import { DisplayUtilService } from '../../providers/display-util.service';
-import { Logger } from '../../providers/logger.service';
+import { Logger } from '../../logger';
 @Component({
   templateUrl: 'account-forgot-password.html',
 })

@@ -6,8 +6,7 @@ import { AccountSignupPage } from '../account-signup/account-signup';
 import { NavController, LoadingController } from 'ionic-angular';
 import { AuthService } from '../../providers/auth.service';
 import { DisplayUtilService } from '../../providers/display-util.service';
-import { Logger } from '../../providers/logger.service';
-
+import { Logger } from '../../logger';
 export class SignInDetails {
   username: string;
   password: string;

@@ -9,7 +9,7 @@ import { HomePage } from '../pages/home/home';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AccountConfirmationCodePage } from '../pages/account-confirmation-code/account-confirmation-code';
-import { Logger } from '../providers/logger.service';
+import { Logger } from '../logger';
 
 @Component({
   templateUrl: 'app.html'
@@ -31,6 +31,7 @@ export class MyApp {
     };
 
     platform.ready().then(() => {
+      // TODO auth.serviceに切り出し
       const unsubscribe = afAuth.auth.onAuthStateChanged(user => {
         let page;
         if (!user) {

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { InputTaskPage } from '../../pages/input-task/input-task';
-import { Logger } from '../../providers/logger.service';
+import { Logger } from '../../logger';
 
 @Component({
   selector: 'input-task-button',
@@ -16,6 +16,6 @@ export class InputTaskButtonComponent {
   };
 
   ionViewDidLoad(){
-   Logger.debug("inpu-task-button loaded.")
+    Logger.debug("inpu-task-button loaded.")
   }
 }
