@@ -59,6 +59,7 @@ export class HomePage {
   }
 
   ionViewDidLoad(){
+    Logger.debug("ionViewDidLoad: homepage")
   }
 
   taskInfoViewToggle() {

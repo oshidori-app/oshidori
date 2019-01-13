@@ -9,6 +9,7 @@ import { HomePage } from '../pages/home/home';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AccountConfirmationCodePage } from '../pages/account-confirmation-code/account-confirmation-code';
+import { Logger } from '../providers/logger.service';
 
 @Component({
   templateUrl: 'app.html'
@@ -19,12 +20,14 @@ export class MyApp {
   public showSplash: boolean = true;
 
   constructor(private platform: Platform, private statusBar: StatusBar, private afAuth: AngularFireAuth, private splashScreen: SplashScreen) {
+    Logger.debug("application started. app.component.ts constructor called.");
     let globalActions = () => {
+      Logger.debug("@ globalActions function");
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      timer(1000).subscribe(() => this.showSplash = false)
+      timer(3000).subscribe(() => this.showSplash = false);
     };
 
     platform.ready().then(() => {
@@ -47,6 +50,6 @@ export class MyApp {
         this.rootPage = page;
       });
     })
-      .then(() => globalActions());
+    .then(() => globalActions());
   }
 }
