@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { DisplayUtilService } from '../../providers/display-util.service';
-import { TestRepository } from '../../repository/test.repository';
-import { AuthService } from '../../providers/auth.service';
 import { Logger } from '../../logger';
 import { AccountPage } from '../account/account';
 import { TestListPage } from '../test-list/test-list';
