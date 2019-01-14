@@ -7,6 +7,8 @@
 
   <form #registrationForm="ngForm" novalidate>
 
+    <p>・テストエンティティのFireStoreへの登録</p>
+    <p>・Webのinpu=fileでの画像取得（単一ファイルのみ）とStorageへのアップロード</p>
     <ion-list>
       <ion-item>
         <ion-input [(ngModel)]="testRegistrationVm.title" type="text" name="title" placeholder="title"></ion-input>
@@ -15,21 +17,18 @@
         <ion-textarea [(ngModel)]="testRegistrationVm.description" type="text" name="description" placeholder="Description"></ion-textarea>
       </ion-item>
       <ion-item>
-        <button ion-button color="secondary" (click)="onClickCameraSelection()">カメラから画像取得</button>
+         <input color="secondary" type="file" (change)="onChangeFileSelection($event)" accept="image/*,video/*"/>
       </ion-item>
       <ion-item>
-        <div>{{ uploadPercent | async }}</div>
+        <div>{{ testRegistrationVm.uploadPercent | async }}</div>
       </ion-item>
 
     </ion-list>
-    <input color="secondary" type="file" (change)="onChangeFileSelection($event)"/>
-
-    <div *ngIf="downloadURL | async as url">
+    <div *ngIf="testRegistrationVm.downloadUrl | async as url">
       <h3>Results!</h3>
       <img [src]="url"><br>
       <a [href]="url" target="_blank" rel="noopener">Download Me!</a>
-    </div> 
+    </div>
   </form>
   <button ion-button (click)="onClickRegistration(registrationForm)" type="submit">登録</button>
-
 </ion-content>

@@ -44,3 +44,21 @@ $ cd アプリのルートディレクトリ
 $ ionic serve
 ```
 `http://localhost:8100/`をブラウザで開くとアプリが起動しているはずです。
+
+
+### エミュレータ・実機実行
+
+プラグインのインストールが必要なので、以下を実行。
+```
+cordova prepare
+```
+
+#### ios
+
+```
+// 実機(初回はXcodeを起動してsigningする必要あり)
+ionic cordova run ios -l -c --device -- --buildFlag="-UseModernBuildSystem=0"
+
+// Emulator
+ionic cordova run ios -l -c -- --buildFlag="-UseModernBuildSystem=0"
+```
