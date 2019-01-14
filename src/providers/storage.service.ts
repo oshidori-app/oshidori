@@ -51,7 +51,7 @@ export class StorageService {
     }
 
     public getDownloadURL(fullPath: string): Observable<string> {
-        if(fullPath == this.APP_ROOT_PREFIX) {
+        if(!fullPath) {
             Logger.debug("file not exist.")
             return;
         }

@@ -17,7 +17,7 @@
         <ion-textarea [(ngModel)]="testRegistrationVm.description" type="text" name="description" placeholder="Description"></ion-textarea>
       </ion-item>
       <ion-item>
-         <input color="secondary" type="file" (change)="onChangeFileSelection($event)"/>
+         <input color="secondary" type="file" (change)="onChangeFileSelection($event)" accept="image/*,video/*"/>
       </ion-item>
       <ion-item>
         <div>{{ testRegistrationVm.uploadPercent | async }}</div>
