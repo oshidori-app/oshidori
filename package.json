@@ -58,7 +58,6 @@
   "devDependencies": {
     "@ionic/app-scripts": "3.2.1",
     "@types/node": "^10.12.18",
-    "ios-deploy": "^1.9.4",
     "typescript": "2.3.4"
   },
   "description": "An Ionic project",
