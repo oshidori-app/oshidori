@@ -41,7 +41,7 @@ export class TestListPage {
         this.testListVms = testList;
 
         testList.forEach((test, i) => {
-          let imgUrl =  this.storage.getDownloadURL(test.imgUrl);
+          let imgUrl = this.storage.getDownloadURL(test.imgUrl);
             this.testListVms[i].downloadUrl = imgUrl;
         });
       });

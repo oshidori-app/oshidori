@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Observable } from "rxjs";
+import { Logger } from "../logger";
 
 @Injectable()
 export class StorageService {
@@ -25,6 +26,7 @@ export class StorageService {
             percentageChanges: task.percentageChanges,
             snapshotChanges: task.snapshotChanges
         }
+        Logger.debug("StorageService:uploadBlob:" + fullPath);
         return ret;
     }
 
@@ -44,10 +46,15 @@ export class StorageService {
             percentageChanges: task.percentageChanges,
             snapshotChanges: task.snapshotChanges
         }
+        Logger.debug("StorageService:uploadFile:" + fullPath);
         return ret;
     }
 
     public getDownloadURL(fullPath: string): Observable<string> {
+        if(fullPath == this.APP_ROOT_PREFIX) {
+            Logger.debug("file not exist.")
+            return;
+        }
         const downloadUrl = this.afStorage.ref(fullPath);
         return downloadUrl.getDownloadURL();
     }

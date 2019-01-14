@@ -31,42 +31,6 @@ export class TestRegistrationPage {
     this.selectedPhoto = null;
   }
 
-  onClickCameraSelection(form) {
-      Logger.debug(form);
-
-      const options: CameraOptions = {
-        quality: 50,
-        // targetHeight: 200,
-        // targetWidth: 200,
-        destinationType: this.camera.DestinationType.DATA_URL, //Base64形式で返却
-        encodingType: this.camera.EncodingType.JPEG,
-        mediaType: this.camera.MediaType.PICTURE
-      }
-  
-      this.camera.getPicture(options).then((imageData) => {
-        // base64をBlobに変換
-        this.selectedPhoto = this.dataURItoBlob('data:image/jpeg;base64,' + imageData);
-        let fileName = uuid();
-        if (this.selectedPhoto) {
-          this.dutil.showLoader('アップロードしています...');
-          let uploadTask = this.storage.uploadBlob(this.selectedPhoto, fileName);
-          this.testRegistrationVm.uploadPercent = uploadTask.percentageChanges();
-          uploadTask.snapshotChanges().pipe(
-            finalize(() => {
-              this.testRegistrationVm.downloadUrl = uploadTask.ref.getDownloadURL();
-              this.imgRef = uploadTask.fullPath,
-              this.dutil.dismissLoader();
-              Logger.debug("登録完了");
-            })
-          ).subscribe();
-        }
-      }).catch(err => {
-        console.log(err);
-      });
-
-
-  }
-
   onClickRegistration(form) {
     if (form && form.valid) {
       Logger.debug(form);
@@ -97,15 +61,15 @@ export class TestRegistrationPage {
     const file = files[0];
 
     let uploadTask = this.storage.uploadFile(file, uuid());
-    this.testRegistrationVm.uploadPercent = uploadTask.percentageChanges();
-    uploadTask.snapshotChanges().pipe(
-      finalize(() => {
-        this.testRegistrationVm.downloadUrl = uploadTask.ref.getDownloadURL();
-        this.imgRef = uploadTask.fullPath,
-        this.dutil.dismissLoader();
-        Logger.debug("登録完了");
-      })
-    ).subscribe();
+      this.testRegistrationVm.uploadPercent = uploadTask.percentageChanges();
+      uploadTask.snapshotChanges().pipe(
+        finalize(() => {
+          this.testRegistrationVm.downloadUrl = uploadTask.ref.getDownloadURL();
+          this.imgRef = uploadTask.fullPath,
+            this.dutil.dismissLoader();
+          Logger.debug("登録完了");
+        })
+      ).subscribe();
   }
 
   dataURItoBlob(dataURI) {
@@ -118,7 +82,7 @@ export class TestRegistrationPage {
     return new Blob([new Uint8Array(array)], { type: 'image/jpeg' });
   };
 
-  ionViewDidEnter(){
-   Logger.debug("ionViewDidEnter: TestRegistrationPage")
+  ionViewDidEnter() {
+    Logger.debug("ionViewDidEnter: TestRegistrationPage")
   }
 }
