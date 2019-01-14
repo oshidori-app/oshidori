@@ -8,8 +8,6 @@
   <form #registrationForm="ngForm" novalidate>
 
     <p>・複数画像ImagePicker(native)で選択肢、Storageにアップロード</p>
-    <ion-textarea [(ngModel)]="testRegistrationVm.description" type="text" name="description" placeholder="Description"></ion-textarea>
-     -->
     <button ion-button (click)="onClickSelectPhotoButton()" color="secondary">写真を選択する(native only)</button>
     <ion-card *ngFor="let image of imageVms">
       <ion-card-content>

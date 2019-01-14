@@ -50,6 +50,7 @@ export class TestMultiRegistrationPage {
 
     imageFiles.forEach((file, i) => {
       let fileName = uuid();
+      Logger.debug(fileName);
       this.selectedPhoto = file;
       if (this.selectedPhoto) {
         this.imageVms.push(new ImageVm());
