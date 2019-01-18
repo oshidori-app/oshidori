@@ -3,14 +3,14 @@ import { User } from "../models/user";
 import { BaseRepository } from './base.repository';
 
 @Injectable()
-export class UserRepository extends BaseRepository<User> {
+export class UserRepository extends BaseRepository {
 
     constructor(injector: Injector) {
         super(injector);
      }
 
     add(user: User): Promise<any> {
-        return super.add(user);
+        return super.addToRootCollection(user);
     }
 
     update(user: User): void {

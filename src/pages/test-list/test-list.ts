@@ -36,15 +36,25 @@ export class TestListPage {
     let test = new Test({
       groupId: user.uid //TODO 認証成功したらグローバル変数から取得したい
     });
-    this.testRepo.getList(test)
-      .subscribe(testList => {
-        this.testListVms = testList;
+    this.testRepo.list(test)
+      .subscribe(actions => 
+        actions.map((action ,i) => {
+        Logger.debug(action);
 
-        testList.forEach((test, i) => {
+          let test = action.payload.doc.data() as Test;
+          test.ref = action.payload.doc.id;
           let imgUrl = this.storage.getDownloadURL(test.imgUrl);
-            this.testListVms[i].downloadUrl = imgUrl;
-        });
-      });
+          this.testListVms[i].downloadUrl = imgUrl;
+      // });
+        // })
+        // Logger.debug(testList);
+        // this.testListVms = testList;
+        // testList.forEach((test, i) => {
+        //   let imgUrl = this.storage.getDownloadURL(test.imgUrl);
+        //     this.testListVms[i].downloadUrl = imgUrl;
+        // });
+      // });
+        }));
   }
 
   ionViewWillEnter() {

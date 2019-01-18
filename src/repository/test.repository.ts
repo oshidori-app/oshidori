@@ -1,28 +1,29 @@
 import { Injectable, Injector } from '@angular/core';
 import { Test } from "../models/test";
-import { BaseRepository } from './base.repository';
 import { Observable } from 'rxjs';
+import { BaseRepository } from './base.repository';
+import { Logger } from '../logger';
 
 @Injectable()
-export class TestRepository extends BaseRepository<Test> {
+export class TestRepository extends BaseRepository {
 
     constructor(injector: Injector) {
         super(injector);
      }
 
-    add(test: Test): Promise<any> {
-        return super.add(test);
+    public add(test: Test): Promise<any> {
+        return super.addToRootCollection(test);
     }
 
-    update(test: Test): void {
+    public update(test: Test): Promise<any> {
+        return super.updateRootCollection(test);
+    }
+
+    public delete(test: Test): void {
         throw new Error('not implemented');
     }
 
-    delete(test: Test): void {
-        throw new Error('not implemented');
-    }
-
-    getList(test: Test): Observable<Test[]> {
-        return super.filterByOwnGroup(test) as Observable<Test[]>;
+    public list(test: Test): any  {
+        return super.listByRootCollection(test);
     }
 }

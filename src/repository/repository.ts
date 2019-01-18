@@ -1,15 +1,23 @@
-import { Entity } from "../models/entity";
+import { Document } from "../models/document";
+import { SubCollection } from "../models/sub-collection";
+import { Collection } from "../models/collection";
+import { listLazyRoutes } from "@angular/compiler/src/aot/lazy_routes";
 
-export interface Repository<T extends Entity>{
+export interface Repository {
     
-    add(item: T) : void
+    addToRootCollection(item: Collection) : void
 
-    update(item: T): void
+    addToSubCollection(item: SubCollection) : void
 
-    delete(item: T): void
+
+    updateRootCollection(item: Collection): void
+
+    // delete(item: T): void
 
     // all(): any
 
-    // list(item: T): any
+    listByRootCollection(item: Collection) : any
+
+    listBySubCollection(item: SubCollection) : any
 
 }

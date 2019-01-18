@@ -45,7 +45,10 @@ export class TestRegistrationPage {
       });
 
       this.testRepo.add(test)
-        .then(() => {
+        .then((ref) => {
+          // Logger.debug(ref);
+          // test.ref = ref;
+          // this.testRepo.update(test);
           this.dutil.showToast('登録しました');
         })
         .catch(err => {

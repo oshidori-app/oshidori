@@ -1,17 +1,25 @@
-import { Entity } from "./entity";
+import { Document } from "./document";
+import { SubCollection } from "./sub-collection";
+import { Collection } from "./collection";
 
-export class User implements Entity {
+export class User extends Document implements Collection {
+    public readonly collectionName: string = 'users';
 
     public userId: string
     public gender: string
     public birthdate: string
 
     constructor(init?: Partial<User>) {
+        super();
         Object.assign(this, init);
     }
 
-    public getEntityName() {
-        return 'users'
+    public getCollectionName() {
+        return this.collectionName;
+    }
+
+    getSelfRef() {
+        return this.ref;
     }
 }
 
