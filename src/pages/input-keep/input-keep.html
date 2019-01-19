@@ -17,7 +17,7 @@
   <img src="assets/img/noimage.png" />
   <ion-item>
     <ion-label stacked>MEMO</ion-label>
-    <ion-textarea></ion-textarea>
+    <ion-textarea [(ngModel)]="memo"></ion-textarea>
   </ion-item>
   <ion-list radio-group>
     <ion-item *ngFor="let task of tasks">
@@ -25,7 +25,7 @@
         <ion-img [src]="task.src !== null ? task.src : ''"></ion-img>
           {{ task.title }}
       </ion-label>
-      <ion-radio [checked]="selectedTask === task.id"></ion-radio>
+      <ion-radio [checked]="selectedTask.id === task.ref.id"></ion-radio>
     </ion-item>
   </ion-list>
   <button ion-button block color="dark" (click)="input()">追加</button>
