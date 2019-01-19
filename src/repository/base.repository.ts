@@ -39,5 +39,4 @@ export abstract class BaseRepository implements Repository {
     public listDocument(model: Collection): Observable<{}[]> {
         return this.store.listDocument(model)
     }
-
  }
