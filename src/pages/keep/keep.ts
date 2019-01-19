@@ -44,10 +44,10 @@ export class KeepPage {
     private dutil: DisplayUtilService,
     private auth: AuthService
   ) {
-    this.keep = navParams.get('keep');
-    this.keep['title'] = 'キープ詳細'
-    this.keep['src'] = 'hoge'
-    this.keep['description'] = '色は暖色系の色味ではなかったけれど、家族・旦那さんが好きな色味でデザインとボリュームが今まで着たドレスの中で1番'
+//    this.keep = navParams.get('keep');
+   this.keep['title'] = 'キープ詳細'
+   this.keep['src'] = 'hoge'
+   this.keep['description'] = '色は暖色系の色味ではなかったけれど、家族・旦那さんが好きな色味でデザインとボリュームが今まで着たドレスの中で1番'
   }
 
   //firebaseへコメントを登録
