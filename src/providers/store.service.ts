@@ -125,6 +125,13 @@ export class StoreService {
                 })
         })
     }
+
+    // TODO: なぜか動かない
+    public findDocument<T extends Collection>(document: T, docRef: any) {
+        const collectionName = document['collectionName'];
+        return this.afStore.collection(collectionName).doc(docRef.id).valueChanges();
+    }
+
     // 現在のfirebaseではcustom objectを引数としてサポートしていないので、
     // plainなオブジェクトに変換する必要あり。
     // https://github.com/firebase/firebase-js-sdk/issues/311
