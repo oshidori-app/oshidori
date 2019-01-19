@@ -1,16 +1,14 @@
-import { Task } from './../../models/task';
-import { DisplayUtilService } from '../../providers/display-util.service';
 import { Component, NgModule } from '@angular/core';
-import { IonicPage, NavController, NavParams, ActionSheetController, AlertController } from 'ionic-angular';
-import { KeepPage } from '../keep/keep';
-import { Observable } from 'rxjs';
+import { DisplayUtilService } from '../../providers/display-util.service';
+import { KeepRepository } from '../../repository/keep.repository';
 import { Keep } from '../../models/keep';
 import { Logger } from '../../logger';
-import { AuthService } from '../../providers/auth.service';
 import { StorageService } from '../../providers/storage.service';
-import { KeepRepository } from '../../repository/keep.repository';
+import { Observable } from 'rxjs';
 import { IonicImageLoader } from 'ionic-image-loader';
-
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { KeepPage } from '../keep/keep';
+import { IonicPageModule } from 'ionic-angular';
 
 /**
  * Generated class for the KeepListPage page.
@@ -19,7 +17,7 @@ import { IonicImageLoader } from 'ionic-image-loader';
  * on Ionic pages and navigation.
  */
 
-export class KeepListVm {
+export class KeepVm {
   title?: string
   imgUrl?: string
   downloadUrl?: Observable<string>
@@ -32,66 +30,71 @@ export class KeepListVm {
 })
 
 @NgModule({
-  imports:[
+  declarations: [
+    KeepListPage
+  ],
+  imports: [
+    IonicPageModule.forChild(KeepListPage),
     IonicImageLoader
   ]
 })
 
 export class KeepListPage {
-  //public keeplist = [];
-  // public taglist = [];
+
   public task;
 
-  public keepListVms: KeepListVm[];
+  public keepVmInDL: KeepVm[];
+  public keepListVm: (KeepVm[])[];
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private keepRepo: KeepRepository,
-    private auth: AuthService, 
     private storage: StorageService,
-    private dutil: DisplayUtilService, 
-    public actionSheetCtrl: ActionSheetController,
-    public alertCtrl: AlertController
-    ) {
-      this.task = navParams.get('task');
-    }
+    private dutil: DisplayUtilService,
+  ) {
+    this.task = navParams.get('task');
+  }
 
   private addkeeps() {
-     let keepReg = new Keep({
+    let keepReg = new Keep({
       title: 'dress',
       imgUrl: 'content/image01.jpg'
     });
     this.keepRepo.add(keepReg)
-    .then((ref) => {
-      // Logger.debug(ref);
-      // test.ref = ref;
-      // this.testRepo.update(test);
-      this.dutil.showToast('登録しました');
-    })
-    .catch(err => {
-      this.dutil.showToast(err);
-      Logger.error(err);
-      return;
-    });
+      .then((ref) => {
+      })
+      .catch(err => {
+        this.dutil.showToast(err);
+        Logger.error(err);
+        return;
+      });
   }
 
   private getKeeps() {
+
     let keep = new Keep();
     this.keepRepo.list(keep).subscribe(keepList => {
       Logger.debug(keepList);
-      this.keepListVms = keepList;
+
+      // 一旦keepVmInDLに格納して、downloadUrlを付与
+      this.keepVmInDL = keepList;
       keepList.forEach((keep, i) => {
         let imageURL = this.storage.getDownloadURL(keep.imgUrl);
-          this.keepListVms[i].downloadUrl = imageURL;
+        this.keepVmInDL[i].downloadUrl = imageURL;
       });
+
+      // 表示用に配列を整形
+      let xNum = 2;
+      let ret = [];
+      for (let i = 0; i < Math.ceil(this.keepVmInDL.length / xNum); i++) {
+        var index = i * xNum;
+        ret.push(this.keepVmInDL.slice(index, index + xNum));
+      }
+      this.keepListVm = ret;
+
     });
   }
-
-  // ionViewDidLoad() {
-  //   this.addkeeps();
-  //   this.getKeeps();
-  // }
 
   ionViewWillEnter() {
     this.dutil.showLoader("データを読み込んでいます...");
@@ -99,39 +102,9 @@ export class KeepListPage {
     this.getKeeps();
   }
 
-  // ionViewDidLoad() {
-  //   // タグリストのデータ設定
-  //   //this.taglist = ["#ウェディングドレス","#白","#レース","#1着目","#チャペル"];
-
-  //   //キープリストのデータ設定
-  //   let keeps = [
-  //       { title: "dress1", src: "assets/img/image01.jpg", class:"ribbon" },
-  //       { title: "dress2", src: "assets/img/image04.jpg", class:"noRibbon" },
-  //       { title: "dress3", src: "assets/img/image08.jpg", class: "noRibbon" },
-  //       { title: "dress4", src: "assets/img/image02.jpg", class: "noRibbon" },
-  //       { title: "dress9", src: "assets/img/image09.jpg", class: "noRibbon" },
-  //       { title: "dress7", src: "assets/img/image07.jpg", class: "noRibbon" },
-  //       { title: "dress1", src: "assets/img/image01.jpg", class: "noRibbon" },
-  //       { title: "dress2", src: "assets/img/image04.jpg", class: "noRibbon" },
-  //       { title: "dress3", src: "assets/img/image08.jpg", class: "noRibbon" },
-  //       { title: "dress4", src: "assets/img/image02.jpg", class: "noRibbon" },
-  //       { title: "dress9", src: "assets/img/image09.jpg", class: "noRibbon" },
-  //       { title: "dress7", src: "assets/img/image07.jpg", class: "noRibbon" }
-  //     ];
-
-  //   let xNum = 2;  
-  //       // 表示用に配列を整形
-  //       let ret = [];
-  //       for(let i = 0; i < Math.ceil(keeps.length / xNum); i++){
-  //         var index = i * xNum;
-  //         ret.push(keeps.slice(index, index + xNum));
-  //       }
-  //    this.keeplist = ret;
-
-  // }
-
   goToKeep(task) {
-    this.navCtrl.push(KeepPage, {keep: task});
+    this.navCtrl.push(KeepPage, { keep: task });
   }
+
 }
 
