@@ -1,3 +1,4 @@
+import { CommentRepository } from '../repository/comment.repository';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
@@ -37,9 +38,9 @@ import { StorageService } from '../providers/storage.service';
 import { StoreService } from '../providers/store.service';
 import { GroupRepository } from '../repository/group.repository';
 import { SubTestRepository } from '../repository/sub-test.repository';
+import { TestRepository } from '../repository/test.repository';
 import { TaskRepository } from '../repository/task.repository';
 import { KeepRepository } from '../repository/keep.repository';
-import { TestRepository } from '../repository/test.repository';
 import { UserRepository } from '../repository/user.repository';
 import { AccountChangePasswordPage } from './../pages/account-change-password/account-change-password';
 import { AccountForgotPasswordPage } from './../pages/account-forgot-password/account-forgot-password';
@@ -47,79 +48,79 @@ import { AccountSigninPage } from './../pages/account-signin/account-signin';
 import { MyApp } from './app.component';
 
 @NgModule({
-  declarations: [
-    MyApp,
-    AccountPage,
-    AccountSignupPage,
-    AccountSigninPage,
-    AccountConfirmationCodePage,
-    AccountChangePasswordPage,
-    AccountForgotPasswordPage,
-    KeepAddDevPage,
-    TasksCreatePage,
-    RankingPage,
-    TabsPage,
-    KeepPage,
-    InputKeepPage,
-    TestRegistrationPage,
-    TestMultiRegistrationPage,
-    TestListPage,
-    SubTestRegistrationPage,
-    DevMenuPage
-  ],
-  imports: [
-    HttpModule,
-    BrowserModule,
-    IonicModule.forRoot(MyApp),
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFireAuthModule,
-    AngularFirestoreModule,
-    HomePageModule,
-    InputTaskPageModule,
-    KeepListPageModule,
-    AngularFireStorageModule,
-    IonicImageLoader.forRoot()
-  ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-    AccountPage,
-    AccountSignupPage,
-    AccountSigninPage,
-    AccountConfirmationCodePage,
-    AccountChangePasswordPage,
-    AccountForgotPasswordPage,
-    KeepAddDevPage,
-    TasksCreatePage,
-    RankingPage,
-    TabsPage,
-    KeepPage,
-    InputKeepPage,
-    TestRegistrationPage,
-    TestMultiRegistrationPage,
-    TestListPage,
-    SubTestRegistrationPage,
-    DevMenuPage
-  ],
-  providers: [
-    StatusBar,
-    SplashScreen,
-    { provide: ErrorHandler, useClass: IonicErrorHandler },
-    Camera,
-    ImagePicker,
-    AuthService,
-    DisplayUtilService,
-    ImagePickerService,
-    StoreService,
-    StorageService,
-    UserRepository,
-    TaskRepository,
-    KeepRepository,
-    TestRepository,
-    KeepRepository,
-    SubTestRepository,
-    GroupRepository,
-    { provide: HttpService, useClass: HttpService }
-  ]
+    declarations: [
+        MyApp,
+        AccountPage,
+        AccountSignupPage,
+        AccountSigninPage,
+        AccountConfirmationCodePage,
+        AccountChangePasswordPage,
+        AccountForgotPasswordPage,
+        KeepAddDevPage,
+        TasksCreatePage,
+        RankingPage,
+        TabsPage,
+        KeepPage,
+        InputKeepPage,
+        TestRegistrationPage,
+        TestMultiRegistrationPage,
+        TestListPage,
+        SubTestRegistrationPage,
+        DevMenuPage
+    ],
+    imports: [
+        HttpModule,
+        BrowserModule,
+        IonicModule.forRoot(MyApp),
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFireAuthModule,
+        AngularFirestoreModule,
+        HomePageModule,
+        InputTaskPageModule,
+        KeepListPageModule,
+        AngularFireStorageModule,
+        IonicImageLoader.forRoot()
+    ],
+    bootstrap: [IonicApp],
+    entryComponents: [
+        MyApp,
+        AccountPage,
+        AccountSignupPage,
+        AccountSigninPage,
+        AccountConfirmationCodePage,
+        AccountChangePasswordPage,
+        AccountForgotPasswordPage,
+        KeepAddDevPage,
+        TasksCreatePage,
+        RankingPage,
+        TabsPage,
+        KeepPage,
+        InputKeepPage,
+        TestRegistrationPage,
+        TestMultiRegistrationPage,
+        TestListPage,
+        SubTestRegistrationPage,
+        DevMenuPage
+    ],
+    providers: [
+        StatusBar,
+        SplashScreen,
+        { provide: ErrorHandler, useClass: IonicErrorHandler },
+        Camera,
+        ImagePicker,
+        AuthService,
+        DisplayUtilService,
+        ImagePickerService,
+        StoreService,
+        StorageService,
+        UserRepository,
+        TaskRepository,
+        TestRepository,
+        CommentRepository,
+        KeepRepository,
+        SubTestRepository,
+        GroupRepository,
+        { provide: HttpService, useClass: HttpService }
+    ]
 })
 export class AppModule { }

@@ -20,7 +20,7 @@ export class InputTaskPage {
     }
 
     input() {
-        this.taskRepository.add(new Task({title: this.title, done: false, keepId: null})
+        this.taskRepository.add(new Task({title: this.title, done: false, imgUrl: null})
         ).then(() => {
                 this.toastCtrl.create({ message: 'タスクを登録しました！', position: 'top', duration: 2000 }).present();
                 this.navCtrl.pop();
