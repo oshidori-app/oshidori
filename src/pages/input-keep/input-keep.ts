@@ -24,9 +24,7 @@ export class InputKeepPage {
   public memo = "";
   public imgUrl;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private keepRepository: KeepRepository, private taskRepository: TaskRepository, private toastCtrl: ToastController, 
-    private dutil: DisplayUtilService,
-    ) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private keepRepository: KeepRepository, private taskRepository: TaskRepository, private toastCtrl: ToastController) {
     this.selectedTask = navParams.get('selectedTask');
     this.imgUrl = navParams.get('imgUrl');
   }
@@ -39,12 +37,12 @@ export class InputKeepPage {
 
   input() {
     this.keepRepository.add(new Keep({ imgUrl: this.imgUrl, memo: this.memo, parentRef: this.selectedTask }))
-    .then(() => {
-      this.toastCtrl.create({ message: '候補を追加しました！', position: 'top', duration: 2000 }).present();
-      this.navCtrl.pop();
-    }).catch((e) => {
-      this.toastCtrl.create({ message: e, position: 'top', duration: 2000 }).present();
-      this.navCtrl.pop();
-    });
+      .then(() => {
+        this.toastCtrl.create({ message: '候補を追加しました！', position: 'top', duration: 2000 }).present();
+        this.navCtrl.pop();
+      }).catch((e) => {
+        this.toastCtrl.create({ message: e, position: 'top', duration: 2000 }).present();
+        this.navCtrl.pop();
+      });
   }
 }
