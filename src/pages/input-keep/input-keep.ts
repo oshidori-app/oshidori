@@ -33,7 +33,7 @@ export class InputKeepPage {
   }
 
   input() {
-    this.keepRepository.add(new Keep({ imageUrl: "", memo: this.memo, parentRef: this.selectedTask }))
+    this.keepRepository.add(new Keep({ imgUrl: "", memo: this.memo, parentRef: this.selectedTask }))
     .then(() => {
       this.toastCtrl.create({ message: '候補を追加しました！', position: 'top', duration: 2000 }).present();
       this.navCtrl.pop();

@@ -18,8 +18,14 @@ export class Keep extends Document implements Collection {
     public parentRef: any = null;
 
     // field
-    public imageUrl: string;
+    public imgUrl: string;
     public memo: string
+    
+    // field
+    public groupId: string   
+    public userId: string
+    public title: string
+    public ｄecisionFlg: boolean
 
     constructor(init?: Partial<Keep>) {
         super();
