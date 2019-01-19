@@ -78,10 +78,12 @@ export class AccountSignupPage {
           });
 
           // GroupとUserを同時に作成する
-          this.groupRepo.add(group)
-            .then(() => {
+          this.groupRepo.add(group, uid)
+            .then((ref) => {
+              Logger.debug(ref);
               // group登録が完了したらuserの登録
-              this.userRepo.add(user)
+              user.parentRef = ref;
+              this.userRepo.add(user, uid)
               .then(() => {
                 this.navCtrl.setRoot(AccountConfirmationCodePage);
               })

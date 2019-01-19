@@ -10,8 +10,8 @@ export class GroupRepository extends BaseRepository {
         super(injector);
      }
 
-    public add(group: Group): Promise<any> {
-        return super.addDocument(group);
+    public add(group: Group, docId: string): Promise<any> {
+        return super.setDocument(group, docId);
     }
 
     public update(group: Group): Promise<any> {
