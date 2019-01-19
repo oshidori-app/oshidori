@@ -35,6 +35,7 @@ import { HttpService } from '../providers/http-service';
 import { ImagePickerService } from '../providers/image-picker.service';
 import { StorageService } from '../providers/storage.service';
 import { StoreService } from '../providers/store.service';
+import { GroupRepository } from '../repository/group.repository';
 import { SubTestRepository } from '../repository/sub-test.repository';
 import { TaskRepository } from '../repository/task.repository';
 import { TestRepository } from '../repository/test.repository';
@@ -114,6 +115,7 @@ import { MyApp } from './app.component';
     TaskRepository,
     TestRepository,
     SubTestRepository,
+    GroupRepository,
     { provide: HttpService, useClass: HttpService }
   ]
 })
