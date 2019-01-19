@@ -36,6 +36,7 @@ import { StorageService } from '../providers/storage.service';
 import { StoreService } from '../providers/store.service';
 import { TaskRepository } from '../repository/task.repository';
 import { TestRepository } from '../repository/test.repository';
+import { KeepRepository } from '../repository/keep.repository';
 import { UserRepository } from '../repository/user.repository';
 import { AccountChangePasswordPage } from './../pages/account-change-password/account-change-password';
 import { AccountForgotPasswordPage } from './../pages/account-forgot-password/account-forgot-password';
@@ -109,6 +110,7 @@ import { MyApp } from './app.component';
     UserRepository,
     TaskRepository,
     TestRepository,
+    KeepRepository,
     { provide: HttpService, useClass: HttpService }
   ]
 })
