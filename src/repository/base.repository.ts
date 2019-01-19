@@ -24,6 +24,18 @@ export abstract class BaseRepository implements Repository {
         });
     }
 
+    public setDocument(model: Collection, docId: string): Promise<any> {
+        return new Promise<any>((resolve, reject) => {
+            this.store.setDocument(model, docId)
+                .then(docRef => {
+                    resolve(docRef);
+                })
+                .catch(err => {
+                    reject(err);
+                });
+        });
+    }
+
     public updateDocument(model: Collection): Promise<any> {
         return new Promise<any>((resolve, reject) => {
             this.store.updateDocument(model)

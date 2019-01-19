@@ -9,8 +9,8 @@ export class UserRepository extends BaseRepository {
         super(injector);
      }
 
-    add(user: User): Promise<any> {
-        return super.addDocument(user);
+    add(user: User, docId: string): Promise<any> {
+        return super.setDocument(user, docId);
     }
 
     update(user: User): void {

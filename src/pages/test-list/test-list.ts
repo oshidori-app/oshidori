@@ -6,7 +6,7 @@ import { Test } from '../../models/test';
 import { AuthService } from '../../providers/auth.service';
 import { Logger } from '../../logger';
 import { StorageService } from '../../providers/storage.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { IonicImageLoader } from 'ionic-image-loader';
 import { SubTestRegistrationPage } from '../test-registration/sub-test-registration';
 
@@ -30,13 +30,14 @@ export class TestListVm {
 export class TestListPage {
 
   public testListVms: TestListVm[];
+  private listSubscription: Subscription;
 
   constructor(public navCtrl: NavController, private testRepo: TestRepository, private auth: AuthService, private storage: StorageService, private dutil: DisplayUtilService) {
   }
 
   private getTests() {
     let test = new Test();
-    this.testRepo.list(test)
+    this.listSubscription = this.testRepo.list(test)
       .subscribe(testList => {
         Logger.debug(testList);
         this.testListVms = testList;
@@ -60,5 +61,9 @@ export class TestListPage {
     Logger.debug("ionViewWillEnter: TeltListPage");
     this.dutil.showLoader("データを読み込んでいます...");
     this.getTests();
+  }
+
+  ionViewDidLeave() {
+    if (this.listSubscription) this.listSubscription.unsubscribe();
   }
 }

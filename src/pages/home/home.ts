@@ -10,6 +10,7 @@ import { TestRegistrationPage } from '../test-registration/test-registration';
 import { TestListPage } from '../test-list/test-list';
 import { Logger } from '../../logger';
 import { DisplayUtilService } from '../../providers/display-util.service';
+import { Subscription } from 'rxjs';
 
 export class TaskListVm {
     title?: string;
@@ -28,6 +29,8 @@ export class HomePage {
     public taskInfoVisible = false;
     public platformWidth = 0;
 
+    private listSubscription: Subscription;
+
     constructor(
         public navCtrl: NavController,
         public platform: Platform,
@@ -44,8 +47,12 @@ export class HomePage {
         this.getTasks();
     }
 
+    ionViewDidLeave() {
+        if (this.listSubscription) this.listSubscription.unsubscribe();
+    }
+
     private getTasks() {
-        this.taskRepo.list(new Task()).subscribe(taskList => {
+        this.listSubscription = this.taskRepo.list(new Task()).subscribe(taskList => {
             Logger.debug(taskList);
             this.taskListVms = taskList;
             this.formatedTaskList = this.formatedArrayForView(2, this.taskListVms)
