@@ -2,32 +2,26 @@
 </ion-header>
 
 <ion-content class="card-background-page" id="home">
-  <ion-grid no-padding responsive-sm >
-    <ion-row responsive-sm *ngFor="let row_tasks of tasks">
-      <ion-col *ngFor="let task of row_tasks">
-        <ion-card class="task {{task.status}}" (click)="goToKeepList(task)">
-          <div class="card-parent">
-            <input class="task_id" type="hidden" value="{{task.id}}">
-            <img class="task_img {{task.status}}" src={{task.src}} *ngIf="task.src != null"/>
-            <div class="no_img" *ngIf="task.src == null">
-              <div class="title">{{task.title}}</div>
-            </div>
-            <div class="task_info animated fadeInUp" *ngIf="taskInfoVisible">
-              <div class="card-title">{{task.title}}</div>
-              <div class="limt">{{task.limit}}</div>
-              <div class="assign">
-                <div class="{{task.assign}} circle right"></div>
-              </div>
-            </div>
-          </div>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <ion-fab right bottom>
-    <input-task-button color="instagram"></input-task-button>
-  </ion-fab>
-  <ion-fab left bottom>
-      <dev-button color="primary"></dev-button>
-  </ion-fab>
+    <ion-grid no-padding responsive-sm>
+        <ion-row responsive-sm *ngFor="let rowTasks of formatedTaskList">
+            <ion-col *ngFor="let task of rowTasks">
+                <ion-card class="task {{task.done}}" (click)="goToKeepList(task)">
+                    <div class="card-parent">
+                        <div class="noimg" *ngIf="!task.DownloadUrl">
+                            <div class="title">{{task.title}}</div>
+                        </div>
+                        <div *ngIf="task.DownloadUrl | async as url">
+                            <img-loader [imgAttributes]="imageAttributes" [src]="url" useImg></img-loader>
+                        </div>
+                    </div>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <ion-fab right bottom>
+        <input-task-button color="instagram"></input-task-button>
+    </ion-fab>
+    <ion-fab left bottom>
+        <dev-button color="primary"></dev-button>
+    </ion-fab>
 </ion-content>

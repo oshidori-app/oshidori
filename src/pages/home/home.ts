@@ -1,93 +1,102 @@
+import { Observable } from 'rxjs';
+import { StorageService } from './../../providers/storage.service';
+import { TaskRepository } from './../../repository/task.repository';
 import { InputTaskPage } from './../input-task/input-task';
 import { Component } from '@angular/core';
-import { NavController} from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { KeepListPage } from '../keep-list/keep-list';
 import { Platform } from 'ionic-angular';
-import { Task } from '../../models/task' ;
+import { Task } from '../../models/task';
 import { AccountPage } from '../account/account';
 import { TestRegistrationPage } from '../test-registration/test-registration';
 import { TestListPage } from '../test-list/test-list';
 import { Logger } from '../../logger';
+import { DisplayUtilService } from '../../providers/display-util.service';
+import { Subscription } from 'rxjs';
+import { ImageAttribute } from 'ionic-image-loader'
 
+export class TaskListVm {
+    title?: string;
+    done?: boolean;
+    imgUrl?: string;
+    DownloadUrl?: Observable<string>;
+}
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html'
+    selector: 'page-home',
+    templateUrl: 'home.html'
 })
 
 export class HomePage {
 
-  public tasks = [];
-  public taskInfoVisible = false;
-  public platformWidth = 0;
+    public taskListVms: TaskListVm[];
+    public formatedTaskList: any[];
+    public taskInfoVisible = false;
+    public platformWidth = 0;
+    public imageAttributes: ImageAttribute[] = [];
+    private listSubscription: Subscription;
 
-  constructor(public navCtrl: NavController, public platform: Platform) {
-    // デバイスの画面幅を取得
-    this.platformWidth = platform.width();
-
-    // パネルのデータを設定
-    // 本来はAPIの返り値の取得処理
-    this.tasks = this.makeTasks();
-  }
-
-  makeTasks(){
-    let xNum = 2;
-    let tasks = [
-      new Task(1,"dress",  "yyyy/MM/dd","assets/img/dress01.jpg",  "finished","shinpu"),
-      new Task(2,"present","yyyy/MM/dd","assets/img/present01.jpg","finished","shinro"),
-      new Task(3,"travel", "yyyy/MM/dd","assets/img/travel01.jpg", "unfinished","shinro"),
-      new Task(4,"food",   "yyyy/MM/dd",null,                      "unfinished","shinro"),
-      new Task(5,"ring",   "yyyy/MM/dd","assets/img/ring01.jpg",   "finished","shinpu"),
-      new Task(6,"place",  "yyyy/MM/dd","assets/img/place01.jpg",  "unfinished","shinpu"),
-      new Task(7,"tuxede", "yyyy/MM/dd","assets/img/tuxede01.jpg", "finished","shinro"),
-      new Task(8,"secret", "yyyy/MM/dd",null,                      "finished","shinpu"),
-      new Task(9,"dress",  "yyyy/MM/dd","assets/img/dress01.jpg",  "finished","shinpu"),
-      new Task(10,"present","yyyy/MM/dd","assets/img/present01.jpg","unfinished","shinro"),
-      new Task(11,"travel", "yyyy/MM/dd","assets/img/travel01.jpg", "unfinished","shinro"),
-      new Task(12,"secret", "yyyy/MM/dd",null,                      "unfinished","shinro"),
-      new Task(13,"ring",   "yyyy/MM/dd","assets/img/ring01.jpg",   "unfinished","shinpu"),
-      new Task(14,"place",  "yyyy/MM/dd","assets/img/place01.jpg",  "unfinished","shinpu"),
-      new Task(15,"tuxede", "yyyy/MM/dd","assets/img/tuxede01.jpg", "unfinished","shinro"),
-      new Task(16,"food",   "yyyy/MM/dd",null,                      "unfinished","shinro"),
-    ]
-    // 表示用に配列を整形
-    let ret = [];
-    for(let i = 0; i < Math.ceil(tasks.length / xNum); i++){
-      var index = i * xNum;
-      ret.push(tasks.slice(index, index + xNum));
+    constructor(
+        public navCtrl: NavController,
+        public platform: Platform,
+        private taskRepo: TaskRepository,
+        private dutil: DisplayUtilService,
+        private strage: StorageService
+    ) {
+        // デバイスの画面幅を取得
+        this.platformWidth = platform.width();
+        this.imageAttributes.push({
+            element: 'class',
+            value: 'task-img'
+        })
     }
-    return ret
-  }
 
-  ionViewDidLoad(){
-    Logger.debug("ionViewDidLoad: homepage")
-  }
-
-  taskInfoViewToggle() {
-    this.taskInfoVisible = !this.taskInfoVisible;
-    if (this.taskInfoVisible){
-      [].forEach.call(document.getElementsByClassName('task_info'),function(taskinfo){
-        taskinfo.classList.remove('fadeOutDown');
-        taskinfo.classList.add('fadeInUp');
-      });
+    ionViewDidEnter() {
+        Logger.debug("ionViewWillEnter: HomePage");
+        this.dutil.showLoader("データを読み込んでいます...");
+        this.getTasks();
     }
-  }
 
-  goToKeepList(task){
-    // APIにtaskでREST投げて返り値からKeepListを生成してページ遷移
-    this.navCtrl.push(KeepListPage, { task: task.id })
-  }
+    ionViewDidLeave() {
+        if (this.listSubscription) this.listSubscription.unsubscribe();
+    }
 
-  goToAccount(){
-    this.navCtrl.push(AccountPage)
-  }
+    private getTasks() {
+        this.listSubscription = this.taskRepo.list(new Task()).subscribe(taskList => {
+            Logger.debug(taskList);
+            this.taskListVms = taskList;
+            taskList.forEach((task, i) => {
+                let DownloadUrl = this.strage.getDownloadURL(task.imgUrl);
+                this.taskListVms[i].DownloadUrl = DownloadUrl
+            })
+            return this.formatedTaskList = this.formatedArrayForView(2, this.taskListVms)
+        })
+    }
 
-  gotoInputTask() {
-    this.navCtrl.push(InputTaskPage)
-  }
-  gotoTestRegistration() {
-    this.navCtrl.push(TestRegistrationPage)
-  }
-  gotoTestList() {
-    this.navCtrl.push(TestListPage)
-  }
+    formatedArrayForView(xNum: number, array: any[]) {
+        let ret = [];
+        for (let i = 0; i < Math.ceil(array.length / xNum); i++) {
+            var index = i * xNum;
+            ret.push(array.slice(index, index + xNum));
+        }
+        return ret
+    }
+
+    goToKeepList(task: Task) {
+        // APIにtaskでREST投げて返り値からKeepListを生成してページ遷移
+        this.navCtrl.push(KeepListPage, { task: task.ref })
+    }
+
+    goToAccount() {
+        this.navCtrl.push(AccountPage)
+    }
+
+    gotoInputTask() {
+        this.navCtrl.push(InputTaskPage)
+    }
+    gotoTestRegistration() {
+        this.navCtrl.push(TestRegistrationPage)
+    }
+    gotoTestList() {
+        this.navCtrl.push(TestListPage)
+    }
 }

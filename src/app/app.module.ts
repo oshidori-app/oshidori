@@ -45,6 +45,8 @@ import { AccountChangePasswordPage } from './../pages/account-change-password/ac
 import { AccountForgotPasswordPage } from './../pages/account-forgot-password/account-forgot-password';
 import { AccountSigninPage } from './../pages/account-signin/account-signin';
 import { MyApp } from './app.component';
+import { ComponentsModule } from '../components/components.module';
+import { KeepListPage } from '../pages/keep-list/keep-list';
 
 @NgModule({
     declarations: [
@@ -64,6 +66,7 @@ import { MyApp } from './app.component';
         TestRegistrationPage,
         TestMultiRegistrationPage,
         TestListPage,
+        KeepListPage,
         SubTestRegistrationPage,
         DevMenuPage
     ],
@@ -77,7 +80,8 @@ import { MyApp } from './app.component';
         HomePageModule,
         InputTaskPageModule,
         AngularFireStorageModule,
-        IonicImageLoader.forRoot()
+        IonicImageLoader.forRoot(),
+        ComponentsModule
     ],
     bootstrap: [IonicApp],
     entryComponents: [
@@ -93,6 +97,7 @@ import { MyApp } from './app.component';
         RankingPage,
         TabsPage,
         KeepPage,
+        KeepListPage,
         InputKeepPage,
         TestRegistrationPage,
         TestMultiRegistrationPage,

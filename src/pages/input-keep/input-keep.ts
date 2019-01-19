@@ -1,6 +1,10 @@
+import { TaskRepository } from './../../repository/task.repository';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { Task } from '../../models/task';
+import { KeepRepository } from '../../repository/keep.repository';
+import { Keep } from '../../models/keep';
+import { DisplayUtilService } from '../../providers/display-util.service';
 
 /**
  * Generated class for the InputKeepPage page.
@@ -17,35 +21,28 @@ import { Task } from '../../models/task';
 export class InputKeepPage {
   public tasks = [];
   public selectedTask;
+  public memo = "";
+  public imgUrl;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private keepRepository: KeepRepository, private taskRepository: TaskRepository, private toastCtrl: ToastController) {
     this.selectedTask = navParams.get('selectedTask');
+    this.imgUrl = navParams.get('imgUrl');
   }
 
   ionViewDidLoad() {
-    this.tasks = [
-      new Task(1,"dress",  "yyyy/MM/dd","assets/img/dress01.jpg",  "finished","shinpu"),
-      new Task(2,"present","yyyy/MM/dd","assets/img/present01.jpg","finished","shinro"),
-      new Task(3,"travel", "yyyy/MM/dd","assets/img/travel01.jpg", "unfinished","shinro"),
-      new Task(4,"food",   "yyyy/MM/dd",null,                      "unfinished","shinro"),
-      new Task(5,"ring",   "yyyy/MM/dd","assets/img/ring01.jpg",   "finished","shinpu"),
-      new Task(6,"place",  "yyyy/MM/dd","assets/img/place01.jpg",  "unfinished","shinpu"),
-      new Task(7,"tuxede", "yyyy/MM/dd","assets/img/tuxede01.jpg", "finished","shinro"),
-      new Task(8,"secret", "yyyy/MM/dd",null,                      "finished","shinpu"),
-      new Task(9,"dress",  "yyyy/MM/dd","assets/img/dress01.jpg",  "finished","shinpu"),
-      new Task(10,"present","yyyy/MM/dd","assets/img/present01.jpg","unfinished","shinro"),
-      new Task(11,"travel", "yyyy/MM/dd","assets/img/travel01.jpg", "unfinished","shinro"),
-      new Task(12,"secret", "yyyy/MM/dd",null,                      "unfinished","shinro"),
-      new Task(13,"ring",   "yyyy/MM/dd","assets/img/ring01.jpg",   "unfinished","shinpu"),
-      new Task(14,"place",  "yyyy/MM/dd","assets/img/place01.jpg",  "unfinished","shinpu"),
-      new Task(15,"tuxede", "yyyy/MM/dd","assets/img/tuxede01.jpg", "unfinished","shinro"),
-      new Task(16,"food",   "yyyy/MM/dd",null,                      "unfinished","shinro"),
-    ];
+    this.taskRepository.list(new Task()).subscribe(result =>{
+      this.tasks = result;
+    })
   }
 
   input() {
-    //todo repository 呼び出して書き込み
-    this.toastCtrl.create({ message: '候補を追加しました！', position: 'top' }).present();
-    this.navCtrl.pop();
+    this.keepRepository.add(new Keep({ imgUrl: this.imgUrl, memo: this.memo, parentRef: this.selectedTask }))
+      .then(() => {
+        this.toastCtrl.create({ message: '候補を追加しました！', position: 'top', duration: 2000 }).present();
+        this.navCtrl.pop();
+      }).catch((e) => {
+        this.toastCtrl.create({ message: e, position: 'top', duration: 2000 }).present();
+        this.navCtrl.pop();
+      });
   }
 }

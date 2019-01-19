@@ -5,6 +5,7 @@ import { AccountPage } from '../account/account';
 import { TestListPage } from '../test-list/test-list';
 import { TestRegistrationPage } from '../test-registration/test-registration';
 import { TestMultiRegistrationPage } from '../test-registration/test-multi-registration';
+import { KeepPage } from '../keep/keep';
 
 @Component({
   selector: 'develop-menu',
@@ -29,6 +30,10 @@ export class DevMenuPage {
 
   goTestMultipleRegistrationPage() {
     this.navCtrl.push(TestMultiRegistrationPage);
+  }
+
+  goKeepPage() {
+     this.navCtrl.push(KeepPage);
   }
 
   ionViewDidEnter(){

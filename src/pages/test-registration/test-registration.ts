@@ -35,12 +35,14 @@ export class TestRegistrationPage {
     if (form && form.valid) {
       Logger.debug(form);
 
+      // テストのドキュメントを作成
       let test = new Test({
         title: this.testRegistrationVm.title,
         description: this.testRegistrationVm.description,
         imgUrl: this.imgRef
       });
 
+      // データ登録
       this.testRepo.add(test)
         .then((ref) => {
           this.dutil.showToast('登録しました');

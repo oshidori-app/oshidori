@@ -1,47 +1,26 @@
 #home{
-  .task{
-    position: relative;
-  }
-  .task_img{
-    height: 50vw;
-    object-fit: cover;
-  }
-  .no_img{
-    height: 50vw;
-    background-image: url('../../assets/img/oshidori_V2.png');
-    opacity: 0.5;
-    background-color: gray;
-    background-position: center center; 
-    background-repeat: no-repeat;
-    background-size: 20vw;
+    .task{
+        position: relative;
+    }
+    .task-img{
+        height: 50vw;
+        object-fit: cover;
+    }
+    .noimg{
+        height: 50vw;
+        background-image: url('../../assets/img/oshidori_V2.png');
+        opacity: 0.5;
+        background-color: gray;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: 20vw;
+    }
     .title{
-      color: white;
-      font-size: xx-large;
-      text-align: center;
+        color: white;
+        font-size: xx-large;
+        text-align: center;
     }
-  }
-  .task_info{
-    width: 100%;
-    height: 33%;
-    position: absolute;
-    bottom: 0px;
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    padding: 3px;
-    .circle{
-      height: 10px;
-      width: 10px;
-      border-radius: 5px;
-      margin-left: auto;
+    .unfinished{
+        filter:grayscale(100%);
     }
-    .shinro{
-      background-color: lightblue;
-    }
-    .shinpu{
-      background-color: pink;
-    }
-  }
-  .unfinished{
-    filter:grayscale(100%);
-  }
 }
