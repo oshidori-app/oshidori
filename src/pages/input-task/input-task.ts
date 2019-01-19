@@ -1,7 +1,8 @@
-import { TaskRepository } from './../../repository/task.repository';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, ViewController } from 'ionic-angular';
 import { Task } from '../../models/task';
+import { TaskRepository } from './../../repository/task.repository';
+import { DisplayUtilService } from '../../providers/display-util.service';
 
 @IonicPage()
 @Component({
@@ -10,9 +11,17 @@ import { Task } from '../../models/task';
 })
 export class InputTaskPage {
 
-    public title = "";
+    public taskVm: {
+        title?: string
+    } = {};
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private taskRepository: TaskRepository, private toastCtrl: ToastController) {
+    constructor(
+        private navCtrl: NavController,
+        private navParams: NavParams,
+        private viewCtrl: ViewController,
+        private taskRepository: TaskRepository,
+        private dutil: DisplayUtilService
+    ) {
     }
 
     ionViewDidLoad() {
@@ -20,12 +29,19 @@ export class InputTaskPage {
     }
 
     input() {
-        this.taskRepository.add(new Task({title: this.title, done: false, keepId: null})
-        ).then(() => {
-                this.toastCtrl.create({ message: 'タスクを登録しました！', position: 'top', duration: 2000 }).present();
-                this.navCtrl.pop();
-            }).catch(() => {
-                this.toastCtrl.create({ message: 'タスク登録に失敗しました。時間をおいて再度試してください。', position: 'top', duration: 2000 }).present();
+        let task = new Task({
+            title: this.taskVm.title
+        });
+        this.taskRepository.add(task)
+            .then(() => {
+                this.dutil.showToast('タスクを登録しました！');
+            })
+            .catch(() => {
+                this.dutil.showToast('タスク登録に失敗しました。時間をおいて再度試してください。');
+            })
+            .then(() => {
+                this.viewCtrl.dismiss();
             });
+
     }
 }

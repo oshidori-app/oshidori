@@ -9,6 +9,7 @@ import { Camera } from '@ionic-native/camera';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
+import { IonicStorageModule } from '@ionic/storage';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { IonicImageLoader } from 'ionic-image-loader';
 import { environment } from "../environments/environment";
@@ -36,16 +37,15 @@ import { ImagePickerService } from '../providers/image-picker.service';
 import { StorageService } from '../providers/storage.service';
 import { StoreService } from '../providers/store.service';
 import { GroupRepository } from '../repository/group.repository';
+import { KeepRepository } from '../repository/keep.repository';
 import { SubTestRepository } from '../repository/sub-test.repository';
 import { TaskRepository } from '../repository/task.repository';
 import { TestRepository } from '../repository/test.repository';
-import { KeepRepository } from '../repository/keep.repository';
 import { UserRepository } from '../repository/user.repository';
 import { AccountChangePasswordPage } from './../pages/account-change-password/account-change-password';
 import { AccountForgotPasswordPage } from './../pages/account-forgot-password/account-forgot-password';
 import { AccountSigninPage } from './../pages/account-signin/account-signin';
 import { MyApp } from './app.component';
-
 @NgModule({
   declarations: [
     MyApp,
@@ -78,7 +78,8 @@ import { MyApp } from './app.component';
     InputTaskPageModule,
     KeepListPageModule,
     AngularFireStorageModule,
-    IonicImageLoader.forRoot()
+    IonicImageLoader.forRoot(),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [

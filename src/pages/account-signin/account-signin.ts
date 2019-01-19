@@ -7,6 +7,9 @@ import { NavController, LoadingController } from 'ionic-angular';
 import { AuthService } from '../../providers/auth.service';
 import { DisplayUtilService } from '../../providers/display-util.service';
 import { Logger } from '../../logger';
+import { GroupRepository } from '../../repository/group.repository';
+import { UserRepository } from '../../repository/user.repository';
+import { Group } from '../../models/group';
 export class SignInDetails {
   username: string;
   password: string;
@@ -23,6 +26,8 @@ export class AccountSigninPage {
   constructor(private navCtrl: NavController,
     private loadingCtrl: LoadingController,
     private auth: AuthService,
+    private groupRepo: GroupRepository,
+    private userRepo: UserRepository,
     private dutil: DisplayUtilService) {
     this.signInDetails = new SignInDetails();
   }
@@ -78,6 +83,11 @@ export class AccountSigninPage {
           });
           return;
         }
+
+        // groupへの参照を取得
+        let group = new Group({
+        })
+
         this.navCtrl.popToRoot({ animate: false });
         this.allowButtonPresses = true;
         this.navCtrl.push(HomePage);

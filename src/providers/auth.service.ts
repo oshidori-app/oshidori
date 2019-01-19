@@ -4,7 +4,7 @@ import { AngularFireAuth } from "@angular/fire/auth";
 @Injectable()
 export class AuthService {
 
-  constructor(private afAuth: AngularFireAuth) { }
+  constructor(private afAuth: AngularFireAuth, private storage: Storage) { }
 
   signUp(auth: { email: string; password: string }): Promise<any> {
     return new Promise<any>((resolve, reject) => {
@@ -36,6 +36,7 @@ export class AuthService {
     return new Promise<any>((resolve, reject) => {
       this.afAuth.auth.signInWithEmailAndPassword(auth.email, auth.password)
         .then(res => {
+          this.storage.set('userId', res.user.uid);
           resolve(res);
         }).catch(err => {
           reject(err);
@@ -49,6 +50,7 @@ export class AuthService {
         // this.afStore.firestore.disableNetwork();
         this.afAuth.auth.signOut()
           .then(() => {
+            this.storage.remove('userId');
             resolve();
           }).catch(err => {
             reject(err);
@@ -71,4 +73,12 @@ export class AuthService {
   getUser() {
     return this.afAuth.auth.currentUser;
   }
+
+  getUserId() {
+    let userId = this.storage.get('userId');
+    if (!userId) userId = null;
+    return userId;
+  }
+
+
 }
