@@ -1,15 +1,15 @@
-import { Task } from './../../models/task';
 import { Component, NgModule } from '@angular/core';
 import { DisplayUtilService } from '../../providers/display-util.service';
 import { KeepRepository } from '../../repository/keep.repository';
 import { Keep } from '../../models/keep';
-import { AuthService } from '../../providers/auth.service';
 import { Logger } from '../../logger';
 import { StorageService } from '../../providers/storage.service';
 import { Observable } from 'rxjs';
 import { IonicImageLoader } from 'ionic-image-loader';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { KeepPage } from '../keep/keep';
+import { IonicPageModule } from 'ionic-angular';
+import { ComponentsModule } from '../../components/components.module';
 
 /**
  * Generated class for the KeepListPage page.
@@ -31,26 +31,27 @@ export class KeepVm {
 })
 
 @NgModule({
+  declarations: [
+    KeepListPage
+  ],
   imports: [
+    ComponentsModule,
+    IonicPageModule,
     IonicImageLoader
   ]
 })
 
 export class KeepListPage {
-  //public keeplist = [];
-  // public taglist = [];
+
   public task;
 
   public keepVmInDL: KeepVm[];
   public keepListVm: (KeepVm[])[];
 
-  // public keepListVm: keepListVms[];
-
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private keepRepo: KeepRepository,
-    private auth: AuthService,
     private storage: StorageService,
     private dutil: DisplayUtilService,
   ) {
@@ -93,8 +94,6 @@ export class KeepListPage {
         ret.push(this.keepVmInDL.slice(index, index + xNum));
       }
       this.keepListVm = ret;
-      Logger.debug("aaaaa");
-      Logger.debug(this.keepListVm);
 
     });
   }
@@ -108,5 +107,6 @@ export class KeepListPage {
   goToKeep(task) {
     this.navCtrl.push(KeepPage, { keep: task });
   }
+
 }
 
