@@ -61,9 +61,9 @@ export class HomePage {
         return ret
     }
 
-    goToKeepList(task) {
+    goToKeepList(task: Task) {
         // APIにtaskでREST投げて返り値からKeepListを生成してページ遷移
-        this.navCtrl.push(KeepListPage, { task: task.id })
+        this.navCtrl.push(KeepListPage, { task: task.ref })
     }
 
     goToAccount() {

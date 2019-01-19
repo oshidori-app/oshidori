@@ -17,7 +17,7 @@
   <img src="assets/img/noimage.png" />
   <ion-item>
     <ion-label stacked>MEMO</ion-label>
-    <ion-textarea></ion-textarea>
+    <ion-textarea [(ngModel)]="memo"></ion-textarea>
   </ion-item>
   <ion-list radio-group>
     <ion-item *ngFor="let task of tasks">
