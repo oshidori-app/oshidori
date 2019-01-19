@@ -2,13 +2,13 @@ import { Injectable, Injector } from '@angular/core';
 import { Repository } from "./repository";
 import { StoreService } from '../providers/store.service';
 import { Observable } from "rxjs";
-import { Collection } from '../models/Collection';
+import { Collection } from '../models/collection';
 
 @Injectable()
 export abstract class BaseRepository implements Repository {
 
     protected store: StoreService;
-    constructor(injector: Injector) { 
+    constructor(injector: Injector) {
         this.store = injector.get(StoreService);
     }
 
