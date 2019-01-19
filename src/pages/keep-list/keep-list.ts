@@ -4,7 +4,7 @@ import { KeepRepository } from '../../repository/keep.repository';
 import { Keep } from '../../models/keep';
 import { Logger } from '../../logger';
 import { StorageService } from '../../providers/storage.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { IonicImageLoader } from 'ionic-image-loader';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { KeepPage } from '../keep/keep';
@@ -46,6 +46,8 @@ export class KeepListPage {
   public keepVmInDL: KeepVm[];
   public keepListVm: (KeepVm[])[];
 
+  private listSubscription: Subscription;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -73,8 +75,13 @@ export class KeepListPage {
 
   private getKeeps() {
 
-    let keep = new Keep();
-    this.keepRepo.list(keep).subscribe(keepList => {
+    let keep = new Keep({
+      parentRef: this.task
+    });
+
+    Logger.debug('keep 　一覧');
+    Logger.debug(keep);
+    this.listSubscription = this.keepRepo.list(keep).subscribe(keepList => {
       Logger.debug(keepList);
 
       // 一旦keepVmInDLに格納して、downloadUrlを付与
@@ -100,6 +107,10 @@ export class KeepListPage {
     this.dutil.showLoader("データを読み込んでいます...");
     //this.addkeeps();
     this.getKeeps();
+  }
+
+  ionViewDidLeave() {
+    if (this.listSubscription) this.listSubscription.unsubscribe();
   }
 
   goToKeep(task) {

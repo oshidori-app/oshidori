@@ -94,11 +94,13 @@ export class AccountSigninPage {
         this.clientStorage.get('userRef')
           .then(val => {
 
+            let ref = val;
             // 参照がクライアントストレージにない場合。アプリ再インストール。サインアップを別端末でしたなど。
             if(!val || val == ''){
+              ref = 'groups/'+ this.auth.getUser().uid + '/users/' + this.auth.getUser().uid 
               //TODO firebaseのidからたどる
             }
-            this.subscription = this.userRepo.find(val)
+            this.subscription = this.userRepo.find(ref)
             .subscribe(user => {
               Logger.debug('find user');
               Logger.debug(user);

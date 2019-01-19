@@ -25,8 +25,8 @@ export class InputKeepButtonComponent {
     private camera: Camera,
     private dutil: DisplayUtilService,
     private storage: StorageService) {
-    console.log(this.task);
-  }
+      console.log(this.task);
+      }
 
   showMenu() {
     const actionSheet = this.actionSheetCtrl.create({
@@ -36,7 +36,7 @@ export class InputKeepButtonComponent {
           handler: () => {
             // revisit: await したい...
             const next = (url) => this.navCtrl.push(InputKeepPage, { selectedTask: this.task, imgUrl: url });
-            this.takePhotoAndUpload(next);
+             this.takePhotoAndUpload(next);
           }
         }, {
           text: 'ライブラリから選択する',
@@ -76,7 +76,7 @@ export class InputKeepButtonComponent {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64:
       const selectedPhoto = this.dataURItoBlob('data:image/jpeg;base64,' + imageData);
-      
+
       const fileName = uuid();
       const uploadTask = this.storage.uploadBlob(selectedPhoto, fileName);
       uploadTask.snapshotChanges().pipe(
