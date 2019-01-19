@@ -17,11 +17,12 @@
   <ion-list> 
     <ion-item>
       <ion-label color="primary" stacked></ion-label>
-      <ion-input type="text" placeholder="タイトル"></ion-input>
+      <ion-input type="text" placeholder="タイトル" [(ngModel)]="title"></ion-input>
     </ion-item>
   </ion-list>
     
   <br>
-  <button ion-button block color="light">追加</button>
+  <!-- todo 処理中は非活性にするなどしたい -->
+  <button ion-button block color="light" (click)="input()">追加</button>
   
 </ion-content>

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
-import { Logger } from '../../providers/logger.service';
+import { Logger } from '../../logger';
 
 @Component({
   templateUrl: 'keep-add-dev.html',

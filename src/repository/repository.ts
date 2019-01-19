@@ -1,13 +1,11 @@
-export interface Repository<T> {
+import { Collection } from "../models/collection";
+
+export interface Repository {
     
-    add(item: T) : void
+    addDocument(item: Collection) : void
 
-    update(item: T): void
+    updateDocument(item: Collection): void
 
-    delete(item: T): void
-
-    // all(): any
-
-    // list(item: T): any
+    listDocument(item: Collection) : any
 
 }

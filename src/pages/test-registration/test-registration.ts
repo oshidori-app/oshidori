@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { DisplayUtilService } from '../../providers/display-util.service';
 import { TestRepository } from '../../repository/test.repository';
-import { Logger } from '../../providers/logger.service';
 import { Test } from '../../models/test';
 import { AuthService } from '../../providers/auth.service';
 import { CameraOptions, Camera } from '@ionic-native/camera';
@@ -10,6 +9,7 @@ import { v4 as uuid } from 'uuid';
 import { StorageService } from '../../providers/storage.service';
 import { finalize } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
+import { Logger } from '../../logger';
 
 @Component({
   selector: 'page-test-registration',
@@ -19,67 +19,32 @@ export class TestRegistrationPage {
 
   public testRegistrationVm: {
     title?: string,
-    description?: string
+    description?: string,
+    uploadPercent?: string,
+    downloadUrl?: Observable<string>,
   } = {};
 
-  public uploadPercent;
-  public selectedPhoto: Blob;
-  public downloadURL: Observable<string>;
+  private selectedPhoto: Blob;
+  private imgRef: string = null;
 
   constructor(public navCtrl: NavController, private testRepo: TestRepository, private auth: AuthService, private storage: StorageService, private dutil: DisplayUtilService, private camera: Camera) {
     this.selectedPhoto = null;
-  }
-
-  onClickCameraSelection(form) {
-      Logger.debug(form);
-
-      const options: CameraOptions = {
-        quality: 50,
-        // targetHeight: 200,
-        // targetWidth: 200,
-        destinationType: this.camera.DestinationType.DATA_URL, //Base64形式で返却
-        encodingType: this.camera.EncodingType.JPEG,
-        mediaType: this.camera.MediaType.PICTURE
-      }
-  
-      this.camera.getPicture(options).then((imageData) => {
-        // base64をBlobに変換
-        this.selectedPhoto = this.dataURItoBlob('data:image/jpeg;base64,' + imageData);
-        let fileName = uuid();
-        if (this.selectedPhoto) {
-          this.dutil.showLoader('アップロードしています...');
-          let task = this.storage.uploadBlob(this.selectedPhoto, fileName);
-          this.uploadPercent = task.percentageChanges();
-          task.snapshotChanges().pipe(
-            finalize(() => {
-              this.downloadURL = task.ref.getDownloadURL();
-              this.dutil.dismissLoader();
-              Logger.debug("登録完了");
-            })
-          ).subscribe();
-        }
-      }).catch(err => {
-        console.log(err);
-      });
-
-
   }
 
   onClickRegistration(form) {
     if (form && form.valid) {
       Logger.debug(form);
 
-      let user = this.auth.getUser();
+      // テストのドキュメントを作成
       let test = new Test({
-        groupId: user.uid, //TODO 認証成功したらグローバル変数から取得したい
-        userId: user.uid, //TODO 認証成功したらグローバル変数から取得したい
         title: this.testRegistrationVm.title,
-        description: this.testRegistrationVm.description
-      }
-      );
+        description: this.testRegistrationVm.description,
+        imgUrl: this.imgRef
+      });
 
+      // データ登録
       this.testRepo.add(test)
-        .then(() => {
+        .then((ref) => {
           this.dutil.showToast('登録しました');
         })
         .catch(err => {
@@ -90,36 +55,20 @@ export class TestRegistrationPage {
     }
   }
 
-  onClickImageSelection(form) {
-    const options: CameraOptions = {
-      quality: 50,
-      // targetHeight: 200,
-      // targetWidth: 200,
-      destinationType: this.camera.DestinationType.DATA_URL, //Base64形式で返却
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
-    }
-
-    this.camera.getPicture(options).then((imageData) => {
-      // base64をBlobに変換
-      this.selectedPhoto = this.dataURItoBlob('data:image/jpeg;base64,' + imageData);
-    }).catch(err => {
-      console.log(err);
-    });
-  }
   onChangeFileSelection(event) {
     const files = event.target.files;
     const file = files[0];
 
-    let task = this.storage.uploadFile(file, uuid());
-    this.uploadPercent = task.percentageChanges();
-    task.snapshotChanges().pipe(
-      finalize(() => {
-        this.downloadURL = task.ref.getDownloadURL();
-        this.dutil.dismissLoader();
-        Logger.debug("登録完了");
-      })
-    ).subscribe();
+    let uploadTask = this.storage.uploadFile(file, uuid());
+      this.testRegistrationVm.uploadPercent = uploadTask.percentageChanges();
+      uploadTask.snapshotChanges().pipe(
+        finalize(() => {
+          this.testRegistrationVm.downloadUrl = uploadTask.ref.getDownloadURL();
+          this.imgRef = uploadTask.fullPath,
+            this.dutil.dismissLoader();
+          Logger.debug("登録完了");
+        })
+      ).subscribe();
   }
 
   dataURItoBlob(dataURI) {
@@ -132,4 +81,7 @@ export class TestRegistrationPage {
     return new Blob([new Uint8Array(array)], { type: 'image/jpeg' });
   };
 
+  ionViewDidEnter() {
+    Logger.debug("ionViewDidEnter: TestRegistrationPage")
+  }
 }

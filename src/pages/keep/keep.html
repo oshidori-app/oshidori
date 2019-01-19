@@ -4,23 +4,43 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
+
 <ion-header>
-
   <ion-navbar color="dark">
-    <ion-title>{{keep.title}}</ion-title>
+    <ion-title>キープ詳細</ion-title>
   </ion-navbar>
-
 </ion-header>
-
 
 <ion-content>
   <ion-card>
-      <ion-item>
-          <p class="right" (click)="showMenu()"><ion-icon name="more"></ion-icon></p>
-      </ion-item>
         <img src="{{keep.src}}" />
+        <ion-item>
+            <p class="right" (click)="showMenu()"><ion-icon name="more"></ion-icon></p>
+        </ion-item>
     <ion-card-content>
         {{keep.description}}
     </ion-card-content>
-  </ion-card>
+
+  <button ion-button icon-only color="danger" clear (click)="manFavChange()">
+        <ion-icon name="heart" ></ion-icon>
+  </button>
+  <button ion-button icon-only color="danger" clear (click)="womanFavChange()">
+      <ion-icon name="heart"></ion-icon>
+  </button>
+  <button ion-button (click)="decideStatusChange()">決定</button>
+
+  <ion-list>
+      <ion-item *ngFor="let t of chats;let i = index" (tap)="changeChat(i)">{{t.name}}</ion-item>
+  </ion-list>
+
+  <form (submit)="addChat()">
+    <ion-list>
+      <ion-item>
+        <ion-label floating>チャット</ion-label>
+        <ion-input type="text" [(ngModel)]="chat" name="chat"></ion-input>
+      </ion-item>
+    </ion-list>
+    <button type="submit" ion-button block>追加</button>
+  </form>
+</ion-card>
 </ion-content>

@@ -1,3 +1,9 @@
+<ion-header>
+    <ion-navbar>
+      <ion-title>テストエンティティ一覧</ion-title>
+    </ion-navbar>
+</ion-header>
+
 <ion-content padding>
   <ion-card class="singlePost" *ngFor="let test of testListVms">
     <ion-item>
@@ -7,41 +13,27 @@
       <div>{{test.description}}</div>
       <ion-row>
         <ion-col>
-          <button ion-button icon-start clear small>
+          <button ion-button icon-start clear small (click)="onClickToSubCollection(test)">
             <ion-icon name="text"></ion-icon>
-            <div>コメント</div>
+            <div>サブコレクションへ</div>
           </button>
         </ion-col>
         <ion-col>
-          <button ion-button icon-start clear small>
-            <ion-icon name="create"></ion-icon>
-            <div>編集</div>
-          </button>
-        </ion-col>
-        <ion-col>
-          <button ion-button icon-start clear small>
-            <ion-icon name="trash"></ion-icon>
-            <div>削除</div>
-          </button>
+          <ion-note>
+            {{test.refPath}}
+          </ion-note>
         </ion-col>
         <ion-col class="postedTime">
           <ion-note>
-            {{test.createdDate}}
+            {{test.created}}
           </ion-note>
         </ion-col>
+      </ion-row>
+      <ion-row>
+          <div *ngIf="test.downloadUrl | async as url">
+              <img-loader [src]="url" useImg></img-loader><br>
+          </div>
       </ion-row>
     </ion-card-content>
   </ion-card>
 </ion-content>
-
-<!-- <ion-list>
-  <ion-item>
-    <ion-lbale [(ngModel)]="testListVm.title" type="text" name="title">
-      </ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label [(ngModel)]="testListVm.description" type="text" name="description">
-      </ion-textarea>
-  </ion-item>
-</ion-list> -->
-

@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-navbar color="dark">
+    <ion-title>テストサブコレクション登録</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+
+  <form #registrationForm="ngForm" novalidate>
+    <p>・テストサブコレクションのFireStoreへの登録</p>
+    <ion-list>
+      <ion-item>
+        <ion-input [(ngModel)]="subTestRegistrationVm.title" type="text" name="title" placeholder="title"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-textarea [(ngModel)]="subTestRegistrationVm.description" type="text" name="description" placeholder="Description"></ion-textarea>
+      </ion-item>
+    </ion-list>
+  </form>
+  <button ion-button (click)="onClickRegistration(registrationForm)" type="submit">登録</button>
+</ion-content>

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { DisplayUtilService } from '../../providers/display-util.service';
-import { Logger } from '../../providers/logger.service';
 @Component({
   templateUrl: 'account-change-password.html',
 })

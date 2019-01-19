@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-navbar color="dark">
+    <ion-title>テスト複数登録</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+
+  <form #registrationForm="ngForm" novalidate>
+
+    <p>・複数画像ImagePicker(native)で選択肢、Storageにアップロード</p>
+    <button ion-button (click)="onClickSelectPhotoButton()" color="secondary">写真を選択する(native only)</button>
+    <ion-card *ngFor="let image of imageVms">
+      <ion-card-content>
+        <ion-row>
+          <div>{{ image.uploadPercent | async }}</div>
+        </ion-row>
+        <ion-row>
+            <div *ngIf="image.downloadUrl | async as url">
+                <img-loader [src]="url" useImg></img-loader><br>
+            </div>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </form>
+
+</ion-content>
