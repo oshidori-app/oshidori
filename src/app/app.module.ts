@@ -1,3 +1,4 @@
+import { CommentRepository } from '../repository/comment.repository';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
@@ -20,7 +21,6 @@ import { DevMenuPage } from '../pages/develop/develop-menu';
 import { HomePageModule } from '../pages/home/home.module';
 import { InputKeepPage } from '../pages/input-keep/input-keep';
 import { KeepAddDevPage } from '../pages/keep-add-dev/keep-add-dev';
-import { KeepListPageModule } from '../pages/keep-list/keep-list.module';
 import { KeepPage } from '../pages/keep/keep';
 import { RankingPage } from '../pages/ranking/ranking';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -45,6 +45,8 @@ import { AccountChangePasswordPage } from './../pages/account-change-password/ac
 import { AccountForgotPasswordPage } from './../pages/account-forgot-password/account-forgot-password';
 import { AccountSigninPage } from './../pages/account-signin/account-signin';
 import { MyApp } from './app.component';
+import { ComponentsModule } from '../components/components.module';
+import { KeepListPage } from '../pages/keep-list/keep-list';
 import { InputTaskPage } from '../pages/input-task/input-task';
 @NgModule({
   declarations: [
@@ -60,6 +62,7 @@ import { InputTaskPage } from '../pages/input-task/input-task';
     RankingPage,
     TabsPage,
     KeepPage,
+    KeepListPage,
     InputKeepPage,
     InputTaskPage,
     TestRegistrationPage,
@@ -76,10 +79,10 @@ import { InputTaskPage } from '../pages/input-task/input-task';
     AngularFireAuthModule,
     AngularFirestoreModule,
     HomePageModule,
-    KeepListPageModule,
     AngularFireStorageModule,
     IonicImageLoader.forRoot(),
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    ComponentsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -95,6 +98,7 @@ import { InputTaskPage } from '../pages/input-task/input-task';
     RankingPage,
     TabsPage,
     KeepPage,
+    KeepListPage,
     InputKeepPage,
     InputTaskPage,
     TestRegistrationPage,
@@ -123,4 +127,5 @@ import { InputTaskPage } from '../pages/input-task/input-task';
     { provide: HttpService, useClass: HttpService }
   ]
 })
+
 export class AppModule { }
