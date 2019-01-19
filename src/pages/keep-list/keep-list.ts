@@ -9,7 +9,6 @@ import { IonicImageLoader } from 'ionic-image-loader';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { KeepPage } from '../keep/keep';
 import { IonicPageModule } from 'ionic-angular';
-import { ComponentsModule } from '../../components/components.module';
 
 /**
  * Generated class for the KeepListPage page.
@@ -35,8 +34,7 @@ export class KeepVm {
     KeepListPage
   ],
   imports: [
-    ComponentsModule,
-    IonicPageModule,
+    IonicPageModule.forChild(KeepListPage),
     IonicImageLoader
   ]
 })

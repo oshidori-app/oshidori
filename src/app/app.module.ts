@@ -42,6 +42,8 @@ import { AccountChangePasswordPage } from './../pages/account-change-password/ac
 import { AccountForgotPasswordPage } from './../pages/account-forgot-password/account-forgot-password';
 import { AccountSigninPage } from './../pages/account-signin/account-signin';
 import { MyApp } from './app.component';
+import { ComponentsModule } from '../components/components.module';
+
 
 @NgModule({
   declarations: [
@@ -65,6 +67,7 @@ import { MyApp } from './app.component';
     DevMenuPage
   ],
   imports: [
+    ComponentsModule,
     HttpModule,
     BrowserModule,
     IonicModule.forRoot(MyApp),
