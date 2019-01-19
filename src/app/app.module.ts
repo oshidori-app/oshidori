@@ -20,8 +20,8 @@ import { HomePageModule } from '../pages/home/home.module';
 import { InputKeepPage } from '../pages/input-keep/input-keep';
 import { InputTaskPageModule } from '../pages/input-task/input-task.module';
 import { KeepAddDevPage } from '../pages/keep-add-dev/keep-add-dev';
-import { KeepListPageModule } from '../pages/keep-list/keep-list.module';
 import { KeepPage } from '../pages/keep/keep';
+import { KeepListPage } from '../pages/keep-list/keep-list';
 import { RankingPage } from '../pages/ranking/ranking';
 import { TabsPage } from '../pages/tabs/tabs';
 import { TasksCreatePage } from '../pages/tasks-create/tasks-create';
@@ -57,6 +57,7 @@ import { MyApp } from './app.component';
     RankingPage,
     TabsPage,
     KeepPage,
+    KeepListPage,
     InputKeepPage,
     TestRegistrationPage,
     TestMultiRegistrationPage,
@@ -72,7 +73,6 @@ import { MyApp } from './app.component';
     AngularFirestoreModule,
     HomePageModule,
     InputTaskPageModule,
-    KeepListPageModule,
     AngularFireStorageModule,
     IonicImageLoader.forRoot()
   ],
@@ -90,6 +90,7 @@ import { MyApp } from './app.component';
     RankingPage,
     TabsPage,
     KeepPage,
+    KeepListPage,
     InputKeepPage,
     TestRegistrationPage,
     TestMultiRegistrationPage,

@@ -1,16 +1,15 @@
 import { Task } from './../../models/task';
-import { DisplayUtilService } from '../../providers/display-util.service';
 import { Component, NgModule } from '@angular/core';
-import { IonicPage, NavController, NavParams, ActionSheetController, AlertController } from 'ionic-angular';
-import { KeepPage } from '../keep/keep';
-import { Observable } from 'rxjs';
-import { Keep } from '../../models/keep';
-import { Logger } from '../../logger';
-import { AuthService } from '../../providers/auth.service';
-import { StorageService } from '../../providers/storage.service';
+import { DisplayUtilService } from '../../providers/display-util.service';
 import { KeepRepository } from '../../repository/keep.repository';
+import { Keep } from '../../models/keep';
+import { AuthService } from '../../providers/auth.service';
+import { Logger } from '../../logger';
+import { StorageService } from '../../providers/storage.service';
+import { Observable } from 'rxjs';
 import { IonicImageLoader } from 'ionic-image-loader';
-
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { KeepPage } from '../keep/keep';
 
 /**
  * Generated class for the KeepListPage page.
@@ -32,7 +31,7 @@ export class KeepListVm {
 })
 
 @NgModule({
-  imports:[
+  imports: [
     IonicImageLoader
   ]
 })
@@ -48,32 +47,30 @@ export class KeepListPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private keepRepo: KeepRepository,
-    private auth: AuthService, 
+    private auth: AuthService,
     private storage: StorageService,
-    private dutil: DisplayUtilService, 
-    public actionSheetCtrl: ActionSheetController,
-    public alertCtrl: AlertController
-    ) {
-      this.task = navParams.get('task');
-    }
+    private dutil: DisplayUtilService,
+  ) {
+    this.task = navParams.get('task');
+  }
 
   private addkeeps() {
-     let keepReg = new Keep({
+    let keepReg = new Keep({
       title: 'dress',
       imgUrl: 'content/image01.jpg'
     });
     this.keepRepo.add(keepReg)
-    .then((ref) => {
-      // Logger.debug(ref);
-      // test.ref = ref;
-      // this.testRepo.update(test);
-      this.dutil.showToast('登録しました');
-    })
-    .catch(err => {
-      this.dutil.showToast(err);
-      Logger.error(err);
-      return;
-    });
+      .then((ref) => {
+        // Logger.debug(ref);
+        // test.ref = ref;
+        // this.testRepo.update(test);
+        //this.dutil.showToast('登録しました');
+      })
+      .catch(err => {
+        this.dutil.showToast(err);
+        Logger.error(err);
+        return;
+      });
   }
 
   private getKeeps() {
@@ -83,7 +80,10 @@ export class KeepListPage {
       this.keepListVms = keepList;
       keepList.forEach((keep, i) => {
         let imageURL = this.storage.getDownloadURL(keep.imgUrl);
-          this.keepListVms[i].downloadUrl = imageURL;
+        this.keepListVms[i].downloadUrl = imageURL;
+        Logger.debug(imageURL);
+        Logger.debug(keep.imgUrl);
+        Logger.debug(this.keepListVms[i].downloadUrl);
       });
     });
   }
@@ -95,7 +95,7 @@ export class KeepListPage {
 
   ionViewWillEnter() {
     this.dutil.showLoader("データを読み込んでいます...");
-    //this.addkeeps();
+    this.addkeeps();
     this.getKeeps();
   }
 
@@ -131,7 +131,9 @@ export class KeepListPage {
   // }
 
   goToKeep(task) {
-    this.navCtrl.push(KeepPage, {keep: task});
+    // this.navCtrl.push(KeepPage, { keep: task });
   }
 }
+
+//export class SharedModule {}
 

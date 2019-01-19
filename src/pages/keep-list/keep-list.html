@@ -14,6 +14,7 @@
     </ion-title>
   </ion-navbar>
 </ion-header>
+
 <ion-content class="KeepList">
   <ion-grid no-padding>
     <ion-row *ngFor="let keep of keepListVms">
@@ -22,13 +23,13 @@
 {{keep.ion-title}}
         <img src="{{keep.src}}" />
       </ion-col> -->
-      
-          <!-- <div *ngIf="keep.downloadUrl | async as url">
-        <img-loader src="url" useImg></img-loader>
-      </div> -->
+
+      <div *ngIf="keep.downloadUrl | async as url">
+        <img-loader [src]="url" useImg></img-loader><br>
+      </div>
     </ion-row>
   </ion-grid>
   <ion-fab right bottom>
-    <input-keep-button color="instagram" [task]="task"></input-keep-button>
+    <!-- <input-keep-button color="instagram" [task]="task"></input-keep-button> -->
   </ion-fab>
 </ion-content>
