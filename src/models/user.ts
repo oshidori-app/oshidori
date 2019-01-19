@@ -13,6 +13,7 @@ export class User extends Document implements Collection {
     public userId: string
     public gender: string
     public birthdate: string
+    public groupRef: any
 
     constructor(init?: Partial<User>) {
         super();

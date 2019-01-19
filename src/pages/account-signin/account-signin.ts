@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { HomePage } from '../home/home';
 import { AccountForgotPasswordPage } from '../account-forgot-password/account-forgot-password';
 import { AccountConfirmationCodePage } from '../account-confirmation-code/account-confirmation-code';
@@ -7,6 +7,12 @@ import { NavController, LoadingController } from 'ionic-angular';
 import { AuthService } from '../../providers/auth.service';
 import { DisplayUtilService } from '../../providers/display-util.service';
 import { Logger } from '../../logger';
+import { GroupRepository } from '../../repository/group.repository';
+import { UserRepository } from '../../repository/user.repository';
+import { Group } from '../../models/group';
+import { User } from '../../models/user';
+import { Storage } from '@ionic/storage';
+import { Subscription } from 'rxjs';
 export class SignInDetails {
   username: string;
   password: string;
@@ -19,10 +25,14 @@ export class SignInDetails {
 export class AccountSigninPage {
 
   public signInDetails: SignInDetails;
+  private subscription: Subscription;
 
   constructor(private navCtrl: NavController,
     private loadingCtrl: LoadingController,
     private auth: AuthService,
+    private groupRepo: GroupRepository,
+    private userRepo: UserRepository,
+    private clientStorage: Storage,
     private dutil: DisplayUtilService) {
     this.signInDetails = new SignInDetails();
   }
@@ -78,6 +88,30 @@ export class AccountSigninPage {
           });
           return;
         }
+
+        // groupへの参照を取得
+        let userRef = null;
+        this.clientStorage.get('userRef')
+          .then(val => {
+
+            // 参照がクライアントストレージにない場合。アプリ再インストール。サインアップを別端末でしたなど。
+            if(!val || val == ''){
+              //TODO firebaseのidからたどる
+            }
+            this.subscription = this.userRepo.find(val)
+            .subscribe(user => {
+              Logger.debug('find user');
+              Logger.debug(user);
+              Logger.debug('client storage saved. groupRef:' + user.groupRef.path);
+              this.clientStorage.set('groupRef', user.groupRef.path)
+                .catch(err => Logger.error(err));
+              Logger.debug('clientStorageSaved');
+              Logger.debug(user.groupRef);
+            });
+          })
+          .catch(err => {
+            Logger.error(err);
+          });
         this.navCtrl.popToRoot({ animate: false });
         this.allowButtonPresses = true;
         this.navCtrl.push(HomePage);
@@ -97,5 +131,9 @@ export class AccountSigninPage {
         this.allowButtonPresses = true;
       }
       );
+  }
+
+  ionViewDidLeave() {
+    if (this.subscription) this.subscription.unsubscribe();
   }
 }

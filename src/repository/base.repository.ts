@@ -1,18 +1,17 @@
 import { Injectable, Injector } from '@angular/core';
-import { Repository } from "./repository";
 import { StoreService } from '../providers/store.service';
 import { Observable } from "rxjs";
 import { Collection } from '../models/collection';
 
 @Injectable()
-export abstract class BaseRepository implements Repository {
+export abstract class BaseRepository {
 
     protected store: StoreService;
     constructor(injector: Injector) {
         this.store = injector.get(StoreService);
     }
 
-    public addDocument(model: Collection): Promise<any> {
+    protected addDocument(model: Collection): Promise<any> {
         return new Promise<any>((resolve, reject) => {
             this.store.addDocument(model)
                 .then(docRef => {
@@ -24,7 +23,7 @@ export abstract class BaseRepository implements Repository {
         });
     }
 
-    public setDocument(model: Collection, docId: string): Promise<any> {
+    protected setDocument(model: Collection, docId: string): Promise<any> {
         return new Promise<any>((resolve, reject) => {
             this.store.setDocument(model, docId)
                 .then(docRef => {
@@ -36,7 +35,7 @@ export abstract class BaseRepository implements Repository {
         });
     }
 
-    public updateDocument(model: Collection): Promise<any> {
+    protected updateDocument(model: Collection): Promise<any> {
         return new Promise<any>((resolve, reject) => {
             this.store.updateDocument(model)
                 .then(docRef => {
@@ -48,7 +47,11 @@ export abstract class BaseRepository implements Repository {
         });
     }
 
-    public listDocument(model: Collection): Observable<{}[]> {
+    protected listDocument(model: Collection): Observable<{}[]> {
         return this.store.listDocument(model)
+    }
+
+    protected findDocument(docRef: any): Observable<{}>{
+        return this.store.findDocument(docRef);
     }
 }

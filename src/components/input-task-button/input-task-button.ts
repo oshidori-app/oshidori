@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ModalController } from 'ionic-angular';
 import { InputTaskPage } from '../../pages/input-task/input-task';
 import { Logger } from '../../logger';
 
@@ -9,10 +9,11 @@ import { Logger } from '../../logger';
 })
 export class InputTaskButtonComponent {
 
-  constructor(private navCtrl: NavController){}
+  constructor(private navCtrl: NavController, private modalCtrl: ModalController){}
 
   goInputTask() {
-    this.navCtrl.push(InputTaskPage);
+    let modal = this.modalCtrl.create(InputTaskPage);
+    modal.present();
   };
 
   ionViewDidLoad(){

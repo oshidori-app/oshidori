@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { AccountConfirmationCodePage } from '../account-confirmation-code/account-confirmation-code';
 import { AuthService } from '../../providers/auth.service';
@@ -8,6 +8,7 @@ import { UserRepository } from '../../repository/user.repository';
 import { Logger } from '../../logger';
 import { GroupRepository } from '../../repository/group.repository';
 import { Group } from '../../models/group';
+import { Storage } from '@ionic/storage';
 export class UserDetails {
   username: string;
   password: string;
@@ -31,6 +32,7 @@ export class AccountSignupPage {
     private auth: AuthService,
     private userRepo: UserRepository,
     private groupRepo: GroupRepository,
+    private clientStorage: Storage,
     private dutil: DisplayUtilService
   ) {
     this.userDetails = new UserDetails();
@@ -79,12 +81,19 @@ export class AccountSignupPage {
 
           // GroupとUserを同時に作成する
           this.groupRepo.add(group, uid)
-            .then((ref) => {
-              Logger.debug(ref);
+            .then((groupRef) => {
+              Logger.debug(groupRef);
               // group登録が完了したらuserの登録
-              user.parentRef = ref;
+              user.parentRef = groupRef;
+              // groupへの参照は自身の初期グループ
+              user.groupRef = groupRef;
               this.userRepo.add(user, uid)
-              .then(() => {
+              .then((userRef) => {
+                Logger.debug('groupRefを追加します：' + groupRef.path);
+                Logger.debug('userRefを追加します：' + userRef.path);
+                // storageにgroup情報を保存
+                this.clientStorage.set('groupRef', groupRef.path);
+                this.clientStorage.set('userRef', userRef.path);
                 this.navCtrl.setRoot(AccountConfirmationCodePage);
               })
               .catch(err => {
@@ -93,7 +102,6 @@ export class AccountSignupPage {
                 Logger.error(err);
                 return;
               });
-
             })
             .catch(err => {
               // TODO 失敗したらfbauthからも消す。
@@ -101,7 +109,6 @@ export class AccountSignupPage {
               Logger.error(err);
               return;
             });
-
 
           this.auth.mailVerify()
             .then(res => {

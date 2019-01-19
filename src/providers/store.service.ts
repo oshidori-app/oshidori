@@ -125,6 +125,18 @@ export class StoreService {
                 })
         })
     }
+
+    /**
+     * ドキュメントへの参照を引数で受け取り、1件のドキュメントを返却する。
+     *
+     * @param {*} docRef
+     * @returns
+     * @memberof StoreService
+     */
+    public findDocument(docRef: any) {
+        return this.afStore.doc(docRef).valueChanges();
+    }
+
     // 現在のfirebaseではcustom objectを引数としてサポートしていないので、
     // plainなオブジェクトに変換する必要あり。
     // https://github.com/firebase/firebase-js-sdk/issues/311
