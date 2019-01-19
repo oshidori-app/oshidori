@@ -26,6 +26,7 @@ import { RankingPage } from '../pages/ranking/ranking';
 import { TabsPage } from '../pages/tabs/tabs';
 import { TasksCreatePage } from '../pages/tasks-create/tasks-create';
 import { TestListPage } from '../pages/test-list/test-list';
+import { SubTestRegistrationPage } from '../pages/test-registration/sub-test-registration';
 import { TestMultiRegistrationPage } from '../pages/test-registration/test-multi-registration';
 import { TestRegistrationPage } from '../pages/test-registration/test-registration';
 import { AuthService } from '../providers/auth.service';
@@ -34,6 +35,7 @@ import { HttpService } from '../providers/http-service';
 import { ImagePickerService } from '../providers/image-picker.service';
 import { StorageService } from '../providers/storage.service';
 import { StoreService } from '../providers/store.service';
+import { SubTestRepository } from '../repository/sub-test.repository';
 import { TaskRepository } from '../repository/task.repository';
 import { TestRepository } from '../repository/test.repository';
 import { KeepRepository } from '../repository/keep.repository';
@@ -61,6 +63,7 @@ import { MyApp } from './app.component';
     TestRegistrationPage,
     TestMultiRegistrationPage,
     TestListPage,
+    SubTestRegistrationPage,
     DevMenuPage
   ],
   imports: [
@@ -94,6 +97,7 @@ import { MyApp } from './app.component';
     TestRegistrationPage,
     TestMultiRegistrationPage,
     TestListPage,
+    SubTestRegistrationPage,
     DevMenuPage
   ],
   providers: [
@@ -111,6 +115,7 @@ import { MyApp } from './app.component';
     TaskRepository,
     TestRepository,
     KeepRepository,
+    SubTestRepository,
     { provide: HttpService, useClass: HttpService }
   ]
 })
