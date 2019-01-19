@@ -16,12 +16,9 @@ export class Task extends Document implements Collection {
     public parentRef: any = null;
 
     // field
-    public id:    Number; // todo guid にしたいなぁ
     public title: string;
-    public limit: Date;
-    public src:   string;
-    public status: string; // todo boolean にしたいなぁ
-    public assign: string; // todo assignedTo にしたいなぁ
+    public done: boolean;
+    public keepId: string
 
     constructor(init?: Partial<Task>) {
         super();
