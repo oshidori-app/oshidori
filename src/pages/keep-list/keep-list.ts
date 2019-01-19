@@ -1,12 +1,15 @@
 import { Task } from './../../models/task';
-import { Component } from '@angular/core';
+import { DisplayUtilService } from '../../providers/display-util.service';
+import { Component, NgModule } from '@angular/core';
 import { IonicPage, NavController, NavParams, ActionSheetController, AlertController } from 'ionic-angular';
 import { KeepPage } from '../keep/keep';
 import { Observable } from 'rxjs';
 import { Keep } from '../../models/keep';
 import { Logger } from '../../logger';
 import { AuthService } from '../../providers/auth.service';
+import { StorageService } from '../../providers/storage.service';
 import { KeepRepository } from '../../repository/keep.repository';
+import { IonicImageLoader } from 'ionic-image-loader';
 
 
 /**
@@ -19,13 +22,21 @@ import { KeepRepository } from '../../repository/keep.repository';
 export class KeepListVm {
   title?: string
   imgUrl?: string
+  downloadUrl?: Observable<string>
 }
 
-@IonicPage()
+//@IonicPage()
 @Component({
   selector: 'page-keep-list',
   templateUrl: 'keep-list.html',
 })
+
+@NgModule({
+  imports:[
+    IonicImageLoader
+  ]
+})
+
 export class KeepListPage {
   //public keeplist = [];
   // public taglist = [];
@@ -38,21 +49,53 @@ export class KeepListPage {
     public navParams: NavParams,
     private keepRepo: KeepRepository,
     private auth: AuthService, 
+    private storage: StorageService,
+    private dutil: DisplayUtilService, 
     public actionSheetCtrl: ActionSheetController,
     public alertCtrl: AlertController
     ) {
       this.task = navParams.get('task');
     }
 
+  private addkeeps() {
+     let keepReg = new Keep({
+      title: 'dress',
+      imgUrl: 'content/image01.jpg'
+    });
+    this.keepRepo.add(keepReg)
+    .then((ref) => {
+      // Logger.debug(ref);
+      // test.ref = ref;
+      // this.testRepo.update(test);
+      this.dutil.showToast('登録しました');
+    })
+    .catch(err => {
+      this.dutil.showToast(err);
+      Logger.error(err);
+      return;
+    });
+  }
+
   private getKeeps() {
     let keep = new Keep();
     this.keepRepo.list(keep).subscribe(keepList => {
       Logger.debug(keepList);
       this.keepListVms = keepList;
+      keepList.forEach((keep, i) => {
+        let imageURL = this.storage.getDownloadURL(keep.imgUrl);
+          this.keepListVms[i].downloadUrl = imageURL;
+      });
     });
   }
 
-  ionViewDidLoad() {
+  // ionViewDidLoad() {
+  //   this.addkeeps();
+  //   this.getKeeps();
+  // }
+
+  ionViewWillEnter() {
+    this.dutil.showLoader("データを読み込んでいます...");
+    //this.addkeeps();
     this.getKeeps();
   }
 

@@ -16,10 +16,11 @@ export class Keep extends Document implements Collection {
     public parentRef:any = null; // ルートドキュメントはnullを入れてもらう必要あり。頑張ってもいいけどとりあえずこれで...
     
     // field
-    // public groupId: string   
-    // public userId: string
+    public groupId: string   
+    public userId: string
     public title: string
     public imgUrl: string
+    public ｄecisionFlg: boolean
 
     constructor(init?: Partial<Keep>) {
         super();

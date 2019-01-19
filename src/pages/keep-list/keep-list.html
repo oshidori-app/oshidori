@@ -22,7 +22,10 @@
 {{keep.ion-title}}
         <img src="{{keep.src}}" />
       </ion-col> -->
-      {{keep.title}}
+      
+          <!-- <div *ngIf="keep.downloadUrl | async as url">
+        <img-loader src="url" useImg></img-loader>
+      </div> -->
     </ion-row>
   </ion-grid>
   <ion-fab right bottom>
