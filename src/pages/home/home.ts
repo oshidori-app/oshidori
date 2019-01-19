@@ -18,7 +18,8 @@ import { ImageAttribute } from 'ionic-image-loader'
 export class TaskListVm {
     title?: string;
     done?: boolean;
-    imgUrl?: Observable<string>;
+    imgUrl?: string;
+    DownloadUrl?: Observable<string>;
 }
 @Component({
     selector: 'page-home',
@@ -64,8 +65,8 @@ export class HomePage {
             Logger.debug(taskList);
             this.taskListVms = taskList;
             taskList.forEach((task, i) => {
-                let imgUrl = this.strage.getDownloadURL(task.imgUrl);
-                this.taskListVms[i].imgUrl = imgUrl
+                let DownloadUrl = this.strage.getDownloadURL(task.imgUrl);
+                this.taskListVms[i].DownloadUrl = DownloadUrl
             })
             return this.formatedTaskList = this.formatedArrayForView(2, this.taskListVms)
         })
