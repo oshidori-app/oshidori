@@ -30,6 +30,12 @@ export class StorageService {
         return ret;
     }
 
+    public deleteBlob(fileName: string) {
+        let fullPath = this.APP_ROOT_PREFIX + '/' + fileName;
+        const ref = this.afStorage.ref(fullPath);
+        return ref.delete();
+    }
+
     public uploadFile(file: File, fileName: string): {
         fullPath: string,
         ref: any,

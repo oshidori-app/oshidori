@@ -1,10 +1,10 @@
+import { StorageService } from './../../providers/storage.service';
 import { TaskRepository } from './../../repository/task.repository';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { Task } from '../../models/task';
 import { KeepRepository } from '../../repository/keep.repository';
 import { Keep } from '../../models/keep';
-import { DisplayUtilService } from '../../providers/display-util.service';
 
 /**
  * Generated class for the InputKeepPage page.
@@ -23,16 +23,29 @@ export class InputKeepPage {
   public selectedTask;
   public memo = "";
   public imgUrl;
+  public fileName;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private keepRepository: KeepRepository, private taskRepository: TaskRepository, private toastCtrl: ToastController) {
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    private keepRepository: KeepRepository, 
+    private taskRepository: TaskRepository, 
+    private storageService: StorageService,
+    private toastCtrl: ToastController) {
     this.selectedTask = navParams.get('selectedTask');
     this.imgUrl = navParams.get('imgUrl');
+    this.fileName = navParams.get('fileName');
   }
 
   ionViewDidLoad() {
     this.taskRepository.list(new Task()).subscribe(result =>{
       this.tasks = result;
     })
+  }
+
+  ionViewCanLeave(){
+    //todo url だけじゃなく fileName ほしいかも
+    this.storageService.deleteBlob(this.fileName);
   }
 
   input() {

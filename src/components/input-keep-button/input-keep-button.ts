@@ -29,19 +29,18 @@ export class InputKeepButtonComponent {
   }
 
   showMenu() {
+    const next = (url, fileName) => this.navCtrl.push(InputKeepPage, { selectedTask: this.task, imgUrl: url, fileName: fileName });
     const actionSheet = this.actionSheetCtrl.create({
       buttons: [
         {
           text: 'カメラで撮影する',
           handler: () => {
             // revisit: await したい...
-            const next = (url) => this.navCtrl.push(InputKeepPage, { selectedTask: this.task, imgUrl: url });
             this.takePhotoAndUpload(next);
           }
         }, {
           text: 'ライブラリから選択する',
           handler: () => {
-            const next = (url) => this.navCtrl.push(InputKeepPage, { selectedTask: this.task, imgUrl: url });
             this.getFromLibraryAndUpload(next);
           }
         }, {
@@ -82,7 +81,7 @@ export class InputKeepButtonComponent {
       uploadTask.snapshotChanges().pipe(
         finalize(() => {
           uploadTask.ref.getDownloadURL().subscribe(url => {
-            callback(url);
+            callback(url, fileName);
           });
         })
       ).subscribe();
