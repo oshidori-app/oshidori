@@ -12,12 +12,9 @@ import { Logger } from '../../logger';
 import { DisplayUtilService } from '../../providers/display-util.service';
 
 export class TaskListVm {
-    id?:    Number; // todo guid にしたいなぁ
     title?: string;
-    limit?: Date;
-    src?:   string;
-    status?: string; // todo boolean にしたいなぁ
-    assign?: string; // todo assignedTo にしたいなぁ
+    done?: boolean;
+    keepId?:   string;
 }
 @Component({
     selector: 'page-home',
