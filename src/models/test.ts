@@ -9,8 +9,13 @@ import { Collection } from "./collection";
  * @extends {Document}
  */
 export class Test extends Document implements Collection {
+
+    // meta field
     public readonly collectionName: string = 'tests';
+    public ref: any;
+    public parentRef:any = null; // ルートドキュメントはnullを入れてもらう必要あり。頑張ってもいいけどとりあえずこれで...
     
+    // field
     public groupId: string   
     public userId: string
     public title: string
@@ -20,13 +25,5 @@ export class Test extends Document implements Collection {
     constructor(init?: Partial<Test>) {
         super();
         Object.assign(this, init);
-    }
-
-    public getCollectionName() {
-        return this.collectionName;
-    }
-
-    public getSelfRef() {
-        return this.ref;
     }
 }

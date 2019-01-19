@@ -32,29 +32,16 @@ export class TestListPage {
   }
 
   private getTests() {
-    let user = this.auth.getUser();
-    let test = new Test({
-      groupId: user.uid //TODO 認証成功したらグローバル変数から取得したい
-    });
+    let test = new Test();
     this.testRepo.list(test)
-      .subscribe(actions => 
-        actions.map((action ,i) => {
-        Logger.debug(action);
-
-          let test = action.payload.doc.data() as Test;
-          test.ref = action.payload.doc.id;
+      .subscribe(testList => {
+        Logger.debug(testList);
+        this.testListVms = testList;
+        testList.forEach((test, i) => {
           let imgUrl = this.storage.getDownloadURL(test.imgUrl);
-          this.testListVms[i].downloadUrl = imgUrl;
-      // });
-        // })
-        // Logger.debug(testList);
-        // this.testListVms = testList;
-        // testList.forEach((test, i) => {
-        //   let imgUrl = this.storage.getDownloadURL(test.imgUrl);
-        //     this.testListVms[i].downloadUrl = imgUrl;
-        // });
-      // });
-        }));
+            this.testListVms[i].downloadUrl = imgUrl;
+        });
+      });
   }
 
   ionViewWillEnter() {

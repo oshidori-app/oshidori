@@ -5,19 +5,15 @@ import { listLazyRoutes } from "@angular/compiler/src/aot/lazy_routes";
 
 export interface Repository {
     
-    addToRootCollection(item: Collection) : void
-
-    addToSubCollection(item: SubCollection) : void
+    addDocument(item: Collection) : void
 
 
-    updateRootCollection(item: Collection): void
+    updateDocument(item: Collection): void
 
     // delete(item: T): void
 
     // all(): any
 
-    listByRootCollection(item: Collection) : any
-
-    listBySubCollection(item: SubCollection) : any
+    listDocument(item: Collection) : any
 
 }

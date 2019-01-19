@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-navbar color="dark">
+    <ion-title>テストエンティティ登録</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+
+  <form #registrationForm="ngForm" novalidate>
+
+    <p>・テストエンティティのFireStoreへの登録</p>
+    <p>・Webのinpu=fileでの画像取得（単一ファイルのみ）とStorageへのアップロード</p>
+    <ion-list>
+      <ion-item>
+        <ion-input [(ngModel)]="testRegistrationVm.title" type="text" name="title" placeholder="title"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-textarea [(ngModel)]="testRegistrationVm.description" type="text" name="description" placeholder="Description"></ion-textarea>
+      </ion-item>
+      <ion-item>
+         <input color="secondary" type="file" (change)="onChangeFileSelection($event)" accept="image/*,video/*"/>
+      </ion-item>
+      <ion-item>
+        <div>{{ testRegistrationVm.uploadPercent | async }}</div>
+      </ion-item>
+
+    </ion-list>
+    <div *ngIf="testRegistrationVm.downloadUrl | async as url">
+      <h3>Results!</h3>
+      <img [src]="url"><br>
+      <a [href]="url" target="_blank" rel="noopener">Download Me!</a>
+    </div>
+  </form>
+  <button ion-button (click)="onClickRegistration(registrationForm)" type="submit">登録</button>
+</ion-content>

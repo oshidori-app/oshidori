@@ -10,7 +10,7 @@ export class TaskRepository extends BaseRepository {
      }
 
     public add(task: Task): Promise<any> {
-        return super.addToRootCollection(task);
+        return super.addDocument(task);
     }
 
     public update(task: Task): void {

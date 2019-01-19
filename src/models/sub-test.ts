@@ -1,5 +1,5 @@
-import { Test } from "./test";
-import { SubCollection } from "./sub-collection";
+import { Document } from "./document";
+import { Collection } from "./collection";
 
 /**
  * 開発用：testsコレクションのサブコレクションであるsub-testsのドキュメント
@@ -8,7 +8,14 @@ import { SubCollection } from "./sub-collection";
  * @class SubTest
  * @extends {Test}
  */
-export class SubTest extends Test implements SubCollection {
+export class SubTest extends Document implements Collection {
+
+    // meta field
+    public readonly collectionName: string = 'sub-tests'
+    public ref: any;
+    public parentRef: any;
+
+    // field
     public groupId: string   
     public userId: string
     public title: string
@@ -18,13 +25,5 @@ export class SubTest extends Test implements SubCollection {
     constructor(init?: Partial<SubTest>) {
         super();
         Object.assign(this, init);
-    }
-
-    public getCollectionName() {
-        return 'sub-tests'
-    }
-
-    public getParentRef() {
-        return super.getSelfRef();
     }
 }

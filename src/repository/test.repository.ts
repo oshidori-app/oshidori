@@ -12,18 +12,18 @@ export class TestRepository extends BaseRepository {
      }
 
     public add(test: Test): Promise<any> {
-        return super.addToRootCollection(test);
+        return super.addDocument(test);
     }
 
     public update(test: Test): Promise<any> {
-        return super.updateRootCollection(test);
+        return super.updateDocument(test);
     }
 
     public delete(test: Test): void {
         throw new Error('not implemented');
     }
 
-    public list(test: Test): any  {
-        return super.listByRootCollection(test);
+    public list(test: Test): Observable<Test[]> {
+        return super.listDocument(test) as Observable<Test[]>;
     }
 }

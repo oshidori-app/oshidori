@@ -2,7 +2,10 @@ import { Document } from "./document";
 import { Collection } from "./collection";
 
 export class Task extends Document implements Collection {
+
     public readonly collectionName: string = 'tasks';
+    public ref: any;
+    public parentRef: any = null;
 
     public id:    Number; // todo guid にしたいなぁ
     public title: string;
@@ -20,13 +23,4 @@ export class Task extends Document implements Collection {
         this.status = status;
         this.assign = assign;
     }
-
-    public getCollectionName() {
-        return this.collectionName;
-    }
-    
-    public getSelfRef() {
-        return this.ref;
-    }
-
 }

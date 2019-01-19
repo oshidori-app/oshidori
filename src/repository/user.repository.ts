@@ -10,7 +10,7 @@ export class UserRepository extends BaseRepository {
      }
 
     add(user: User): Promise<any> {
-        return super.addToRootCollection(user);
+        return super.addDocument(user);
     }
 
     update(user: User): void {

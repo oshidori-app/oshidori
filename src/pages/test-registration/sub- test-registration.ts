@@ -25,7 +25,7 @@ export class TestRegistrationPage {
   } = {};
 
   private selectedPhoto: Blob;
-  private imgRef: string = null;
+  private imgRef: string;
 
   constructor(public navCtrl: NavController, private testRepo: TestRepository, private auth: AuthService, private storage: StorageService, private dutil: DisplayUtilService, private camera: Camera) {
     this.selectedPhoto = null;
@@ -35,7 +35,10 @@ export class TestRegistrationPage {
     if (form && form.valid) {
       Logger.debug(form);
 
+      let user = this.auth.getUser();
       let test = new Test({
+        groupId: user.uid,
+        userId: user.uid,
         title: this.testRegistrationVm.title,
         description: this.testRegistrationVm.description,
         imgUrl: this.imgRef
@@ -43,6 +46,9 @@ export class TestRegistrationPage {
 
       this.testRepo.add(test)
         .then((ref) => {
+          // Logger.debug(ref);
+          // test.ref = ref;
+          // this.testRepo.update(test);
           this.dutil.showToast('登録しました');
         })
         .catch(err => {

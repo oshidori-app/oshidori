@@ -14,9 +14,9 @@ export abstract class BaseRepository implements Repository {
         this.store = injector.get(StoreService);
     }
 
-    public addToRootCollection(model: Collection): Promise<any> {
+    public addDocument(model: Collection): Promise<any> {
         return new Promise<any>((resolve, reject) => {
-            this.store.addToRootCollection(model)
+            this.store.addDocument(model)
                 .then(docRef => {
                     resolve(docRef);
                 })
@@ -26,22 +26,9 @@ export abstract class BaseRepository implements Repository {
         });
     }
 
-    public addToSubCollection(model: SubCollection): Promise<any> {
+    public updateDocument(model: Collection): Promise<any> {
         return new Promise<any>((resolve, reject) => {
-            this.store.addToSubCollection(model)
-                .then(docRef => {
-                    resolve(docRef);
-                })
-                .catch(err => {
-                    reject(err);
-                });
-        });
-    }
-    
-
-    public updateRootCollection(model: Collection): Promise<any> {
-        return new Promise<any>((resolve, reject) => {
-            this.store.updateRootCollection(model)
+            this.store.updateDocument(model)
                 .then(docRef => {
                     resolve(docRef);
                 })
@@ -51,17 +38,8 @@ export abstract class BaseRepository implements Repository {
         });
     }
 
-    // delete(model: T): void {
-    //     throw new Error('not implemented');
-    // }
-
-    public listByRootCollection(model: Collection): Observable<{}[]> {
-        return this.store.listByRootCollection(model)
-    }
-
-    // TODO 返却の型を頑張りたい...
-    public listBySubCollection(model: SubCollection): any {
-        return this.store.listBySubCollection(model)
+    public listDocument(model: Collection): Observable<{}[]> {
+        return this.store.listDocument(model)
     }
 
  }

@@ -11,11 +11,11 @@ export class SubTestRepository extends BaseRepository {
      }
 
     public add(test: SubTest): Promise<any> {
-        return super.addToSubCollection(test);
+        return super.addDocument(test);
     }
 
     public update(test: SubTest): Promise<any> {
-        return super.updateRootCollection(test);
+        return super.updateDocument(test);
     }
 
     public delete(test: SubTest): void {
@@ -23,6 +23,6 @@ export class SubTestRepository extends BaseRepository {
     }
 
     public list(test: SubTest): Observable<SubTest[]> {
-        return super.listBySubCollection(test) as Observable<SubTest[]>;
+        return super.listDocument(test) as Observable<SubTest[]>;
     }
 }
