@@ -18,7 +18,7 @@ export class Task extends Document implements Collection {
     // field
     public title: string;
     public done: boolean;
-    public keepId: string
+    public imgUrl: string;
 
     constructor(init?: Partial<Task>) {
         super();
