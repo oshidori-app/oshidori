@@ -2,10 +2,10 @@ import { Document } from "./document";
 import { Collection } from "./collection";
 
 /**
- * tasksコレクションのドキュメント
+ * keepsコレクションのドキュメント
  *
  * @export
- * @class Task
+ * @class Keep
  * @extends {Document}
  */
 export class Keep extends Document implements Collection {
@@ -14,18 +14,15 @@ export class Keep extends Document implements Collection {
     public readonly collectionName: string = 'keeps';
     public ref: any;
 
-    // task
-    public parentRef: any = null;
+    public parentRef:any = null; // ルートドキュメントはnullを入れてもらう必要あり。頑張ってもいいけどとりあえずこれで...
 
-    // field
-    public imgUrl: string;
-    public memo: string
-    
     // field
     public groupId: string   
     public userId: string
     public title: string
-    public ｄecisionFlg: boolean
+    public imgUrl: string;
+    public memo: string
+    public decisionFlg: boolean
 
     constructor(init?: Partial<Keep>) {
         super();
