@@ -13,7 +13,7 @@ export class Task extends Document implements Collection {
     // meta field
     public readonly collectionName: string = 'tasks';
     public ref: any;
-    public parentRef: any = null;
+    public parentRef: any;
 
     // field
     public title: string;

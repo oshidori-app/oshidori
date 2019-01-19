@@ -19,7 +19,6 @@ import { AccountPage } from '../pages/account/account';
 import { DevMenuPage } from '../pages/develop/develop-menu';
 import { HomePageModule } from '../pages/home/home.module';
 import { InputKeepPage } from '../pages/input-keep/input-keep';
-import { InputTaskPageModule } from '../pages/input-task/input-task.module';
 import { KeepAddDevPage } from '../pages/keep-add-dev/keep-add-dev';
 import { KeepListPageModule } from '../pages/keep-list/keep-list.module';
 import { KeepPage } from '../pages/keep/keep';
@@ -46,6 +45,7 @@ import { AccountChangePasswordPage } from './../pages/account-change-password/ac
 import { AccountForgotPasswordPage } from './../pages/account-forgot-password/account-forgot-password';
 import { AccountSigninPage } from './../pages/account-signin/account-signin';
 import { MyApp } from './app.component';
+import { InputTaskPage } from '../pages/input-task/input-task';
 @NgModule({
   declarations: [
     MyApp,
@@ -61,6 +61,7 @@ import { MyApp } from './app.component';
     TabsPage,
     KeepPage,
     InputKeepPage,
+    InputTaskPage,
     TestRegistrationPage,
     TestMultiRegistrationPage,
     TestListPage,
@@ -75,7 +76,6 @@ import { MyApp } from './app.component';
     AngularFireAuthModule,
     AngularFirestoreModule,
     HomePageModule,
-    InputTaskPageModule,
     KeepListPageModule,
     AngularFireStorageModule,
     IonicImageLoader.forRoot(),
@@ -96,6 +96,7 @@ import { MyApp } from './app.component';
     TabsPage,
     KeepPage,
     InputKeepPage,
+    InputTaskPage,
     TestRegistrationPage,
     TestMultiRegistrationPage,
     TestListPage,

@@ -126,10 +126,15 @@ export class StoreService {
         })
     }
 
-    // TODO: なぜか動かない
-    public findDocument<T extends Collection>(document: T, docRef: any) {
-        const collectionName = document['collectionName'];
-        return this.afStore.collection(collectionName).doc(docRef.id).valueChanges();
+    /**
+     * ドキュメントへの参照を引数で受け取り、1件のドキュメントを返却する。
+     *
+     * @param {*} docRef
+     * @returns
+     * @memberof StoreService
+     */
+    public findDocument(docRef: any) {
+        return this.afStore.doc(docRef).valueChanges();
     }
 
     // 現在のfirebaseではcustom objectを引数としてサポートしていないので、

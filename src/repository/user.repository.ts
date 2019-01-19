@@ -1,6 +1,7 @@
 import { Injectable, Injector } from '@angular/core';
 import { User } from "../models/user";
 import { BaseRepository } from './base.repository';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class UserRepository extends BaseRepository {
@@ -15,6 +16,10 @@ export class UserRepository extends BaseRepository {
 
     update(user: User): void {
         throw new Error('not implemented');
+    }
+
+    find(docRef: any): Observable<User> {
+        return super.findDocument(docRef) as Observable<User>;
     }
 
     delete(user: User): void {

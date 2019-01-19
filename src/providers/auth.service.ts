@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { AngularFireAuth } from "@angular/fire/auth";
+import { Storage } from "@ionic/storage";
 
 @Injectable()
 export class AuthService {
@@ -79,6 +80,4 @@ export class AuthService {
     if (!userId) userId = null;
     return userId;
   }
-
-
 }
