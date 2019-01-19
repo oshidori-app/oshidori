@@ -3,21 +3,21 @@ import { Task } from "../models/task";
 import { BaseRepository } from './base.repository';
 
 @Injectable()
-export class TaskRepository extends BaseRepository<Task> {
+export class TaskRepository extends BaseRepository {
 
     constructor(injector: Injector) {
         super(injector);
      }
 
-    add(task: Task): Promise<any> {
-        return super.add(task);
+    public add(task: Task): Promise<any> {
+        return super.addDocument(task);
     }
 
-    update(task: Task): void {
+    public update(task: Task): void {
         throw new Error('not implemented');
     }
 
-    delete(task: Task): void {
+    public delete(task: Task): void {
         throw new Error('not implemented');
     }
 }

@@ -1,9 +1,12 @@
-import { Entity } from "./entity";
+import { Document } from "./document";
+import { Collection } from "./collection";
 
-export class Task implements Entity {
-    getEntityName(): string {
-        return 'tasks';
-    }   
+export class Task extends Document implements Collection {
+
+    public readonly collectionName: string = 'tasks';
+    public ref: any;
+    public parentRef: any = null;
+
     public id:    Number; // todo guid にしたいなぁ
     public title: string;
     public limit: Date;
@@ -12,6 +15,7 @@ export class Task implements Entity {
     public assign: string; // todo assignedTo にしたいなぁ
 
     constructor(id, title, limit, src, status, assign){
+        super();
         this.id    = id;
         this.title = title;
         this.limit = limit;

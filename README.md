@@ -56,6 +56,11 @@ cordova prepare
 ### ios
 
 ```
+npm -g install ios-deploy
+```
+
+
+```
 // 実機(初回はXcodeを起動してsigningする必要あり)
 ionic cordova run ios -l -c --device -- --buildFlag="-UseModernBuildSystem=0"
 

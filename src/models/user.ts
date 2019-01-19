@@ -1,17 +1,22 @@
-import { Entity } from "./entity";
+import { Document } from "./document";
+import { SubCollection } from "./sub-collection";
+import { Collection } from "./collection";
 
-export class User implements Entity {
+export class User extends Document implements Collection {
 
+    // meta field
+    public readonly collectionName: string = 'users';
+    public ref: any;
+    public parentRef: any;
+
+    // field
     public userId: string
     public gender: string
     public birthdate: string
 
     constructor(init?: Partial<User>) {
+        super();
         Object.assign(this, init);
-    }
-
-    public getEntityName() {
-        return 'users'
     }
 }
 

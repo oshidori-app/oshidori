@@ -1,15 +1,11 @@
-import { Entity } from "../models/entity";
+import { Collection } from "../models/collection";
 
-export interface Repository<T extends Entity>{
+export interface Repository {
     
-    add(item: T) : void
+    addDocument(item: Collection) : void
 
-    update(item: T): void
+    updateDocument(item: Collection): void
 
-    delete(item: T): void
-
-    // all(): any
-
-    // list(item: T): any
+    listDocument(item: Collection) : any
 
 }

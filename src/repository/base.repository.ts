@@ -2,19 +2,19 @@ import { Injectable, Injector } from '@angular/core';
 import { Repository } from "./repository";
 import { StoreService } from '../providers/store.service';
 import { Observable } from "rxjs";
-import { Entity } from '../models/entity';
+import { Collection } from '../models/Collection';
 
 @Injectable()
-export abstract class BaseRepository<T extends Entity> implements Repository<T> {
+export abstract class BaseRepository implements Repository {
 
     protected store: StoreService;
     constructor(injector: Injector) { 
         this.store = injector.get(StoreService);
     }
 
-    add(model: Entity): Promise<any> {
+    public addDocument(model: Collection): Promise<any> {
         return new Promise<any>((resolve, reject) => {
-            this.store.add(model)
+            this.store.addDocument(model)
                 .then(docRef => {
                     resolve(docRef);
                 })
@@ -24,15 +24,20 @@ export abstract class BaseRepository<T extends Entity> implements Repository<T> 
         });
     }
 
-    update(model: Entity): void {
-        throw new Error('not implemented');
+    public updateDocument(model: Collection): Promise<any> {
+        return new Promise<any>((resolve, reject) => {
+            this.store.updateDocument(model)
+                .then(docRef => {
+                    resolve(docRef);
+                })
+                .catch(err => {
+                    reject(err);
+                });
+        });
     }
 
-    delete(model: Entity): void {
-        throw new Error('not implemented');
+    public listDocument(model: Collection): Observable<{}[]> {
+        return this.store.listDocument(model)
     }
 
-    filterByOwnGroup(model: Entity): Observable<{}[]> {
-        return this.store.filterByOwnGroup(model)
-    }
  }

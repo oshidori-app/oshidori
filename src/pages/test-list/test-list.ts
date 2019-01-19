@@ -32,14 +32,11 @@ export class TestListPage {
   }
 
   private getTests() {
-    let user = this.auth.getUser();
-    let test = new Test({
-      groupId: user.uid //TODO 認証成功したらグローバル変数から取得したい
-    });
-    this.testRepo.getList(test)
+    let test = new Test();
+    this.testRepo.list(test)
       .subscribe(testList => {
+        Logger.debug(testList);
         this.testListVms = testList;
-
         testList.forEach((test, i) => {
           let imgUrl = this.storage.getDownloadURL(test.imgUrl);
             this.testListVms[i].downloadUrl = imgUrl;
