@@ -46,7 +46,7 @@ export class HomePage {
         this.platformWidth = platform.width();
         this.imageAttributes.push({
             element: 'class',
-            value: 'task_img'
+            value: 'task-img'
         })
     }
 

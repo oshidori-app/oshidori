@@ -7,8 +7,7 @@
             <ion-col *ngFor="let task of rowTasks">
                 <ion-card class="task {{task.done}}" (click)="goToKeepList(task)">
                     <div class="card-parent">
-                        <input class="task_id" type="hidden" value="{{task.id}}">
-                        <div class="no_img" *ngIf="!task.DownloadUrl">
+                        <div class="noimg" *ngIf="!task.DownloadUrl">
                             <div class="title">{{task.title}}</div>
                         </div>
                         <div *ngIf="task.DownloadUrl | async as url">
