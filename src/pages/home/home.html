@@ -8,8 +8,11 @@
                 <ion-card class="task {{task.done}}" (click)="goToKeepList(task)">
                     <div class="card-parent">
                         <input class="task_id" type="hidden" value="{{task.id}}">
-                        <div class="no_img">
+                        <div class="no_img" *ngIf="!task.imgUrl">
                             <div class="title">{{task.title}}</div>
+                        </div>
+                        <div *ngIf="task.imgUrl | async as url">
+                            <img-loader [imgAttributes]="imageAttributes" [src]="url" useImg></img-loader>
                         </div>
                     </div>
                 </ion-card>

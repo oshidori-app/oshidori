@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs';
+import { StorageService } from './../../providers/storage.service';
 import { TaskRepository } from './../../repository/task.repository';
 import { InputTaskPage } from './../input-task/input-task';
 import { Component } from '@angular/core';
@@ -11,11 +13,12 @@ import { TestListPage } from '../test-list/test-list';
 import { Logger } from '../../logger';
 import { DisplayUtilService } from '../../providers/display-util.service';
 import { Subscription } from 'rxjs';
+import { ImageAttribute } from 'ionic-image-loader'
 
 export class TaskListVm {
     title?: string;
     done?: boolean;
-    keepId?:   string;
+    imgUrl?: Observable<string>;
 }
 @Component({
     selector: 'page-home',
@@ -28,17 +31,22 @@ export class HomePage {
     public formatedTaskList: any[];
     public taskInfoVisible = false;
     public platformWidth = 0;
-
+    public imageAttributes: ImageAttribute[] = [];
     private listSubscription: Subscription;
 
     constructor(
         public navCtrl: NavController,
         public platform: Platform,
         private taskRepo: TaskRepository,
-        private dutil: DisplayUtilService
+        private dutil: DisplayUtilService,
+        private strage: StorageService
     ) {
         // デバイスの画面幅を取得
         this.platformWidth = platform.width();
+        this.imageAttributes.push({
+            element: 'class',
+            value: 'task_img'
+        })
     }
 
     ionViewDidEnter() {
@@ -55,7 +63,11 @@ export class HomePage {
         this.listSubscription = this.taskRepo.list(new Task()).subscribe(taskList => {
             Logger.debug(taskList);
             this.taskListVms = taskList;
-            this.formatedTaskList = this.formatedArrayForView(2, this.taskListVms)
+            taskList.forEach((task, i) => {
+                let imgUrl = this.strage.getDownloadURL(task.imgUrl);
+                this.taskListVms[i].imgUrl = imgUrl
+            })
+            return this.formatedTaskList = this.formatedArrayForView(2, this.taskListVms)
         })
     }
 
