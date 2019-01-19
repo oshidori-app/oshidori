@@ -1,9 +1,8 @@
 import { Injectable } from "@angular/core";
-import { AngularFirestore, DocumentChangeAction, AngularFirestoreDocument } from "@angular/fire/firestore";
+import { AngularFirestore } from "@angular/fire/firestore";
 import * as firebase from 'firebase';
 import { Observable } from "rxjs";
 import { Collection } from "../models/collection";
-import { SubCollection } from "../models/sub-collection";
 import { Logger } from "../logger";
 import { AuthService } from "./auth.service";
 
@@ -48,22 +47,7 @@ export class StoreService {
                 })
         })
     }
-    // public addToSubCollection<T extends SubCollection>(document: T): Promise<any> {
-    //     return new Promise<any>((resolve, reject) => {
-    //         let data = this.convertPlainObject(document);
-    //         this.beforeAddConvert(data);
-    //         let collectionName = data['collectionName'];
-    //         let parentRef = data['parentRef'];
-    //         let parentDoc = this.afStore.doc(parentRef);
-    //         parentDoc.collection(collectionName).add(data)
-    //             .then(res => resolve(res))
-    //             .catch(err => {
-    //                 // TOOD: firebaseに依存しない業務例外を返却する
-    //                 reject(err)
-    //             })
-    //     })
-    // }
-
+    
     // TODO group対応をする。Rootと分ける必要ないかも。
     public listDocument(document: Collection): Observable<{}[]> {
         let collectionName = document['collectionName'];

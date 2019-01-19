@@ -2,7 +2,6 @@ import { Injectable, Injector } from '@angular/core';
 import { Test } from "../models/test";
 import { Observable } from 'rxjs';
 import { BaseRepository } from './base.repository';
-import { Logger } from '../logger';
 
 @Injectable()
 export class TestRepository extends BaseRepository {

@@ -3,8 +3,6 @@ import { Repository } from "./repository";
 import { StoreService } from '../providers/store.service';
 import { Observable } from "rxjs";
 import { Collection } from '../models/Collection';
-import { SubCollection } from '../models/sub-collection';
-import { DocumentChangeAction } from '@angular/fire/firestore';
 
 @Injectable()
 export abstract class BaseRepository implements Repository {
