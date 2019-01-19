@@ -6,6 +6,8 @@ import { DisplayUtilService } from '../../providers/display-util.service';
 import { User, Gender } from "../../models/user";
 import { UserRepository } from '../../repository/user.repository';
 import { Logger } from '../../logger';
+import { GroupRepository } from '../../repository/group.repository';
+import { Group } from '../../models/group';
 export class UserDetails {
   username: string;
   password: string;
@@ -24,7 +26,13 @@ export class AccountSignupPage {
 
   private user: User;
 
-  constructor(private navCtrl: NavController, private auth: AuthService, private userRepo: UserRepository, private dutil: DisplayUtilService) {
+  constructor(
+    private navCtrl: NavController,
+    private auth: AuthService,
+    private userRepo: UserRepository,
+    private groupRepo: GroupRepository,
+    private dutil: DisplayUtilService
+  ) {
     this.userDetails = new UserDetails();
   }
 
@@ -57,25 +65,44 @@ export class AccountSignupPage {
         .then(res => {
           let uid = res.user.uid;
 
+
           // モデル生成
+          let group = new Group({
+            name: 'ラブリー！'
+          });
+
           let user = new User({
             userId: uid,
             gender: details.gender,
             birthdate: details.birthdate
           });
 
-          // データ永続化
-          this.userRepo.add(user)
-            .then(() => {
-              this.navCtrl.setRoot(AccountConfirmationCodePage);
+          // GroupとUserを同時に作成する
+          this.groupRepo.add(group, uid)
+            .then((ref) => {
+              Logger.debug(ref);
+              // group登録が完了したらuserの登録
+              user.parentRef = ref;
+              this.userRepo.add(user, uid)
+              .then(() => {
+                this.navCtrl.setRoot(AccountConfirmationCodePage);
+              })
+              .catch(err => {
+                // TODO 失敗したらfbauthからも消す。
+                this.dutil.showToast(err);
+                Logger.error(err);
+                return;
+              });
+
             })
             .catch(err => {
               // TODO 失敗したらfbauthからも消す。
               this.dutil.showToast(err);
               Logger.error(err);
-              return; 
+              return;
             });
-          
+
+
           this.auth.mailVerify()
             .then(res => {
             })
