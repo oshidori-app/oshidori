@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, DateTime } from 'ionic-angular';
 import { DisplayUtilService } from '../../providers/display-util.service';
 import { TestRepository } from '../../repository/test.repository';
 import { Test } from '../../models/test';
@@ -8,11 +8,14 @@ import { Logger } from '../../logger';
 import { StorageService } from '../../providers/storage.service';
 import { Observable } from 'rxjs';
 import { IonicImageLoader } from 'ionic-image-loader';
+import { SubTestRegistrationPage } from '../test-registration/sub-test-registration';
 
 export class TestListVm {
   title?: string
   description?: string
   downloadUrl?: Observable<string>
+  refPath?: string
+  updated?: DateTime
 }
 
 @Component({
@@ -20,7 +23,7 @@ export class TestListVm {
   templateUrl: 'test-list.html',
 })
 @NgModule({
-  imports:[
+  imports: [
     IonicImageLoader
   ]
 })
@@ -38,10 +41,19 @@ export class TestListPage {
         Logger.debug(testList);
         this.testListVms = testList;
         testList.forEach((test, i) => {
+          Logger.debug(test.updated);
           let imgUrl = this.storage.getDownloadURL(test.imgUrl);
-            this.testListVms[i].downloadUrl = imgUrl;
+          this.testListVms[i].downloadUrl = imgUrl;
+          this.testListVms[i].updated = new Date().getTime() + test.updated;
+          this.testListVms[i].refPath = test.ref.path;
         });
       });
+  }
+
+  public onClickToSubCollection(testVm) {
+    let test = new Test();
+    test = testVm;
+    this.navCtrl.push(SubTestRegistrationPage, test);
   }
 
   ionViewWillEnter() {
