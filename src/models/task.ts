@@ -1,12 +1,21 @@
 import { Document } from "./document";
 import { Collection } from "./collection";
 
+/**
+ * tasksコレクションのドキュメント
+ *
+ * @export
+ * @class Task
+ * @extends {Document}
+ */
 export class Task extends Document implements Collection {
 
+    // meta field
     public readonly collectionName: string = 'tasks';
     public ref: any;
     public parentRef: any = null;
 
+    // field
     public id:    Number; // todo guid にしたいなぁ
     public title: string;
     public limit: Date;
@@ -14,13 +23,8 @@ export class Task extends Document implements Collection {
     public status: string; // todo boolean にしたいなぁ
     public assign: string; // todo assignedTo にしたいなぁ
 
-    constructor(id, title, limit, src, status, assign){
+    constructor(init?: Partial<Task>) {
         super();
-        this.id    = id;
-        this.title = title;
-        this.limit = limit;
-        this.src   = src;
-        this.status = status;
-        this.assign = assign;
+        Object.assign(this, init);
     }
 }
