@@ -29,6 +29,21 @@
   </button>
   <button ion-button (click)="decideStatusChange()">決定</button>
 
+  <form #registrationForm="ngForm" novalidate>
+    <ion-item>
+        <ion-input [(ngModel)]="commentRegistrationVm.comment" type="text" name="comment" placeholder="コメント"></ion-input>
+    </ion-item>  
+    <button ion-button (click)="onClickRegistration(registrationForm)" type="submit">登録</button>
+  </form>
+
+  <ion-list>
+      <ion-item *ngFor="let t of commentListVms;let i = index" (tap)="changeComment(i)">太郎：{{t.comment}}(user:{{t.createUser}})</ion-item>
+  </ion-list>
+  
+  <br>
+  <p> ▼旧チャット</p>
+  <br>
+
   <ion-list>
       <ion-item *ngFor="let t of chats;let i = index" (tap)="changeChat(i)">{{t.name}}</ion-item>
   </ion-list>
