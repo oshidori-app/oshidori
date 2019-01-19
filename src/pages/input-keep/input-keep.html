@@ -14,7 +14,7 @@
 
 <ion-content>
   <!-- todo 画像 URL を渡す -->
-  <img src="assets/img/noimage.png" />
+  <img [src]="imgUrl" />
   <ion-item>
     <ion-label stacked>MEMO</ion-label>
     <ion-textarea [(ngModel)]="memo"></ion-textarea>

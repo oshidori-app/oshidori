@@ -1,8 +1,12 @@
-import { Component, Input, NgModule, ElementRef } from '@angular/core';
-import { NavParams, ActionSheetController, NavController } from 'ionic-angular';
+import { Component, Input } from '@angular/core';
+import { ActionSheetController, NavController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { PhotoLibrary } from '@ionic-native/photo-library';
 import { InputKeepPage } from '../../pages/input-keep/input-keep';
+import { StorageService } from '../../providers/storage.service';
+import { v4 as uuid } from 'uuid';
+import { finalize } from 'rxjs/operators';
+import { DisplayUtilService } from '../../providers/display-util.service';
 /**
  * Generated class for the InputKeepButtonComponent component.
  *
@@ -16,14 +20,13 @@ import { InputKeepPage } from '../../pages/input-keep/input-keep';
 export class InputKeepButtonComponent {
   @Input() task: string;
 
-  public selectedPhoto: Blob;
-
   constructor(
-    public navCtrl: NavController, 
-    public actionSheetCtrl: ActionSheetController, 
-    private camera: Camera, 
-    public photoLibrary: PhotoLibrary)
-  {
+    public navCtrl: NavController,
+    public actionSheetCtrl: ActionSheetController,
+    private camera: Camera,
+    public photoLibrary: PhotoLibrary,
+    private dutil: DisplayUtilService,
+    private storage: StorageService) {
     console.log(this.task);
   }
 
@@ -33,16 +36,17 @@ export class InputKeepButtonComponent {
         {
           text: 'カメラで撮影する',
           handler: () => {
-            // todo this.takePhoto();
-            this.navCtrl.push(InputKeepPage, {selectedTask: this.task});
+            // revisit: await したい...
+            const next = (url) => this.navCtrl.push(InputKeepPage, { selectedTask: this.task, imgUrl: url });
+            this.takePhoto(next);
           }
-        },{
+        }, {
           text: 'ライブラリから選択する',
           handler: () => {
             // todo this.library();
-            this.navCtrl.push(InputKeepPage, {selectedTask: this.task});
+            this.navCtrl.push(InputKeepPage, { selectedTask: this.task });
           }
-        },{
+        }, {
           text: 'キャンセル',
           role: 'cancel'
         }
@@ -51,7 +55,7 @@ export class InputKeepButtonComponent {
     actionSheet.present();
   };
 
-  takePhoto(){
+  takePhoto(next: (url) => Promise<any>) {
     const options: CameraOptions = {
       quality: 100,
       targetHeight: 200,
@@ -64,17 +68,29 @@ export class InputKeepButtonComponent {
     this.camera.getPicture(options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64:
-      this.selectedPhoto  = this.dataURItoBlob('data:image/jpeg;base64,' + imageData);
+      const selectedPhoto = this.dataURItoBlob('data:image/jpeg;base64,' + imageData);
+      
+      const fileName = uuid();
+      const uploadTask = this.storage.uploadBlob(selectedPhoto, fileName);
+      uploadTask.snapshotChanges().pipe(
+        finalize(() => {
+          uploadTask.ref.getDownloadURL().subscribe(url => {
+            next(url);
+          });
+        })
+      ).subscribe();
+      this.dutil.showLoader("アップロード中...");
+
     }, (err) => {
       alert(JSON.stringify(err));
     });
   };
 
-  library(){
+  library() {
     this.photoLibrary.requestAuthorization().then(() => {
       this.photoLibrary.getLibrary().subscribe({
         next: library => {
-          library.forEach(function(libraryItem) {
+          library.forEach(function (libraryItem) {
             console.log(libraryItem.id);          // ID of the photo
             console.log(libraryItem.photoURL);    // Cross-platform access to photo
             console.log(libraryItem.thumbnailURL);// Cross-platform access to thumbnail
