@@ -19,14 +19,16 @@ import { DisplayUtilService } from '../../providers/display-util.service';
 export class InputKeepButtonComponent {
   @Input() task: string;
 
+  private imgRef: string;
+
   constructor(
     public navCtrl: NavController,
     public actionSheetCtrl: ActionSheetController,
     private camera: Camera,
     private dutil: DisplayUtilService,
     private storage: StorageService) {
-    console.log(this.task);
-  }
+      console.log(this.task);
+      }
 
   showMenu() {
     const actionSheet = this.actionSheetCtrl.create({
@@ -35,13 +37,13 @@ export class InputKeepButtonComponent {
           text: 'カメラで撮影する',
           handler: () => {
             // revisit: await したい...
-            const next = (url) => this.navCtrl.push(InputKeepPage, { selectedTask: this.task, imgUrl: url });
+            const next = () => this.navCtrl.push(InputKeepPage, { selectedTask: this.task, imgUrl: this.imgRef });
             this.takePhotoAndUpload(next);
           }
         }, {
           text: 'ライブラリから選択する',
           handler: () => {
-            const next = (url) => this.navCtrl.push(InputKeepPage, { selectedTask: this.task, imgUrl: url });
+            const next = () => this.navCtrl.push(InputKeepPage, { selectedTask: this.task, imgUrl: this.imgRef });
             this.getFromLibraryAndUpload(next);
           }
         }, {
@@ -76,14 +78,13 @@ export class InputKeepButtonComponent {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64:
       const selectedPhoto = this.dataURItoBlob('data:image/jpeg;base64,' + imageData);
-      
+
       const fileName = uuid();
       const uploadTask = this.storage.uploadBlob(selectedPhoto, fileName);
       uploadTask.snapshotChanges().pipe(
         finalize(() => {
-          uploadTask.ref.getDownloadURL().subscribe(url => {
-            callback(url);
-          });
+          this.imgRef = uploadTask.fullPath;
+          callback();
         })
       ).subscribe();
       this.dutil.showLoader("アップロード中...");

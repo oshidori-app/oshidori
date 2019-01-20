@@ -100,7 +100,13 @@ export class StoreService {
     // TODO group対応をする。Rootと分ける必要ないかも。
     public listDocument(document: Collection): Observable<{}[]> {
         let collectionName = document['collectionName'];
-        let collection = this.afStore.collection(
+
+        let docRef: any = this.afStore;
+        // 親参照があれば、サブコレクションとして登録
+        if (document['parentRef']) {
+            docRef = this.afStore.doc(document['parentRef']);
+        }
+        let collection = docRef.collection(
             collectionName,
             ref => ref
                 //  .where('groupId', '==', document['groupId'])

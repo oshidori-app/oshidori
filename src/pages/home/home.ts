@@ -14,6 +14,7 @@ import { Logger } from '../../logger';
 import { DisplayUtilService } from '../../providers/display-util.service';
 import { Subscription } from 'rxjs';
 import { ImageAttribute } from 'ionic-image-loader'
+import { Storage } from '@ionic/storage';
 
 export class TaskListVm {
     title?: string;
@@ -39,6 +40,7 @@ export class HomePage {
         public navCtrl: NavController,
         public platform: Platform,
         private taskRepo: TaskRepository,
+        private clientStorage: Storage,
         private dutil: DisplayUtilService,
         private strage: StorageService
     ) {
@@ -61,15 +63,24 @@ export class HomePage {
     }
 
     private getTasks() {
-        this.listSubscription = this.taskRepo.list(new Task()).subscribe(taskList => {
-            Logger.debug(taskList);
-            this.taskListVms = taskList;
-            taskList.forEach((task, i) => {
-                let DownloadUrl = this.strage.getDownloadURL(task.imgUrl);
-                this.taskListVms[i].DownloadUrl = DownloadUrl
+        this.clientStorage.get('groupRef')
+            .then(val => {
+                let task = new Task({
+                    parentRef: val
+                });
+                this.listSubscription = this.taskRepo.list(task).subscribe(taskList => {
+                    Logger.debug(taskList);
+                    this.taskListVms = taskList;
+                    taskList.forEach((task, i) => {
+                        let DownloadUrl = this.strage.getDownloadURL(task.imgUrl);
+                        this.taskListVms[i].DownloadUrl = DownloadUrl
+                    })
+                    return this.formatedTaskList = this.formatedArrayForView(2, this.taskListVms)
+                })
             })
-            return this.formatedTaskList = this.formatedArrayForView(2, this.taskListVms)
-        })
+            .catch(err => {
+                Logger.error(err);
+            })
     }
 
     formatedArrayForView(xNum: number, array: any[]) {
