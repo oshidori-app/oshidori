@@ -60,15 +60,15 @@ export class TestRegistrationPage {
     const file = files[0];
 
     let uploadTask = this.storage.uploadFile(file, uuid());
-      this.testRegistrationVm.uploadPercent = uploadTask.percentageChanges();
-      uploadTask.snapshotChanges().pipe(
-        finalize(() => {
-          this.testRegistrationVm.downloadUrl = uploadTask.ref.getDownloadURL();
-          this.imgRef = uploadTask.fullPath,
-            this.dutil.dismissLoader();
-          Logger.debug("登録完了");
-        })
-      ).subscribe();
+    this.testRegistrationVm.uploadPercent = uploadTask.percentageChanges();
+    uploadTask.snapshotChanges().pipe(
+      finalize(() => {
+        this.testRegistrationVm.downloadUrl = uploadTask.ref.getDownloadURL();
+        this.imgRef = uploadTask.fullPath;
+        this.dutil.dismissLoader();
+        Logger.debug("登録完了");
+      })
+    ).subscribe();
   }
 
   dataURItoBlob(dataURI) {

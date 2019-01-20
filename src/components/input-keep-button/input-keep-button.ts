@@ -19,6 +19,8 @@ import { DisplayUtilService } from '../../providers/display-util.service';
 export class InputKeepButtonComponent {
   @Input() task: string;
 
+  private imgRef: string;
+
   constructor(
     public navCtrl: NavController,
     public actionSheetCtrl: ActionSheetController,
@@ -35,13 +37,13 @@ export class InputKeepButtonComponent {
           text: 'カメラで撮影する',
           handler: () => {
             // revisit: await したい...
-            const next = (url) => this.navCtrl.push(InputKeepPage, { selectedTask: this.task, imgUrl: url });
-             this.takePhotoAndUpload(next);
+            const next = () => this.navCtrl.push(InputKeepPage, { selectedTask: this.task, imgUrl: this.imgRef });
+            this.takePhotoAndUpload(next);
           }
         }, {
           text: 'ライブラリから選択する',
           handler: () => {
-            const next = (url) => this.navCtrl.push(InputKeepPage, { selectedTask: this.task, imgUrl: url });
+            const next = () => this.navCtrl.push(InputKeepPage, { selectedTask: this.task, imgUrl: this.imgRef });
             this.getFromLibraryAndUpload(next);
           }
         }, {
@@ -81,9 +83,8 @@ export class InputKeepButtonComponent {
       const uploadTask = this.storage.uploadBlob(selectedPhoto, fileName);
       uploadTask.snapshotChanges().pipe(
         finalize(() => {
-          uploadTask.ref.getDownloadURL().subscribe(url => {
-            callback(url);
-          });
+          this.imgRef = uploadTask.fullPath;
+          callback();
         })
       ).subscribe();
       this.dutil.showLoader("アップロード中...");
