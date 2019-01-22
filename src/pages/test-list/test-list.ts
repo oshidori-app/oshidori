@@ -32,6 +32,8 @@ export class TestListPage {
   public testListVms: TestListVm[];
   private listSubscription: Subscription;
 
+  public fakeList: Array<any> = new Array(10);
+
   constructor(public navCtrl: NavController, private testRepo: TestRepository, private auth: AuthService, private storage: StorageService, private dutil: DisplayUtilService) {
   }
 

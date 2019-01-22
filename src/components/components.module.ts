@@ -4,6 +4,7 @@ import { InputKeepButtonComponent } from './input-keep-button/input-keep-button'
 import { PhotoLibrary } from '@ionic-native/photo-library';
 import { InputTaskButtonComponent } from './input-task-button/input-task-button';
 import { DevButtonComponent } from './dev-button/dev-button';
+import { SkeletonItemComponent } from './skeleton-item/skeleton-item';
 @NgModule({
 	declarations: [
 		InputKeepButtonComponent, 
@@ -14,7 +15,8 @@ import { DevButtonComponent } from './dev-button/dev-button';
 	exports: [
 		InputKeepButtonComponent, 
 		InputTaskButtonComponent,
-		DevButtonComponent
+		DevButtonComponent,
+		SkeletonItemComponent
 	],
 	providers: [PhotoLibrary]
 })
