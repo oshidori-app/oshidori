@@ -22,11 +22,6 @@ export class TestListVm {
   selector: 'page-test-list',
   templateUrl: 'test-list.html',
 })
-@NgModule({
-  imports: [
-    IonicImageLoader
-  ]
-})
 export class TestListPage {
 
   public testListVms: TestListVm[];
@@ -46,7 +41,7 @@ export class TestListPage {
         testList.forEach((test, i) => {
           Logger.debug(test.updated);
           let imgUrl = this.storage.getDownloadURL(test.imgUrl);
-          this.testListVms[i].downloadUrl = imgUrl;
+          this.testListVms[i].downloadUrl = imgUrl
           this.testListVms[i].updated = new Date().getTime() + test.updated;
           this.testListVms[i].refPath = test.ref.path;
         });
@@ -61,7 +56,6 @@ export class TestListPage {
 
   ionViewWillEnter() {
     Logger.debug("ionViewWillEnter: TeltListPage");
-    this.dutil.showLoader("データを読み込んでいます...");
     this.getTests();
   }
 

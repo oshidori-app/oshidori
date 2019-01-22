@@ -9,7 +9,8 @@ import { SkeletonItemComponent } from './skeleton-item/skeleton-item';
 	declarations: [
 		InputKeepButtonComponent, 
 		InputTaskButtonComponent,
-		DevButtonComponent
+		DevButtonComponent,
+		SkeletonItemComponent
 	],
 	imports: [IonicModule],
 	exports: [

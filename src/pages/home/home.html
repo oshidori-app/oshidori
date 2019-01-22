@@ -2,6 +2,18 @@
 </ion-header>
 
 <ion-content class="card-background-page" id="home">
+
+    <ion-grid no-padding responsive-sm *ngIf="!formatedTaskList">
+        <ion-row responsive-sm *ngFor="let fake of fakeTaskList">
+            <ion-col *ngFor="let column of fakeColumn">
+                <ion-card class="task">
+                    <skeleton-item></skeleton-item>
+                    <skeleton-item height="40vw" style="margin-top: 10px"></skeleton-item>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
     <ion-grid no-padding responsive-sm>
         <ion-row responsive-sm *ngFor="let rowTasks of formatedTaskList">
             <ion-col *ngFor="let task of rowTasks">

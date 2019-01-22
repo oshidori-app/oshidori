@@ -1,7 +1,7 @@
 <ion-header>
-    <ion-navbar>
-      <ion-title>テストエンティティ一覧</ion-title>
-    </ion-navbar>
+  <ion-navbar>
+    <ion-title>テストエンティティ一覧</ion-title>
+  </ion-navbar>
 </ion-header>
 
 <ion-content padding>
@@ -30,45 +30,23 @@
         </ion-col>
       </ion-row>
       <ion-row>
-          <div *ngIf="test.downloadUrl | async as url">
-              <img-loader [src]="url" useImg></img-loader><br>
-          </div>
+        <div *ngIf="test.downloadUrl | async as url">
+          <img-loader [src]="url" useImg></img-loader><br>
+        </div>
       </ion-row>
     </ion-card-content>
   </ion-card>
 
-  <ion-card class="singlePost" *ngIf='!testListVms' *ngFor="let fake of fakeList">
-    <ion-item>
-      <skeleton-item height="50px" width="50px" rounded></skeleton-item>
-    </ion-item>
-    <ion-card-content>
-      <div>{{test.description}}</div>
-      <ion-row>
-        <ion-col>
-          <button ion-button icon-start clear small (click)="onClickToSubCollection(test)">
-            <ion-icon name="text"></ion-icon>
-            <div>サブコレクションへ</div>
-          </button>
-        </ion-col>
-        <ion-col>
-          <ion-note>
-            {{test.refPath}}
-          </ion-note>
-        </ion-col>
-        <ion-col class="postedTime">
-          <ion-note>
-            {{test.created}}
-          </ion-note>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-          <div *ngIf="test.downloadUrl | async as url">
-              <img-loader [src]="url" useImg></img-loader><br>
-          </div>
-      </ion-row>
-    </ion-card-content>
-  </ion-card>
-
+  <ng-container *ngIf="!testListVms">
+    <ion-card class="singlePost" *ngFor="let fake of fakeList">
+      <ion-item>
+        <skeleton-item height="20px" width="80%"></skeleton-item>
+      </ion-item>
+      <ion-card-content>
+        <skeleton-item height="200px" width="80%"></skeleton-item>
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
 
 
 </ion-content>
