@@ -36,9 +36,6 @@ export class HomePage {
     public imageAttributes: ImageAttribute[] = [];
     private listSubscription: Subscription;
 
-    public fakeColumn: Array<any> = new Array(2);
-    public fakeTaskList: Array<any> = new Array(5);
-
     constructor(
         public navCtrl: NavController,
         public platform: Platform,
@@ -57,7 +54,7 @@ export class HomePage {
 
     ionViewDidEnter() {
         Logger.debug("ionViewWillEnter: HomePage");
-        // this.dutil.showLoader("データを読み込んでいます...");
+        this.dutil.showLoader("データを読み込んでいます...");
         this.getTasks();
     }
 
