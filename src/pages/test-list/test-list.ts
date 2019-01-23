@@ -16,6 +16,7 @@ export class TestListVm {
   downloadUrl?: Observable<string>
   refPath?: string
   updated?: DateTime
+  imgLoaded?: boolean
 }
 
 @Component({
@@ -36,14 +37,13 @@ export class TestListPage {
     let test = new Test();
     this.listSubscription = this.testRepo.list(test)
       .subscribe(testList => {
-        Logger.debug(testList);
         this.testListVms = testList;
         testList.forEach((test, i) => {
-          Logger.debug(test.updated);
           let imgUrl = this.storage.getDownloadURL(test.imgUrl);
-          this.testListVms[i].downloadUrl = imgUrl
-          this.testListVms[i].updated = new Date().getTime() + test.updated;
+          this.testListVms[i].downloadUrl = imgUrl;
+          this.testListVms[i].updated = new Date().getTime() + test.updated.seconds;
           this.testListVms[i].refPath = test.ref.path;
+          this.testListVms[i].imgLoaded = false;
         });
       });
   }
@@ -52,6 +52,11 @@ export class TestListPage {
     let test = new Test();
     test = testVm;
     this.navCtrl.push(SubTestRegistrationPage, test);
+  }
+
+  public onImageLoaded(index) {
+    Logger.debug("loaded: " + index);
+    this.testListVms[index].imgLoaded = true;
   }
 
   ionViewWillEnter() {

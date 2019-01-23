@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-card class="singlePost" *ngFor="let test of testListVms">
+  <ion-card class="singlePost" *ngFor="let test of testListVms; index as i">
     <ion-item>
       <h2 padding-vertical>{{test.title}}</h2>
     </ion-item>
@@ -18,32 +18,35 @@
             <div>サブコレクションへ</div>
           </button>
         </ion-col>
-        <ion-col>
-          <ion-note>
-            {{test.refPath}}
-          </ion-note>
-        </ion-col>
-        <ion-col class="postedTime">
-          <ion-note>
-            {{test.created}}
-          </ion-note>
-        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-note>
+          {{test.refPath}}
+        </ion-note>
+      </ion-row>
+      <ion-row class="postedTime">
+        <ion-note>
+          {{test.updated | date: "yy/MM/dd HH:mm"}}
+        </ion-note>
       </ion-row>
       <ion-row>
         <div *ngIf="test.downloadUrl | async as url">
-          <img-loader [src]="url" useImg></img-loader><br>
+          <img [src]="url" (load)="onImageLoaded(i)"><br>
         </div>
       </ion-row>
+      <ng-container *ngIf="test.downloadUrl && !test.imgLoaded">
+        <skeleton-item height="200px" width="100%"></skeleton-item>
+      </ng-container>
     </ion-card-content>
   </ion-card>
 
   <ng-container *ngIf="!testListVms">
     <ion-card class="singlePost" *ngFor="let fake of fakeList">
       <ion-item>
-        <skeleton-item height="20px" width="80%"></skeleton-item>
+        <skeleton-item height="20px" width="100%"></skeleton-item>
       </ion-item>
       <ion-card-content>
-        <skeleton-item height="200px" width="80%"></skeleton-item>
+        <skeleton-item height="200px" width="100%"></skeleton-item>
       </ion-card-content>
     </ion-card>
   </ng-container>
