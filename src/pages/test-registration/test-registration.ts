@@ -37,8 +37,8 @@ export class TestRegistrationPage {
 
       // テストのドキュメントを作成
       let test = new Test({
-        title: this.testRegistrationVm.title,
-        description: this.testRegistrationVm.description,
+        title: this.testRegistrationVm.title ? this.testRegistrationVm.title : null,
+        description: this.testRegistrationVm.description ? this.testRegistrationVm.description : null,
         imgUrl: this.imgRef
       });
 
