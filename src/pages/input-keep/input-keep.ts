@@ -7,6 +7,8 @@ import { Keep } from '../../models/keep';
 import { DisplayUtilService } from '../../providers/display-util.service';
 import { Storage } from '@ionic/storage';
 import { Logger } from '../../logger';
+import { Observable } from 'rxjs';
+import { StorageService } from '../../providers/storage.service';
 
 /**
  * Generated class for the InputKeepPage page.
@@ -24,11 +26,14 @@ export class InputKeepPage {
   public tasks = [];
   public selectedTask;
   public memo = "";
-  public imgUrl;
+  public imgUrl: Observable<string>;
+  private fullPath: string;
+  public imgLoaded: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private keepRepository: KeepRepository, private taskRepository: TaskRepository, private clientStorage: Storage, private toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private keepRepository: KeepRepository, private taskRepository: TaskRepository, private clientStorage: Storage, private storage: StorageService, private toastCtrl: ToastController) {
     this.selectedTask = navParams.get('selectedTask');
-    this.imgUrl = navParams.get('imgUrl');
+    this.fullPath = navParams.get('imgUrl');
+    this.imgUrl = this.storage.getDownloadURL(this.fullPath);
   }
 
   ionViewDidLoad() {
@@ -45,14 +50,12 @@ export class InputKeepPage {
       .catch(err =>{
         Logger.error(err);
       })
-
-
   }
 
   input() {
     Logger.debug('keep登録します');
     Logger.debug(this.selectedTask);
-    this.keepRepository.add(new Keep({ imgUrl: this.imgUrl, memo: this.memo, parentRef: this.selectedTask }))
+    this.keepRepository.add(new Keep({ imgUrl: this.fullPath, memo: this.memo, parentRef: this.selectedTask }))
       .then(() => {
         this.toastCtrl.create({ message: '候補を追加しました！', position: 'top', duration: 2000 }).present();
         this.navCtrl.pop();
@@ -61,4 +64,10 @@ export class InputKeepPage {
         this.navCtrl.pop();
       });
   }
+
+  public onImageLoaded(index) {
+    Logger.debug("loaded: " + index);
+    this.imgLoaded = true;
+  }
+
 }

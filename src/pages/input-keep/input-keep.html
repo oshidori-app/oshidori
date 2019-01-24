@@ -14,7 +14,12 @@
 
 <ion-content>
   <!-- todo 画像 URL を渡す -->
-  <img [src]="imgUrl" />
+  <div *ngIf="imgUrl | async as url">
+    <img [src]="url" (load)="onImageLoaded(i)"><br>
+  </div>
+  <ng-container *ngIf="imgUrl && !imgLoaded">
+      <skeleton-item height="200px" width="100%"></skeleton-item>
+  </ng-container>
   <ion-item>
     <ion-label stacked>MEMO</ion-label>
     <ion-textarea [(ngModel)]="memo"></ion-textarea>
@@ -23,7 +28,7 @@
     <ion-item *ngFor="let task of tasks">
       <ion-label>
         <ion-img [src]="task.src !== null ? task.src : ''"></ion-img>
-          {{ task.title }}
+        {{ task.title }}
       </ion-label>
       <ion-radio [checked]="selectedTask.id === task.ref.id"></ion-radio>
     </ion-item>
