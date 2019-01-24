@@ -11,7 +11,6 @@ export class StoreService {
 
     constructor(private afStore: AngularFirestore, private auth: AuthService) { }
 
-
     /**
      * IDは自動採番でドキュメントを追加する
      *
