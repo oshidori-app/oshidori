@@ -53,7 +53,6 @@ export class AuthService {
       if (this.afAuth.auth.currentUser) {
         this.afAuth.auth.signOut()
           .then(() => {
-            // サインイン時に取得
             this.clientStorage.remove('groupRef')
               .then(() => {
                 Logger.debug('groupRef deleted.');
