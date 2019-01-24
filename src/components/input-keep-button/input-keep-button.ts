@@ -30,9 +30,29 @@ export class InputKeepButtonComponent {
       console.log(this.task);
       }
 
-  showMenu() {
+  showMenu(fileInput: HTMLElement) {
     const actionSheet = this.actionSheetCtrl.create({
       buttons: [
+        {
+          text: '(ForDev) native無し画像選択',
+          handler: () => {
+            fileInput.click();
+            fileInput.onchange = (event) => {
+              const files = (<HTMLInputElement>event.target).files;
+              const file = files[0];
+          
+              let uploadTask = this.storage.uploadFile(file, uuid());
+              this.dutil.showLoader("アップロード中...");
+              uploadTask.snapshotChanges().pipe(
+                finalize(() => {
+                  this.imgRef = uploadTask.fullPath;
+                  this.dutil.dismissLoader();
+                  this.navCtrl.push(InputKeepPage, { selectedTask: this.task, imgUrl: this.imgRef });
+                })
+              ).subscribe();
+            };
+          }
+        },
         {
           text: 'カメラで撮影する',
           handler: () => {

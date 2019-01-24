@@ -1,6 +1,8 @@
 <!-- Generated template for the InputKeepButtonComponent component -->
 <div>
-  <button color="dark" class="fab fab-md fab-md-dark" ng-reflect-color="dark" (click)="showMenu()">
+  <!-- for dev web機能でのファイル選択処理をts側に委譲 -->
+  <input #fileInput type="file" style="display:none;" accept="image/*,video/*"/>
+  <button color="dark" class="fab fab-md fab-md-dark" ng-reflect-color="dark" (click)="showMenu(fileInput)">
     <span class="button-inner">
       <ion-icon name="add" role="img" class="icon icon-md ion-md-add" aria-label="add" ng-reflect-name="add"></ion-icon>
     </span><div class="button-effect"></div>
