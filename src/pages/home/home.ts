@@ -65,6 +65,7 @@ export class HomePage {
     private getTasks() {
         this.clientStorage.get('groupRef')
             .then(val => {
+                Logger.debug('myGroupRef:' + val);
                 let task = new Task({
                     parentRef: val
                 });

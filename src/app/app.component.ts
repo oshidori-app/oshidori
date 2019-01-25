@@ -10,6 +10,7 @@ import { HomePage } from '../pages/home/home';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AccountConfirmationCodePage } from '../pages/account-confirmation-code/account-confirmation-code';
 import { Logger } from '../logger';
+import { Storage } from '@ionic/storage';
 
 @Component({
   templateUrl: 'app.html'
@@ -19,7 +20,7 @@ export class MyApp {
 
   public showSplash: boolean = true;
 
-  constructor(private platform: Platform, private statusBar: StatusBar, private afAuth: AngularFireAuth, private splashScreen: SplashScreen) {
+  constructor(private platform: Platform, private statusBar: StatusBar, private afAuth: AngularFireAuth, private clientStorage: Storage, private splashScreen: SplashScreen) {
     Logger.debug("application started. app.component.ts constructor called.");
     let globalActions = () => {
       Logger.debug("@ globalActions function");
@@ -35,6 +36,12 @@ export class MyApp {
       const unsubscribe = afAuth.auth.onAuthStateChanged(user => {
         let page;
         if (!user) {
+          // ローカルストレージに残っている参照も削除する
+          this.clientStorage.remove('groupRef')
+          .then(() => {
+            Logger.debug('groupRef deleted.');
+          })
+          .catch(err => Logger.error(err));
           page = AccountSigninPage;
           unsubscribe();
         } else {
@@ -50,6 +57,6 @@ export class MyApp {
         this.rootPage = page;
       });
     })
-    .then(() => globalActions());
+      .then(() => globalActions());
   }
 }

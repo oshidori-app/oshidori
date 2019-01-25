@@ -67,7 +67,6 @@ export class AccountSignupPage {
         .then(res => {
           let uid = res.user.uid;
 
-
           // モデル生成
           let group = new Group({
             name: 'ラブリー！'
@@ -90,21 +89,25 @@ export class AccountSignupPage {
               this.userRepo.add(user, uid)
               .then((userRef) => {
                 Logger.debug('groupRefを追加します：' + groupRef.path);
-                Logger.debug('userRefを追加します：' + userRef.path);
                 // storageにgroup情報を保存
-                this.clientStorage.set('groupRef', groupRef.path);
-                this.clientStorage.set('userRef', userRef.path);
-                this.navCtrl.setRoot(AccountConfirmationCodePage);
+                this.clientStorage.set('groupRef', groupRef.path)
+                  .then(() => {
+                    this.navCtrl.setRoot(AccountConfirmationCodePage);
+                  })
+                  .catch(err => {
+                    this.dutil.showToast(err);
+                    Logger.error(err);
+                  });
               })
               .catch(err => {
-                // TODO 失敗したらfbauthからも消す。
+                // TODO 失敗したらfbauthからも消す。トランザクション検討。
                 this.dutil.showToast(err);
                 Logger.error(err);
                 return;
               });
             })
             .catch(err => {
-              // TODO 失敗したらfbauthからも消す。
+              // TODO 失敗したらfbauthからも消す。トランザクション検討。
               this.dutil.showToast(err);
               Logger.error(err);
               return;

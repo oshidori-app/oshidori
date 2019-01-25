@@ -90,33 +90,38 @@ export class AccountSigninPage {
         }
 
         // groupへの参照を取得
-        let userRef = null;
-        this.clientStorage.get('userRef')
+        this.clientStorage.get('groupRef')
           .then(val => {
-
             let ref = val;
-            // 参照がクライアントストレージにない場合。アプリ再インストール。サインアップを別端末でしたなど。
-            if(!val || val == ''){
-              ref = 'groups/'+ this.auth.getUser().uid + '/users/' + this.auth.getUser().uid 
-              //TODO firebaseのidからたどる
+
+            // ローカルストレージにある場合は、それを使用
+            if (ref) {
+              Logger.debug('use localstorage groupRef:' + ref);
             }
-            this.subscription = this.userRepo.find(ref)
-            .subscribe(user => {
-              Logger.debug('find user');
-              Logger.debug(user);
-              Logger.debug('client storage saved. groupRef:' + user.groupRef.path);
-              this.clientStorage.set('groupRef', user.groupRef.path)
-                .catch(err => Logger.error(err));
-              Logger.debug('clientStorageSaved');
-              Logger.debug(user.groupRef);
-            });
+
+            Logger.debug('not exists groupRef');
+            // 参照がクライアントストレージにない場合。アプリ再インストール。サインアップを別端末でしたなど。
+            if (!ref || ref == '') {
+              ref = 'groups/' + res.user.uid + '/users/' + res.user.uid
+            }
+            this.userRepo.find(ref)
+              // TODO unsubscribe
+              .subscribe(user => {
+                this.clientStorage.set('groupRef', user.groupRef.path)
+                  .then(() => {
+                    Logger.debug('client storage saved. groupRef:' + user.groupRef.path);
+                    this.navCtrl.popToRoot({ animate: false });
+                    this.allowButtonPresses = true;
+                    this.navCtrl.push(HomePage);
+                  })
+                  .catch(err => {
+                    Logger.error(err);
+                  });
+              });
           })
           .catch(err => {
             Logger.error(err);
           });
-        this.navCtrl.popToRoot({ animate: false });
-        this.allowButtonPresses = true;
-        this.navCtrl.push(HomePage);
       })
       .catch(err => {
         let message = ''
