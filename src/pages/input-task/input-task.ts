@@ -5,6 +5,7 @@ import { Task } from '../../models/task';
 import { DisplayUtilService } from '../../providers/display-util.service';
 import { TaskRepository } from './../../repository/task.repository';
 import { Logger } from '../../logger';
+import { BackdropProvider } from '../../providers/backdrop/backdrop';
 
 @Component({
     selector: 'page-input-task',
@@ -17,13 +18,13 @@ export class InputTaskPage {
     } = {};
 
     constructor(
-        private navCtrl: NavController,
-        private navParams: NavParams,
         private viewCtrl: ViewController,
         private taskRepository: TaskRepository,
         private clientStorage: Storage,
+        private backdrop: BackdropProvider,
         private dutil: DisplayUtilService
     ) {
+        this.backdrop.show();
     }
 
     ionViewDidLoad() {
@@ -51,9 +52,16 @@ export class InputTaskPage {
                     })
                     .then(() => {
                         this.viewCtrl.dismiss();
+                        this.backdrop.hide();
                     });
             }).catch(err => {
                 Logger.error(err);
             });
     }
+
+    dismiss() {
+        this.viewCtrl.dismiss();
+        this.backdrop.hide();
+    }
+
 }

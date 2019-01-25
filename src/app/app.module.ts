@@ -1,4 +1,3 @@
-import { CommentRepository } from '../repository/comment.repository';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
@@ -13,6 +12,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { IonicStorageModule } from '@ionic/storage';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { IonicImageLoader } from 'ionic-image-loader';
+import { ComponentsModule } from '../components/components.module';
 import { environment } from "../environments/environment";
 import { AccountConfirmationCodePage } from '../pages/account-confirmation-code/account-confirmation-code';
 import { AccountSignupPage } from '../pages/account-signup/account-signup';
@@ -20,7 +20,9 @@ import { AccountPage } from '../pages/account/account';
 import { DevMenuPage } from '../pages/develop/develop-menu';
 import { HomePageModule } from '../pages/home/home.module';
 import { InputKeepPage } from '../pages/input-keep/input-keep';
+import { InputTaskPage } from '../pages/input-task/input-task';
 import { KeepAddDevPage } from '../pages/keep-add-dev/keep-add-dev';
+import { KeepListPage } from '../pages/keep-list/keep-list';
 import { KeepPage } from '../pages/keep/keep';
 import { RankingPage } from '../pages/ranking/ranking';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -30,11 +32,13 @@ import { SubTestRegistrationPage } from '../pages/test-registration/sub-test-reg
 import { TestMultiRegistrationPage } from '../pages/test-registration/test-multi-registration';
 import { TestRegistrationPage } from '../pages/test-registration/test-registration';
 import { AuthService } from '../providers/auth.service';
+import { BackdropProvider } from '../providers/backdrop/backdrop';
 import { DisplayUtilService } from '../providers/display-util.service';
 import { HttpService } from '../providers/http-service';
 import { ImagePickerService } from '../providers/image-picker.service';
 import { StorageService } from '../providers/storage.service';
 import { StoreService } from '../providers/store.service';
+import { CommentRepository } from '../repository/comment.repository';
 import { GroupRepository } from '../repository/group.repository';
 import { KeepRepository } from '../repository/keep.repository';
 import { SubTestRepository } from '../repository/sub-test.repository';
@@ -45,9 +49,6 @@ import { AccountChangePasswordPage } from './../pages/account-change-password/ac
 import { AccountForgotPasswordPage } from './../pages/account-forgot-password/account-forgot-password';
 import { AccountSigninPage } from './../pages/account-signin/account-signin';
 import { MyApp } from './app.component';
-import { ComponentsModule } from '../components/components.module';
-import { KeepListPage } from '../pages/keep-list/keep-list';
-import { InputTaskPage } from '../pages/input-task/input-task';
 @NgModule({
     declarations: [
         MyApp,
@@ -125,6 +126,7 @@ import { InputTaskPage } from '../pages/input-task/input-task';
         SubTestRepository,
         GroupRepository,
         CommentRepository,
+        BackdropProvider,
         { provide: HttpService, useClass: HttpService }
     ]
 })
