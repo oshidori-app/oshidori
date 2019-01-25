@@ -1,28 +1,16 @@
-<!--
-  Generated template for the InputTaskPage page.
+<ion-content class="main-view">
+  <div class="overlay" (click)="dismiss()"></div>
+  <div class="modal_content">
+    <ion-list>
+      <h1>タスク登録🐥</h1>
+      <ion-item>
+        <ion-label color="primary" stacked></ion-label>
+        <ion-input type="text" placeholder="タイトル" [(ngModel)]="taskVm.title"></ion-input>
+      </ion-item>
+    </ion-list>
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
-
-  <ion-navbar color="Light">
-    <ion-title>タスク登録</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-<ion-content padding>
-
-  <ion-list> 
-    <ion-item>
-      <ion-label color="primary" stacked></ion-label>
-      <ion-input type="text" placeholder="タイトル" [(ngModel)]="taskVm.title"></ion-input>
-    </ion-item>
-  </ion-list>
-    
-  <br>
-  <!-- todo 処理中は非活性にするなどしたい -->
-  <button ion-button block color="light" (click)="input()">追加</button>
-  
+    <br>
+    <!-- todo 処理中は非活性にするなどしたい -->
+    <button ion-button block color="dark" (click)="input()">追加</button>
+  </div>
 </ion-content>
