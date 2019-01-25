@@ -97,6 +97,8 @@ export class AccountSigninPage {
             // ローカルストレージにある場合は、それを使用
             if (ref) {
               Logger.debug('use localstorage groupRef:' + ref);
+              this.goHome();
+              return;
             }
 
             Logger.debug('not exists groupRef');
@@ -110,9 +112,7 @@ export class AccountSigninPage {
                 this.clientStorage.set('groupRef', user.groupRef.path)
                   .then(() => {
                     Logger.debug('client storage saved. groupRef:' + user.groupRef.path);
-                    this.navCtrl.popToRoot({ animate: false });
-                    this.allowButtonPresses = true;
-                    this.navCtrl.push(HomePage);
+                    this.goHome();
                   })
                   .catch(err => {
                     Logger.error(err);
@@ -138,6 +138,12 @@ export class AccountSigninPage {
         this.allowButtonPresses = true;
       }
       );
+  }
+
+  private goHome() {
+    this.navCtrl.popToRoot({ animate: false });
+    this.allowButtonPresses = true;
+    this.navCtrl.push(HomePage);
   }
 
   ionViewDidLeave() {
