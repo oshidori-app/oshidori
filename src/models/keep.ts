@@ -13,8 +13,7 @@ export class Keep extends Document implements Collection {
     // meta field
     public readonly collectionName: string = 'keeps';
     public ref: any;
-
-    public parentRef:any = null; // ルートドキュメントはnullを入れてもらう必要あり。頑張ってもいいけどとりあえずこれで...
+    public parentRef:any;
 
     // field
     public groupId: string   
