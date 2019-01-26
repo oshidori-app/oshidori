@@ -103,7 +103,6 @@ export class AuthService {
     })
   }
 
-
   /**
    * 指定したemailアドレスに、パスワードをリセットのためのメールを送信します
    *
@@ -122,6 +121,17 @@ export class AuthService {
     })
   }
 
+
+  /**
+   * 認証情報の確認を行います
+   *
+   * @param {*} nextOrObserver
+   * @returns {firebase.Unsubscribe}
+   * @memberof AuthService
+   */
+  onAuthStateChanged(nextOrObserver): firebase.Unsubscribe {
+    return this.afAuth.auth.onAuthStateChanged(nextOrObserver);
+  }
 
   /**
    * 現在サインイン中のユーザ情報を返却します
