@@ -31,6 +31,7 @@ import { TestListPage } from '../pages/test-list/test-list';
 import { SubTestRegistrationPage } from '../pages/test-registration/sub-test-registration';
 import { TestMultiRegistrationPage } from '../pages/test-registration/test-multi-registration';
 import { TestRegistrationPage } from '../pages/test-registration/test-registration';
+import { AppInitializerService } from '../providers/app-initializer.service';
 import { AuthService } from '../providers/auth.service';
 import { BackdropProvider } from '../providers/backdrop/backdrop';
 import { DisplayUtilService } from '../providers/display-util.service';
@@ -115,6 +116,7 @@ import { MyApp } from './app.component';
         Camera,
         ImagePicker,
         AuthService,
+        AppInitializerService,
         DisplayUtilService,
         ImagePickerService,
         StoreService,

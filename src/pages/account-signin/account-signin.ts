@@ -7,12 +7,8 @@ import { NavController, LoadingController } from 'ionic-angular';
 import { AuthService } from '../../providers/auth.service';
 import { DisplayUtilService } from '../../providers/display-util.service';
 import { Logger } from '../../logger';
-import { GroupRepository } from '../../repository/group.repository';
-import { UserRepository } from '../../repository/user.repository';
-import { Group } from '../../models/group';
-import { User } from '../../models/user';
-import { Storage } from '@ionic/storage';
 import { Subscription } from 'rxjs';
+import { AppInitializerService } from '../../providers/app-initializer.service';
 export class SignInDetails {
   username: string;
   password: string;
@@ -28,11 +24,8 @@ export class AccountSigninPage {
   private subscription: Subscription;
 
   constructor(private navCtrl: NavController,
-    private loadingCtrl: LoadingController,
     private auth: AuthService,
-    private groupRepo: GroupRepository,
-    private userRepo: UserRepository,
-    private clientStorage: Storage,
+    private appInitializer: AppInitializerService,
     private dutil: DisplayUtilService) {
     this.signInDetails = new SignInDetails();
   }
@@ -80,7 +73,6 @@ export class AccountSigninPage {
     let details = this.signInDetails;
     this.auth.signIn({ email: details.username, password: details.password })
       .then(res => {
-
         // メール未検証
         if (!res.user.emailVerified) {
           this.dutil.showAlert('ログイン失敗', '認証が完了していません。', () => {
@@ -88,40 +80,10 @@ export class AccountSigninPage {
           });
           return;
         }
-
-        // groupへの参照を取得
-        this.clientStorage.get('groupRef')
-          .then(val => {
-            let ref = val;
-
-            // ローカルストレージにある場合は、それを使用
-            if (ref) {
-              Logger.debug('use localstorage groupRef:' + ref);
-              this.goHome();
-              return;
-            }
-
-            Logger.debug('not exists groupRef');
-            // 参照がクライアントストレージにない場合。アプリ再インストール。サインアップを別端末でしたなど。
-            if (!ref || ref == '') {
-              ref = 'groups/' + res.user.uid + '/users/' + res.user.uid
-            }
-            this.userRepo.find(ref)
-              // TODO unsubscribe
-              .subscribe(user => {
-                this.clientStorage.set('groupRef', user.groupRef.path)
-                  .then(() => {
-                    Logger.debug('client storage saved. groupRef:' + user.groupRef.path);
-                    this.goHome();
-                  })
-                  .catch(err => {
-                    Logger.error(err);
-                  });
-              });
-          })
-          .catch(err => {
-            Logger.error(err);
-          });
+        // 自身のグループへの参照を取得する
+        this.appInitializer.restoreGroupReference()
+          .then(() => this.goHome())
+          .catch(err => Logger.error(err));
       })
       .catch(err => {
         let message = ''
