@@ -96,4 +96,5 @@
     <engine name="browser" spec="5.0.4" />
     <engine name="ios" spec="~4.5.5" />
     <plugin name="cordova-sqlite-storage" spec="2.6.0" />
+    <plugin name="cordova-plugin-qrscanner" spec="2.6.0" />
 </widget>
