@@ -11,6 +11,7 @@ export class Group extends Document implements Collection {
 
     // field
     public name: string
+    public connectCode: string
 
     constructor(init?: Partial<Group>) {
         super();

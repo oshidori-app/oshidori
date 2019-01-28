@@ -50,6 +50,7 @@ import { AccountChangePasswordPage } from './../pages/account-change-password/ac
 import { AccountForgotPasswordPage } from './../pages/account-forgot-password/account-forgot-password';
 import { AccountSigninPage } from './../pages/account-signin/account-signin';
 import { MyApp } from './app.component';
+import { ConnectPartnerPage } from '../pages/connect-partner/connect-partner';
 @NgModule({
     declarations: [
         MyApp,
@@ -71,6 +72,7 @@ import { MyApp } from './app.component';
         TestMultiRegistrationPage,
         TestListPage,
         SubTestRegistrationPage,
+        ConnectPartnerPage,
         DevMenuPage
     ],
     imports: [
@@ -107,6 +109,7 @@ import { MyApp } from './app.component';
         TestMultiRegistrationPage,
         TestListPage,
         SubTestRegistrationPage,
+        ConnectPartnerPage,
         DevMenuPage
     ],
     providers: [

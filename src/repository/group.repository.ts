@@ -25,4 +25,8 @@ export class GroupRepository extends BaseRepository {
     public list(group: Group): Observable<Group[]> {
         return super.listDocument(group) as Observable<Group[]>;
     }
+
+    public find(docRef: string): Observable<Group> {
+        return super.findDocument(docRef) as Observable<Group>;
+    }
 }

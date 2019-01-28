@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-navbar color="dark">
+    <ion-title>パートナー登録</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+
+  <form #registrationForm="ngForm" novalidate>
+    <ion-card-content>
+        <ng-container *ngIf="!generated && !imgLoaded">
+            <skeleton-item height="200px" width="100%"></skeleton-item>
+        </ng-container>
+      <div style="text-align: center" >
+        <img *ngIf="generated" [src]="generated" (load)="onImageLoaded()"/>
+      </div>
+    </ion-card-content>
+  </form>
+  <ng-container *ngIf="!connectCode && !imgLoaded">
+      <skeleton-item height="20px" width="100%"></skeleton-item>
+  </ng-container>
+  <h1>{{connectCode}}</h1>
+
+</ion-content>
