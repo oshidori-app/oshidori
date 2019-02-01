@@ -82,6 +82,7 @@ export class HomePage {
             .catch(err => {
                 Logger.error(err);
             })
+            .then(() => this.dutil.dismissLoader());
     }
 
     formatedArrayForView(xNum: number, array: any[]) {
