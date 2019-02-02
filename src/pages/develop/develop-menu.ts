@@ -6,6 +6,7 @@ import { TestListPage } from '../test-list/test-list';
 import { TestRegistrationPage } from '../test-registration/test-registration';
 import { TestMultiRegistrationPage } from '../test-registration/test-multi-registration';
 import { KeepPage } from '../keep/keep';
+import { ConnectPartnerPage } from '../connect-partner/connect-partner';
 
 @Component({
   selector: 'develop-menu',
@@ -36,6 +37,9 @@ export class DevMenuPage {
      this.navCtrl.push(KeepPage);
   }
 
+  goConnectPartnerPage() {
+    this.navCtrl.push(ConnectPartnerPage);
+  }
   ionViewDidEnter(){
    Logger.debug("Develop Menu Page Loaded.")
   }

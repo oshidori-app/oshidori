@@ -7,6 +7,7 @@ import { HttpModule } from "@angular/http";
 import { BrowserModule } from '@angular/platform-browser';
 import { Camera } from '@ionic-native/camera';
 import { ImagePicker } from '@ionic-native/image-picker';
+import { QRScanner } from '@ionic-native/qr-scanner';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { IonicStorageModule } from '@ionic/storage';
@@ -17,6 +18,7 @@ import { environment } from "../environments/environment";
 import { AccountConfirmationCodePage } from '../pages/account-confirmation-code/account-confirmation-code';
 import { AccountSignupPage } from '../pages/account-signup/account-signup';
 import { AccountPage } from '../pages/account/account';
+import { ConnectPartnerPage } from '../pages/connect-partner/connect-partner';
 import { DevMenuPage } from '../pages/develop/develop-menu';
 import { HomePageModule } from '../pages/home/home.module';
 import { InputKeepPage } from '../pages/input-keep/input-keep';
@@ -50,6 +52,7 @@ import { AccountChangePasswordPage } from './../pages/account-change-password/ac
 import { AccountForgotPasswordPage } from './../pages/account-forgot-password/account-forgot-password';
 import { AccountSigninPage } from './../pages/account-signin/account-signin';
 import { MyApp } from './app.component';
+
 @NgModule({
     declarations: [
         MyApp,
@@ -71,6 +74,7 @@ import { MyApp } from './app.component';
         TestMultiRegistrationPage,
         TestListPage,
         SubTestRegistrationPage,
+        ConnectPartnerPage,
         DevMenuPage
     ],
     imports: [
@@ -107,6 +111,7 @@ import { MyApp } from './app.component';
         TestMultiRegistrationPage,
         TestListPage,
         SubTestRegistrationPage,
+        ConnectPartnerPage,
         DevMenuPage
     ],
     providers: [
@@ -114,6 +119,7 @@ import { MyApp } from './app.component';
         SplashScreen,
         { provide: ErrorHandler, useClass: IonicErrorHandler },
         Camera,
+        QRScanner,
         ImagePicker,
         AuthService,
         AppInitializerService,

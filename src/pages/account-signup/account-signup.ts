@@ -9,6 +9,7 @@ import { Logger } from '../../logger';
 import { GroupRepository } from '../../repository/group.repository';
 import { Group } from '../../models/group';
 import { Storage } from '@ionic/storage';
+import { v4 as uuid } from 'uuid';
 export class UserDetails {
   username: string;
   password: string;
@@ -69,7 +70,8 @@ export class AccountSignupPage {
 
           // モデル生成
           let group = new Group({
-            name: 'ラブリー！'
+            name: '未設定',
+            connectCode: uuid()
           });
 
           let user = new User({

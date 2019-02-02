@@ -18,7 +18,7 @@ export class UserRepository extends BaseRepository {
         throw new Error('not implemented');
     }
 
-    find(docRef: any): Observable<User> {
+    find(docRef: string): Observable<User> {
         return super.findDocument(docRef) as Observable<User>;
     }
 

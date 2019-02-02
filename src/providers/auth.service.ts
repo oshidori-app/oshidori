@@ -142,4 +142,20 @@ export class AuthService {
   getUser() {
     return this.afAuth.auth.currentUser;
   }
+
+  /**
+   * グループへの参照を返却する
+   *
+   * @returns {Promise<string>}
+   * @memberof AuthService
+   */
+  async getGroupRef(): Promise<string> {
+    let groupRef: string;
+    try {
+      groupRef = await this.clientStorage.get('groupRef');
+    } catch (err) {
+      Logger.error(err);
+    }
+    return groupRef;
+  }
 }

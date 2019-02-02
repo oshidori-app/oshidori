@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-navbar color="dark">
+    <ion-title>パートナー登録</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+
+  <form #registrationForm="ngForm" novalidate>
+    <div padding text-center>
+        <h2>パートナーの<br>QRコードをスキャン</h2>
+          <p>どちらかがスキャンすれば登録が完了します。</p>
+      <button ion-button round outline (click)='onClickReadQR()'>カメラを起動してスキャン</button>
+      <button ion-button round outline (click)='onClickReadQR()'>画像からスキャン</button>
+    </div>
+
+    <hr>
+
+    <ion-card-content text-center>
+      <h2>あなたの招待コード</h2>
+      <p>パートナーのoshidoriアプリから<br>
+      以下のQRコードをスキャンしてください。</p>
+      <div padding *ngIf="generated">
+        <img [src]="generated" (load)="onImageLoaded()" />
+      </div>
+    </ion-card-content>
+  </form>
+  <!-- <div text-center>
+    <h1>ForDev:</h1><br>
+    <h1>{{connectCode}}</h1>
+  </div> -->
+
+</ion-content>
