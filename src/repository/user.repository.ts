@@ -8,7 +8,7 @@ export class UserRepository extends BaseRepository {
 
     constructor(injector: Injector) {
         super(injector);
-     }
+    }
 
     add(user: User, docId: string): Promise<any> {
         return super.setDocument(user, docId);
@@ -18,8 +18,16 @@ export class UserRepository extends BaseRepository {
         throw new Error('not implemented');
     }
 
-    find(docRef: string): Observable<User> {
-        return super.findDocument(docRef) as Observable<User>;
+    find(docRef: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+            super.findDocument(docRef).subscribe(
+            result => {
+                resolve(result);
+            },
+            err => {
+                reject(err);
+            });
+        });
     }
 
     delete(user: User): void {

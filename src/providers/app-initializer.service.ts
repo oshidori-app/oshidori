@@ -38,14 +38,10 @@ export class AppInitializerService {
         ref = 'groups/' + uid + '/users/' + uid
       }
 
-      const findSubscription = this.userRepo.find(ref).subscribe((user) => {
-        this.clientStorage.set('groupRef', user.groupRef.path)
-          .then((result) => {
-            Logger.debug('client storage saved. groupRef:' + result);
-          })
-          .catch(err => Logger.error(err))
-          .then(() => findSubscription.unsubscribe());
-      });
+      const user = await this.userRepo.find(ref);
+      const result = await this.clientStorage.set('groupRef', user.groupRef.path);
+      Logger.debug('client storage saved. groupRef:' + result);
+      Logger.debug('restore completed.');
     } catch (err) {
       Logger.error(err);
     }
