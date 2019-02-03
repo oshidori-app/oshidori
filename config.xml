@@ -1,10 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="jp.co.oshidori-app" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="jp.co.oshidoriapp" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>oshidori</name>
     <description>oshidori</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content src="index.html" />
-    <access origin="*" />
+    <content src="index.html" />  <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -26,6 +25,7 @@
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <preference name="FadeSplashScreen" value="true" />
     <platform name="android">
+        <preference name="loadUrlTimeoutValue" value="100000" />
         <allow-intent href="market:*" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
         <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png" />
@@ -93,8 +93,10 @@
     </plugin>
     <plugin name="cordova-plugin-camera" spec="4.0.3" />
     <plugin name="cordova-sqlite-storage" spec="2.6.0" />
-    <plugin name="cordova-plugin-qrscanner" spec="2.6.0" />
-    <engine name="android" spec="7.1.4" />
+    <plugin name="phonegap-plugin-barcodescanner" spec="8.0.1">
+        <variable name="ANDROID_SUPPORT_V4_VERSION" value="27.+" />
+    </plugin>
     <engine name="browser" spec="5.0.4" />
     <engine name="ios" spec="4.5.5" />
+    <engine name="android" spec="7.1.4" />
 </widget>
