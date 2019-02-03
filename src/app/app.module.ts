@@ -1,13 +1,13 @@
 import { ErrorHandler, NgModule } from '@angular/core';
 import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
-import { AngularFirestoreModule } from "@angular/fire/firestore";
+import { AngularFirestoreModule, FirestoreSettingsToken } from "@angular/fire/firestore";
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { HttpModule } from "@angular/http";
 import { BrowserModule } from '@angular/platform-browser';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Camera } from '@ionic-native/camera';
 import { ImagePicker } from '@ionic-native/image-picker';
-import { QRScanner } from '@ionic-native/qr-scanner';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { IonicStorageModule } from '@ionic/storage';
@@ -52,7 +52,6 @@ import { AccountChangePasswordPage } from './../pages/account-change-password/ac
 import { AccountForgotPasswordPage } from './../pages/account-forgot-password/account-forgot-password';
 import { AccountSigninPage } from './../pages/account-signin/account-signin';
 import { MyApp } from './app.component';
-
 @NgModule({
     declarations: [
         MyApp,
@@ -119,7 +118,7 @@ import { MyApp } from './app.component';
         SplashScreen,
         { provide: ErrorHandler, useClass: IonicErrorHandler },
         Camera,
-        QRScanner,
+        BarcodeScanner,
         ImagePicker,
         AuthService,
         AppInitializerService,
@@ -135,7 +134,8 @@ import { MyApp } from './app.component';
         GroupRepository,
         CommentRepository,
         BackdropProvider,
-        { provide: HttpService, useClass: HttpService }
+        { provide: HttpService, useClass: HttpService },
+        { provide: FirestoreSettingsToken, useValue: {} }
     ]
 })
 

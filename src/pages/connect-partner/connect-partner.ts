@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
+import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner';
 import { NavController } from 'ionic-angular';
 import QRCode from 'qrcode';
 import { Logger } from '../../logger';
 import { AuthService } from '../../providers/auth.service';
+import { DisplayUtilService } from '../../providers/display-util.service';
 import { GroupRepository } from '../../repository/group.repository';
-import { QRScannerStatus, QRScanner } from '@ionic-native/qr-scanner';
 
 @Component({
   selector: 'connect-partner',
@@ -15,15 +16,16 @@ export class ConnectPartnerPage {
   public generated = null;
   public connectCode = null;
   public imgLoaded: boolean = false;
-
+  private options: BarcodeScannerOptions;
   constructor(
     private navCtrl: NavController,
     private auth: AuthService,
     private groupRepo: GroupRepository,
-    private qrScanner: QRScanner
+    private scanner: BarcodeScanner,
+    private dutil: DisplayUtilService,
   ) { }
 
-  generateQRCode(val) {
+  async generateQRCode(val) {
     Logger.debug("generateQRcode")
 
     const qrcode = QRCode;
@@ -47,32 +49,22 @@ export class ConnectPartnerPage {
     })
   }
 
-  onClickReadQR() {
-    Logger.debug(this.qrScanner.prepare());
-    this.qrScanner.prepare()
-    .then((status: QRScannerStatus) => {
-      Logger.debug(status);
-       if (status.authorized) {
-         // camera permission was granted
-  
-         // start scanning
-         let scanSub = this.qrScanner.scan().subscribe((text: string) => {
-           console.log('Scanned something', text);
-  
-           this.qrScanner.hide(); // hide camera preview
-           scanSub.unsubscribe(); // stop scanning
-         });
-  
-       } else if (status.denied) {
-         // camera permission was permanently denied
-         // you must use QRScanner.openSettings() method to guide the user to the settings page
-         // then they can grant the permission from there
-       } else {
-         // permission was denied, but not permanently. You can ask for permission again at a later time.
-       }
-    })
-    .catch((e: any) => console.log('Error is', e));
-
+  async onClickReadQR() {
+    try {
+      this.options = {
+        // androidのときだけ表示
+        prompt: "QRコードを読み込んでください"
+      }
+      const data = await this.scanner.scan(this.options);
+      Logger.debug(data.text);
+    } catch (err) {
+      Logger.error(err);
+      // 非許可の場合
+      if (err.indexOf('prohibited') > -1) {
+        // TODO iphoneとandoridそれぞれの設定方法を記述
+        this.dutil.showAlert("カメラを起動できませんでした", "設定画面からoshidoriアプリにカメラ利用を許可してください。");
+      }
+    }
   }
 
   ionViewWillEnter() {
