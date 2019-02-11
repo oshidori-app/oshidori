@@ -5,14 +5,12 @@ import { Config, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { HomePage } from '../pages/home/home';
-
 import { AccountConfirmationCodePage } from '../pages/account-confirmation-code/account-confirmation-code';
 import { Logger } from '../logger';
 import { Storage } from '@ionic/storage';
-import { UserRepository } from '../repository/user.repository';
 import { AuthService } from '../providers/auth.service';
 import { AppInitializerService } from '../providers/app-initializer.service';
+import { TabRootPage } from '../pages/menu/tab-root';
 
 @Component({
   templateUrl: 'app.html'
@@ -61,7 +59,7 @@ export class MyApp {
           } else {
             // 自身のグループへの参照を取得する
             this.appInitializer.restoreGroupReference()
-              .then(() => this.rootPage = HomePage);
+              .then(() => this.rootPage = TabRootPage);
           }
         }
         unsubscribe();
