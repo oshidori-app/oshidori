@@ -1,5 +1,5 @@
 import { Injectable, Injector } from '@angular/core';
-import { Comment } from "../models/comment";
+import { Comment } from '../models/comment';
 import { Observable } from 'rxjs';
 import { BaseRepository } from './base.repository';
 

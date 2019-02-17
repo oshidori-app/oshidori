@@ -3,7 +3,7 @@ import { NavController } from 'ionic-angular';
 import { AccountConfirmationCodePage } from '../account-confirmation-code/account-confirmation-code';
 import { AuthService } from '../../providers/auth.service';
 import { DisplayUtilService } from '../../providers/display-util.service';
-import { User, Gender } from "../../models/user";
+import { User, Gender } from '../../models/user';
 import { UserRepository } from '../../repository/user.repository';
 import { Logger } from '../../logger';
 import { GroupRepository } from '../../repository/group.repository';
@@ -20,7 +20,7 @@ export class UserDetails {
 
 @Component({
   selector: 'account-signup',
-  templateUrl: 'account-signup.html'
+  templateUrl: 'account-signup.html',
 })
 export class AccountSignupPage {
 
@@ -42,17 +42,17 @@ export class AccountSignupPage {
   public genderList = [
     {
       value: Gender.Male,
-      text: Gender[Gender.Male]
+      text: Gender[Gender.Male],
     }, {
       value: Gender.Female,
-      text: Gender[Gender.Female]
+      text: Gender[Gender.Female],
     }, {
       value: Gender.Other,
-      text: Gender[Gender.Other]
-    }
-  ]
+      text: Gender[Gender.Other],
+    },
+  ];
 
-  public submitted: boolean = false;
+  public submitted = false;
 
   onSignUp(form) {
 
@@ -71,13 +71,13 @@ export class AccountSignupPage {
           // モデル生成
           let group = new Group({
             name: '未設定',
-            connectCode: uuid()
+            connectCode: uuid(),
           });
 
           let user = new User({
             userId: uid,
             gender: details.gender,
-            birthdate: details.birthdate
+            birthdate: details.birthdate,
           });
 
           // GroupとUserを同時に作成する
@@ -121,7 +121,7 @@ export class AccountSignupPage {
             .catch(err => {
               this.dutil.showToast(err);
               Logger.error(err);
-            })
+            });
         })
         .catch(err => {
           this.dutil.showAlert('登録失敗', err.message);

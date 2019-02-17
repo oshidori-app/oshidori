@@ -32,8 +32,8 @@ export class AccountSigninPage {
 
   allowButtonPresses = true; // 複数ボタン押下抑制用
 
-  signInButtonClicked: boolean = false;
-  forgotPasswordButtonClicked: boolean = false;
+  signInButtonClicked = false;
+  forgotPasswordButtonClicked = false;
 
   onSignIn(form) {
     this.signInButtonClicked = true;
@@ -86,11 +86,11 @@ export class AccountSigninPage {
           .catch(err => Logger.error(err));
       })
       .catch(err => {
-        let message = ''
+        let message = '';
         if (err.code === 'auth/wrong-password') {
           message = 'メールアドレスかパスワードが間違っています';
         } else {
-          message = 'ログインできませんでした。もう一度お試しください。'
+          message = 'ログインできませんでした。もう一度お試しください。';
         }
         this.dutil.showAlert('ログイン失敗', message);
         Logger.debug(err);
@@ -109,6 +109,6 @@ export class AccountSigninPage {
   }
 
   ionViewDidLeave() {
-    if (this.subscription) this.subscription.unsubscribe();
+    if (this.subscription) { this.subscription.unsubscribe(); }
   }
 }

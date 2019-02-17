@@ -40,7 +40,7 @@ export class DevMenuPage {
   goConnectPartnerPage() {
     this.navCtrl.push(ConnectPartnerPage);
   }
-  ionViewDidEnter(){
-   Logger.debug("Develop Menu Page Loaded.")
+  ionViewDidEnter() {
+   Logger.debug('Develop Menu Page Loaded.');
   }
 }

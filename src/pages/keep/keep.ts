@@ -4,8 +4,8 @@ import { CommentRepository } from '../../repository/comment.repository';
 import { Comment } from '../../models/comment';
 import { AuthService } from '../../providers/auth.service';
 import { IonicPage, NavController, NavParams, ActionSheetController, AlertController } from 'ionic-angular';
-import { KeepListPage } from '../keep-list/keep-list'
-import { HomePage } from '../home/home'
+import { KeepListPage } from '../keep-list/keep-list';
+import { HomePage } from '../home/home';
 import { InputKeepPage } from '../input-keep/input-keep';
 import { Logger } from '../../logger';
 
@@ -16,10 +16,10 @@ import { Logger } from '../../logger';
  * Ionic pages and navigation.
  */
 
- //チャット表示用
+ // チャット表示用
 export class CommentListVm {
-  comment?: string
-  createUser?: string
+  comment?: string;
+  createUser?: string;
 }
 
 @IonicPage()
@@ -31,7 +31,7 @@ export class CommentListVm {
 export class KeepPage {
 
   public commentRegistrationVm: {
-    comment?: string
+    comment?: string,
   } = {};
 
   public keep = {};
@@ -45,23 +45,23 @@ export class KeepPage {
     private auth: AuthService
   ) {
 //    this.keep = navParams.get('keep');
-   this.keep['title'] = 'キープ詳細'
-   this.keep['src'] = 'hoge'
-   this.keep['description'] = '色は暖色系の色味ではなかったけれど、家族・旦那さんが好きな色味でデザインとボリュームが今まで着たドレスの中で1番'
+   this.keep['title'] = 'キープ詳細';
+   this.keep['src'] = 'hoge';
+   this.keep['description'] = '色は暖色系の色味ではなかったけれど、家族・旦那さんが好きな色味でデザインとボリュームが今まで着たドレスの中で1番';
   }
 
-  //firebaseへコメントを登録
+  // firebaseへコメントを登録
   onClickRegistration(form) {
     if (form && form.valid) {
       Logger.debug(form);
-    
+
     let comment = new Comment({
-      comment: this.commentRegistrationVm.comment
+      comment: this.commentRegistrationVm.comment,
     });
 
     this.commentRepo.add(comment)
       .then((ref) => {
-        this.commentRegistrationVm.comment = "";
+        this.commentRegistrationVm.comment = '';
       })
       .catch(err => {
         this.dutil.showToast(err);
@@ -71,7 +71,7 @@ export class KeepPage {
     }
   }
 
-  //firebaseからチャットコメント取得
+  // firebaseからチャットコメント取得
   public commentListVms: CommentListVm[];
   private getComment() {
     let comment = new Comment();
@@ -80,184 +80,175 @@ export class KeepPage {
         Logger.debug(commentList);
         this.commentListVms = commentList;
       });
-    this.commentRegistrationVm.comment = "";
+    this.commentRegistrationVm.comment = '';
   }
 
   manfav: Boolean;
-  manFavChange(){
-    if (this.manfav == true)
-    {
+  manFavChange() {
+    if (this.manfav == true) {
       this.manfav = false;
-    }
-    else
-    {
+    } else {
       this.manfav = true;
     }
-    localStorage.setItem('manfav', JSON.stringify(this.manfav))
+    localStorage.setItem('manfav', JSON.stringify(this.manfav));
   }
 
   womanfav: Boolean;
-  womanFavChange(){
-    if (this.womanfav == true)
-    {
+  womanFavChange() {
+    if (this.womanfav == true) {
       this.womanfav = false;
-    }
-    else
-    {
+    } else {
       this.womanfav = true;
     }
-    localStorage.setItem('womanfav', JSON.stringify(this.womanfav))
+    localStorage.setItem('womanfav', JSON.stringify(this.womanfav));
   }
 
   decidestatus: Boolean;
-  decideStatusChange(){
-    if (this.decidestatus == true)
-    {
+  decideStatusChange() {
+    if (this.decidestatus == true) {
       this.decidestatus = false;
-    }
-    else
-    {
+    } else {
       this.decidestatus = true;
     }
-    localStorage.setItem('decidestatus', JSON.stringify(this.decidestatus))
+    localStorage.setItem('decidestatus', JSON.stringify(this.decidestatus));
   }
 
-  //ローカルストレージに保持(あとで消す)
+  // ローカルストレージに保持(あとで消す)
   chats: { name: string }[] = [];
   chat: string;
-  addChat(){
+  addChat() {
     this.chats.push({
-      name: this.chat
+      name: this.chat,
     });
-    localStorage.setItem('chats', JSON.stringify(this.chats))
+    localStorage.setItem('chats', JSON.stringify(this.chats));
     this.chat = '';
   }
 
-  ionViewWillEnter(){
-    //firebaseからチャットを読み込む
-    Logger.debug("ionViewWillEnter: Keep");
-    this.dutil.showLoader("データを読み込んでいます...");
+  ionViewWillEnter() {
+    // firebaseからチャットを読み込む
+    Logger.debug('ionViewWillEnter: Keep');
+    this.dutil.showLoader('データを読み込んでいます...');
     this.getComment();
 
-    //ローカルストレージから読み込む(あとで消す)
-    if(localStorage.getItem('chats')){
+    // ローカルストレージから読み込む(あとで消す)
+    if (localStorage.getItem('chats')) {
       this.chats = JSON.parse(localStorage.getItem('chats'));
     }
-    if(localStorage.getItem('manfav')){
+    if (localStorage.getItem('manfav')) {
       this.manfav = JSON.parse(localStorage.getItem('manfav'));
     }
-    if(localStorage.getItem('womanfav')){
+    if (localStorage.getItem('womanfav')) {
       this.womanfav = JSON.parse(localStorage.getItem('womanfav'));
     }
-    if(localStorage.getItem('decidestatus')){
+    if (localStorage.getItem('decidestatus')) {
       this.decidestatus = JSON.parse(localStorage.getItem('decidestatus'));
     }
   }
 
-  //ローカルストレージ版チャットの編集(あとで消す)
-  changeComment(index: number){
+  // ローカルストレージ版チャットの編集(あとで消す)
+  changeComment(index: number) {
     let actionSheet = this.actionSheetCtrl.create({
-      buttons:[
+      buttons: [
         {
           text: '削除',
           role: 'destructive',
-          handler:() => {
-            this.chats.splice(index, 1)
+          handler: () => {
+            this.chats.splice(index, 1);
 //            localStorage.setItem('chats', JSON.stringify(this.chats));
-          }
-        },{
+          },
+        }, {
           text: '変更',
-          handler:() => {
+          handler: () => {
 //            this._modifyChat(index);
-          }
-        },{
+          },
+        }, {
           text: '閉じる',
-          handler:() => {
+          handler: () => {
 //            console.log('Cancel clicked');
-          }
-        }
-      ]
-    })
+          },
+        },
+      ],
+    });
     actionSheet.present();
   }
 
-  _modifyComment(index: number){
+  _modifyComment(index: number) {
     let prompt = this.alertCtrl.create({
-      inputs:[
+      inputs: [
         {
           name: 'chat',
           placeholder: 'チャット',
-          value: this.chats[index].name
-        }
+          value: this.chats[index].name,
+        },
       ],
-      buttons:[
+      buttons: [
         {
-          text: '閉じる'
+          text: '閉じる',
         },
         {
           text: '保存',
-          handler: data =>{
+          handler: data => {
           //   this.chats[index] = {name:data.chat};
           // localStorage.setItem('chats', JSON.stringify(this.chats));
-          }
-        }
-      ]
-    })
+          },
+        },
+      ],
+    });
     prompt.present();
-  }  
+  }
 
-  //ローカルストレージ版チャットの編集(あとで消す)
-  changeChat(index: number){
+  // ローカルストレージ版チャットの編集(あとで消す)
+  changeChat(index: number) {
     let actionSheet = this.actionSheetCtrl.create({
-      buttons:[
+      buttons: [
         {
           text: '削除',
           role: 'destructive',
-          handler:() => {
-            this.chats.splice(index, 1)
+          handler: () => {
+            this.chats.splice(index, 1);
             localStorage.setItem('chats', JSON.stringify(this.chats));
-          }
-        },{
+          },
+        }, {
           text: '変更',
-          handler:() => {
+          handler: () => {
             this._modifyChat(index);
-          }
-        },{
+          },
+        }, {
           text: '閉じる',
-          handler:() => {
+          handler: () => {
             console.log('Cancel clicked');
-          }
-        }
-      ]
-    })
+          },
+        },
+      ],
+    });
     actionSheet.present();
   }
 
-  //ローカルストレージ版チャットの編集(あとで消す)
-  _modifyChat(index: number){
+  // ローカルストレージ版チャットの編集(あとで消す)
+  _modifyChat(index: number) {
     let prompt = this.alertCtrl.create({
-      inputs:[
+      inputs: [
         {
           name: 'chat',
           placeholder: 'チャット',
-          value: this.chats[index].name
-        }
+          value: this.chats[index].name,
+        },
       ],
-      buttons:[
+      buttons: [
         {
-          text: '閉じる'
+          text: '閉じる',
         },
         {
           text: '保存',
-          handler: data =>{
-            this.chats[index] = {name:data.chat};
+          handler: data => {
+            this.chats[index] = { name: data.chat };
           localStorage.setItem('chats', JSON.stringify(this.chats));
-          }
-        }
-      ]
-    })
+          },
+        },
+      ],
+    });
     prompt.present();
-  }  
+  }
 
   showMenu() {
     const actionSheet = this.actionSheetCtrl.create({
@@ -266,23 +257,23 @@ export class KeepPage {
           text: '編集',
           handler: () => {
             this.goToInputKeep();
-          }
-        },{
+          },
+        }, {
           text: '削除',
           role: 'destructive',
           handler: () => {
-            this.showConfirm()
-          }
-        },{
+            this.showConfirm();
+          },
+        }, {
           text: 'キャンセル',
-          role: 'cancel'
-        }
-      ]
+          role: 'cancel',
+        },
+      ],
     });
     actionSheet.present();
   }
 
-  //ローカルストレージ版チャットの編集(あとで消す)
+  // ローカルストレージ版チャットの編集(あとで消す)
   showConfirm() {
     const confirm = this.alertCtrl.create({
       message: '削除してよろしいですか?',
@@ -291,15 +282,15 @@ export class KeepPage {
           text: 'キャンセル',
           handler: () => {
             console.log('Disagree clicked');
-          }
+          },
         },
         {
           text: '削除',
           handler: () => {
             this.goToKeepList();
-          }
-        }
-      ]
+          },
+        },
+      ],
     });
     confirm.present();
   }
@@ -314,6 +305,6 @@ export class KeepPage {
     this.navCtrl.push(InputKeepPage);
   }
   ionViewDidLoad() {
-    Logger.debug("ionViewDidEnter: KeepPage")
+    Logger.debug('ionViewDidEnter: KeepPage');
   }
 }

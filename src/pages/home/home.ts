@@ -13,7 +13,7 @@ import { TestListPage } from '../test-list/test-list';
 import { Logger } from '../../logger';
 import { DisplayUtilService } from '../../providers/display-util.service';
 import { Subscription } from 'rxjs';
-import { ImageAttribute } from 'ionic-image-loader'
+import { ImageAttribute } from 'ionic-image-loader';
 import { Storage } from '@ionic/storage';
 
 export class TaskListVm {
@@ -24,7 +24,7 @@ export class TaskListVm {
 }
 @Component({
     selector: 'page-home',
-    templateUrl: 'home.html'
+    templateUrl: 'home.html',
 })
 
 export class HomePage {
@@ -48,18 +48,18 @@ export class HomePage {
         this.platformWidth = platform.width();
         this.imageAttributes.push({
             element: 'class',
-            value: 'task-img'
-        })
+            value: 'task-img',
+        });
     }
 
     ionViewDidEnter() {
-        Logger.debug("ionViewWillEnter: HomePage");
-        this.dutil.showLoader("データを読み込んでいます...");
+        Logger.debug('ionViewWillEnter: HomePage');
+        this.dutil.showLoader('データを読み込んでいます...');
         this.getTasks();
     }
 
     ionViewDidLeave() {
-        if (this.listSubscription) this.listSubscription.unsubscribe();
+        if (this.listSubscription) { this.listSubscription.unsubscribe(); }
     }
 
     private getTasks() {
@@ -67,17 +67,17 @@ export class HomePage {
             .then(val => {
                 Logger.debug('myGroupRef:' + val);
                 let task = new Task({
-                    parentRef: val
+                    parentRef: val,
                 });
                 this.listSubscription = this.taskRepo.list(task).subscribe(taskList => {
                     Logger.debug(taskList);
                     this.taskListVms = taskList;
                     taskList.forEach((task, i) => {
                         let DownloadUrl = this.strage.getDownloadURL(task.imgUrl);
-                        this.taskListVms[i].DownloadUrl = DownloadUrl
-                    })
-                    return this.formatedTaskList = this.formatedArrayForView(2, this.taskListVms)
-                })
+                        this.taskListVms[i].DownloadUrl = DownloadUrl;
+                    });
+                    return this.formatedTaskList = this.formatedArrayForView(2, this.taskListVms);
+                });
             })
             .catch(err => {
                 Logger.error(err);
@@ -88,28 +88,28 @@ export class HomePage {
     formatedArrayForView(xNum: number, array: any[]) {
         let ret = [];
         for (let i = 0; i < Math.ceil(array.length / xNum); i++) {
-            var index = i * xNum;
+            let index = i * xNum;
             ret.push(array.slice(index, index + xNum));
         }
-        return ret
+        return ret;
     }
 
     goToKeepList(task: Task) {
         // APIにtaskでREST投げて返り値からKeepListを生成してページ遷移
-        this.navCtrl.push(KeepListPage, { task: task.ref })
+        this.navCtrl.push(KeepListPage, { task: task.ref });
     }
 
     goToAccount() {
-        this.navCtrl.push(AccountPage)
+        this.navCtrl.push(AccountPage);
     }
 
     gotoInputTask() {
-        this.navCtrl.push(InputTaskPage)
+        this.navCtrl.push(InputTaskPage);
     }
     gotoTestRegistration() {
-        this.navCtrl.push(TestRegistrationPage)
+        this.navCtrl.push(TestRegistrationPage);
     }
     gotoTestList() {
-        this.navCtrl.push(TestListPage)
+        this.navCtrl.push(TestListPage);
     }
 }

@@ -11,12 +11,12 @@ import { IonicImageLoader } from 'ionic-image-loader';
 import { SubTestRegistrationPage } from '../test-registration/sub-test-registration';
 
 export class TestListVm {
-  title?: string
-  description?: string
-  downloadUrl?: Observable<string>
-  refPath?: string
-  updated?: DateTime
-  imgLoaded?: boolean
+  title?: string;
+  description?: string;
+  downloadUrl?: Observable<string>;
+  refPath?: string;
+  updated?: DateTime;
+  imgLoaded?: boolean;
 }
 
 @Component({
@@ -28,7 +28,7 @@ export class TestListPage {
   public testListVms: TestListVm[];
   private listSubscription: Subscription;
 
-  public fakeList: Array<any> = new Array(10);
+  public fakeList: any[] = new Array(10);
 
   constructor(public navCtrl: NavController, private testRepo: TestRepository, private auth: AuthService, private storage: StorageService, private dutil: DisplayUtilService) {
   }
@@ -55,16 +55,16 @@ export class TestListPage {
   }
 
   public onImageLoaded(index) {
-    Logger.debug("loaded: " + index);
+    Logger.debug('loaded: ' + index);
     this.testListVms[index].imgLoaded = true;
   }
 
   ionViewWillEnter() {
-    Logger.debug("ionViewWillEnter: TeltListPage");
+    Logger.debug('ionViewWillEnter: TeltListPage');
     this.getTests();
   }
 
   ionViewDidLeave() {
-    if (this.listSubscription) this.listSubscription.unsubscribe();
+    if (this.listSubscription) { this.listSubscription.unsubscribe(); }
   }
 }

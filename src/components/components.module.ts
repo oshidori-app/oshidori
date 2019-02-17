@@ -6,19 +6,19 @@ import { InputTaskButtonComponent } from './input-task-button/input-task-button'
 import { DevButtonComponent } from './dev-button/dev-button';
 import { SkeletonItemComponent } from './skeleton-item/skeleton-item';
 @NgModule({
-	declarations: [
-		InputKeepButtonComponent, 
-		InputTaskButtonComponent,
-		DevButtonComponent,
-		SkeletonItemComponent
-	],
-	imports: [IonicModule],
-	exports: [
-		InputKeepButtonComponent, 
-		InputTaskButtonComponent,
-		DevButtonComponent,
-		SkeletonItemComponent
-	],
-	providers: [PhotoLibrary]
+  declarations: [
+    InputKeepButtonComponent,
+    InputTaskButtonComponent,
+    DevButtonComponent,
+    SkeletonItemComponent,
+  ],
+  imports: [IonicModule],
+  exports: [
+    InputKeepButtonComponent,
+    InputTaskButtonComponent,
+    DevButtonComponent,
+    SkeletonItemComponent,
+  ],
+  providers: [PhotoLibrary],
 })
 export class ComponentsModule {}

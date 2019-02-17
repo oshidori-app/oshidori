@@ -1,10 +1,10 @@
-import { Injectable } from "@angular/core";
-import { AngularFirestore, AngularFirestoreDocument } from "@angular/fire/firestore";
+import { Injectable } from '@angular/core';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import * as firebase from 'firebase';
-import { Observable } from "rxjs";
-import { Collection } from "../models/collection";
-import { Logger } from "../logger";
-import { AuthService } from "./auth.service";
+import { Observable } from 'rxjs';
+import { Collection } from '../models/collection';
+import { Logger } from '../logger';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class StoreService {
@@ -34,24 +34,23 @@ export class StoreService {
             docRef.collection(collectionName).add(data)
                 .then(ref => {
                     Logger.debug('new Document ref:' + ref.path);
-                    ref.update({ ref: ref })
+                    ref.update({ ref })
                         .then(updatedRef => {
                             Logger.debug('refence updated!!');
                             resolve(ref);
                         })
                         .catch(err => {
                             Logger.error(err);
-                            reject(err)
-                        })
+                            reject(err);
+                        });
                 })
                 .catch(err => {
                     // TOOD: firebaseに依存しない業務例外を返却する
                     Logger.error(err);
                     reject(err);
-                })
-        })
+                });
+        });
     }
-
 
     /**
      * IDを指定してドキュメントを作成する
@@ -85,15 +84,15 @@ export class StoreService {
                         })
                         .catch(err => {
                             Logger.error(err);
-                            reject(err)
-                        })
+                            reject(err);
+                        });
                 })
                 .catch(err => {
                     // TOOD: firebaseに依存しない業務例外を返却する
                     Logger.error(err);
                     reject(err);
-                })
-        })
+                });
+        });
     }
 
     // TODO group対応をする。Rootと分ける必要ないかも。
@@ -126,9 +125,9 @@ export class StoreService {
                 .then(res => resolve(res))
                 .catch(err => {
                     // TOOD: firebaseに依存しない業務例外を返却する
-                    reject(err)
-                })
-        })
+                    reject(err);
+                });
+        });
     }
 
     /**
@@ -151,8 +150,8 @@ export class StoreService {
     }
 
     private convertCustomObject<T>(obj): T[] {
-        let c: { new(): T };
-        return Object.assign(c, obj);
+        let c: new() => T;
+        return { ...c, ...obj };
     }
 
     private beforeAddConvert(data): void {

@@ -9,10 +9,10 @@ import { Logger } from '../../logger';
 export class AccountForgotPasswordPage {
 
   public formData: {
-    email?: string
+    email?: string,
   } = {};
-  public resetSubmitted: boolean = false;
-  public reseted: boolean = false;
+  public resetSubmitted = false;
+  public reseted = false;
 
   constructor(private navCtrl: NavController, private auth: AuthService, private dutil: DisplayUtilService) {
   }

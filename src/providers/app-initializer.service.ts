@@ -1,9 +1,9 @@
-import { Injectable } from "@angular/core";
-import { Storage } from "@ionic/storage";
-import { Logger } from "../logger";
-import { AuthService } from "./auth.service";
-import { UserRepository } from "../repository/user.repository";
-import { Subject } from "rxjs";
+import { Injectable } from '@angular/core';
+import { Storage } from '@ionic/storage';
+import { Logger } from '../logger';
+import { AuthService } from './auth.service';
+import { UserRepository } from '../repository/user.repository';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class AppInitializerService {
@@ -12,9 +12,8 @@ export class AppInitializerService {
     private auth: AuthService,
     private userRepo: UserRepository,
     private clientStorage: Storage) {
-    Logger.debug("AppInitializerService")
+    Logger.debug('AppInitializerService');
   }
-
 
   /**
    * 自身のグループへの参照を復元する
@@ -35,7 +34,7 @@ export class AppInitializerService {
       // 参照がクライアントストレージにない場合。アプリ再インストール。サインアップを別端末でしたなど。
       // firebaseのuidからfirestoreのユーザ情報をたどり、自身のグループへの参照を取得する
       if (!ref || ref == '') {
-        ref = 'groups/' + uid + '/users/' + uid
+        ref = 'groups/' + uid + '/users/' + uid;
       }
 
       const user = await this.userRepo.find(ref);

@@ -6,7 +6,6 @@ import { DisplayUtilService } from '../../providers/display-util.service';
 import { AuthService } from '../../providers/auth.service';
 import { AccountSigninPage } from '../account-signin/account-signin';
 
-
 @Component({
   selector: 'page-account',
   templateUrl: 'account.html',
@@ -26,7 +25,7 @@ export class AccountPage {
 
   imageUploadEventListenerAttached = false;
   profileImageDisplay = false;
-  submitted: boolean = false;
+  submitted = false;
 
   constructor(private navCtrl: NavController, private camera: Camera, private auth: AuthService, private dutil: DisplayUtilService) {
     this.attributes = [];
@@ -72,8 +71,8 @@ export class AccountPage {
       targetWidth: 200,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
-    }
+      mediaType: this.camera.MediaType.PICTURE,
+    };
 
     this.camera.getPicture(options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
@@ -94,7 +93,7 @@ export class AccountPage {
       array.push(binary.charCodeAt(i));
     }
     return new Blob([new Uint8Array(array)], { type: 'image/jpeg' });
-  };
+  }
 
   uploadFromFile(event) {
     // const files = event.target.files;
