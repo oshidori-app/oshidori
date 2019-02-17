@@ -18,7 +18,11 @@
     "ban-comma-operator": false,
     "variable-name": false,
     "no-empty": false,
-    "prefer-const": false
+    "prefer-const": false,
+    "no-floating-promises": false,
+    "deprecation": false,
+    "strict-boolean-expressions": false,
+    "strict-boolean-conditions" :false
   },
   "rulesDirectory": [
     "node_modules/tslint-eslint-rules/dist/rules"
