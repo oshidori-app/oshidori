@@ -22,6 +22,8 @@
     "no-floating-promises": false,
     "deprecation": false,
     "strict-boolean-expressions": false,
+    "member-access": false,
+    "arrow-parens": false,
     "strict-boolean-conditions" :false
   },
   "rulesDirectory": [
