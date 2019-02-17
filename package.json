@@ -7,7 +7,7 @@
   "scripts": {
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
-    "lint": "ionic-app-scripts lint --bailOnLintError true",
+    "lint": "ionic-app-scripts lint",
     "repair": "/bin/bash -c 'ionic repair && ionic cordova platform add ios android browser'",
     "ios:device": "ionic cordova run ios -lc --device -- --buildFlag='-UseModernBuildSystem=0'",
     "ios:emu:live": "ionic cordova run ios -lc --emulator -- --buildFlag='-UseModernBuildSystem=0'",
