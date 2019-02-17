@@ -1,6 +1,6 @@
 export abstract class Document {
-    created: any;
-    updated: any;
-    createUser: any;
-    updteUser: any;
+    public created: any   
+    public updated: any
+    public createUser: any
+    public updteUser: any
 }

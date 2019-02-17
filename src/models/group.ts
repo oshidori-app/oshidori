@@ -1,17 +1,17 @@
-import { Collection } from './collection';
-import { Document } from './document';
-import { SubCollection } from './sub-collection';
+import { Document } from "./document";
+import { SubCollection } from "./sub-collection";
+import { Collection } from "./collection";
 
 export class Group extends Document implements Collection {
 
     // meta field
-    readonly collectionName: string = 'groups';
-    ref: any;
-    parentRef: any = null;
+    public readonly collectionName: string = 'groups';
+    public ref: any;
+    public parentRef: any = null;
 
     // field
-    name: string;
-    connectCode: string;
+    public name: string
+    public connectCode: string
 
     constructor(init?: Partial<Group>) {
         super();

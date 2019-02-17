@@ -1,5 +1,5 @@
-import { Collection } from './collection';
-import { Document } from './document';
+import { Document } from "./document";
+import { Collection } from "./collection";
 
 /**
  * 開発用：testsコレクションのサブコレクションであるsub-testsのドキュメント
@@ -11,16 +11,16 @@ import { Document } from './document';
 export class SubTest extends Document implements Collection {
 
     // meta field
-    readonly collectionName: string = 'sub-tests';
-    ref: any;
-    parentRef: any;
+    public readonly collectionName: string = 'sub-tests'
+    public ref: any;
+    public parentRef: any;
 
     // field
-    groupId: string;
-    userId: string;
-    title: string;
-    description: string;
-    imgUrl: string;
+    public groupId: string   
+    public userId: string
+    public title: string
+    public description: string
+    public imgUrl: string
 
     constructor(init?: Partial<SubTest>) {
         super();

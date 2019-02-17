@@ -13,37 +13,37 @@ export class DisplayUtilService {
 
   showAlert(title: string, message: string, okCallbackFunction = null): void {
     let _callback = () => {};
-    if (okCallbackFunction != undefined) {
+    if(okCallbackFunction != null) {
         _callback = okCallbackFunction;
     }
-    const alert = this.alertCtrl.create({
-      title,
+    let alert = this.alertCtrl.create({
+      title: title,
       subTitle: message,
-      buttons: [{ text: 'OK', handler: _callback }],
+      buttons: [{ text: 'OK', handler: _callback }]
     });
     alert.present();
   }
 
-  showToast(message: string, duration = 3000): void {
-    const toast = this.toastCtrl.create({
-      message,
-      duration,
-      position: 'bottom',
+  showToast(message: string, duration: number = 3000): void {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: duration,
+      position: 'bottom'
     });
     toast.present();
   }
 
-  showLoader(message: string, duration = 3000): void {
+  showLoader(message: string, duration: number = 3000): void {
     this.loader = this.loadingCtrl.create({
       content: message,
-      duration,
-      dismissOnPageChange: true,
+      duration: duration,
+      dismissOnPageChange: true
     });
     this.loader.present();
   }
 
   dismissLoader(): void {
-    if (this.loader != undefined) {
+    if (this.loader != null) {
       this.loader.dismiss();
     }
     this.loader = null;

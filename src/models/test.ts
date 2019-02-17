@@ -1,5 +1,5 @@
-import { Collection } from './collection';
-import { Document } from './document';
+import { Document } from "./document";
+import { Collection } from "./collection";
 
 /**
  * 開発用：testsコレクションのドキュメント
@@ -11,16 +11,16 @@ import { Document } from './document';
 export class Test extends Document implements Collection {
 
     // meta field
-    readonly collectionName: string = 'tests';
-    ref: any;
-    parentRef: any = null; // ルートドキュメントはnullを入れてもらう必要あり。頑張ってもいいけどとりあえずこれで...
-
+    public readonly collectionName: string = 'tests';
+    public ref: any;
+    public parentRef:any = null; // ルートドキュメントはnullを入れてもらう必要あり。頑張ってもいいけどとりあえずこれで...
+    
     // field
-    groupId: string;
-    userId: string;
-    title: string;
-    description: string;
-    imgUrl: string;
+    public groupId: string   
+    public userId: string
+    public title: string
+    public description: string
+    public imgUrl: string
 
     constructor(init?: Partial<Test>) {
         super();

@@ -1,5 +1,5 @@
-import { Collection } from './collection';
-import { Document } from './document';
+import { Document } from "./document";
+import { Collection } from "./collection";
 
 /**
  * keepsコレクションのドキュメント
@@ -11,17 +11,17 @@ import { Document } from './document';
 export class Keep extends Document implements Collection {
 
     // meta field
-    readonly collectionName: string = 'keeps';
-    ref: any;
-    parentRef: any;
+    public readonly collectionName: string = 'keeps';
+    public ref: any;
+    public parentRef:any;
 
     // field
-    groupId: string;
-    userId: string;
-    title: string;
-    imgUrl: string;
-    memo: string;
-    decisionFlg: boolean;
+    public groupId: string   
+    public userId: string
+    public title: string
+    public imgUrl: string;
+    public memo: string
+    public decisionFlg: boolean
 
     constructor(init?: Partial<Keep>) {
         super();

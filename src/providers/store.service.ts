@@ -1,12 +1,10 @@
-import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { Injectable } from "@angular/core";
+import { AngularFirestore, AngularFirestoreDocument } from "@angular/fire/firestore";
 import * as firebase from 'firebase';
-import { Observable } from 'rxjs';
-
-import { Logger } from '../logger';
-import { Collection } from '../models/collection';
-
-import { AuthService } from './auth.service';
+import { Observable } from "rxjs";
+import { Collection } from "../models/collection";
+import { Logger } from "../logger";
+import { AuthService } from "./auth.service";
 
 @Injectable()
 export class StoreService {
@@ -21,10 +19,10 @@ export class StoreService {
      * @returns {Promise<any>}
      * @memberof StoreService
      */
-    addDocument<T extends Collection>(document: T): Promise<any> {
+    public addDocument<T extends Collection>(document: T): Promise<any> {
         return new Promise<any>((resolve, reject) => {
 
-            const data = this.convertPlainObject(document);
+            let data = this.convertPlainObject(document);
 
             let docRef: any = this.afStore;
             // 親参照があれば、サブコレクションとして登録
@@ -32,27 +30,28 @@ export class StoreService {
                 docRef = this.afStore.doc(data['parentRef']);
             }
             this.beforeAddConvert(data);
-            const collectionName = data['collectionName'];
+            let collectionName = data['collectionName'];
             docRef.collection(collectionName).add(data)
                 .then(ref => {
                     Logger.debug('new Document ref:' + ref.path);
-                    ref.update({ ref })
+                    ref.update({ ref: ref })
                         .then(updatedRef => {
                             Logger.debug('refence updated!!');
                             resolve(ref);
                         })
                         .catch(err => {
                             Logger.error(err);
-                            reject(err);
-                        });
+                            reject(err)
+                        })
                 })
                 .catch(err => {
                     // TOOD: firebaseに依存しない業務例外を返却する
                     Logger.error(err);
                     reject(err);
-                });
-        });
+                })
+        })
     }
+
 
     /**
      * IDを指定してドキュメントを作成する
@@ -63,9 +62,9 @@ export class StoreService {
      * @returns {Promise<any>}
      * @memberof StoreService
      */
-    setDocument<T extends Collection>(document: T, docId: string): Promise<any> {
+    public setDocument<T extends Collection>(document: T, docId: string): Promise<any> {
         return new Promise<any>((resolve, reject) => {
-            const data = this.convertPlainObject(document);
+            let data = this.convertPlainObject(document);
 
             let docRef: any = this.afStore;
             // 親参照があれば、サブコレクションとして登録
@@ -73,8 +72,8 @@ export class StoreService {
                 docRef = this.afStore.doc(data['parentRef']);
             }
             this.beforeAddConvert(data);
-            const collectionName = data['collectionName'];
-            const _ref = docRef.collection(collectionName).doc(docId);
+            let collectionName = data['collectionName'];
+            let _ref = docRef.collection(collectionName).doc(docId);
             _ref.set(data)
                 .then(() => {
                     Logger.debug('new Document ref');
@@ -86,27 +85,27 @@ export class StoreService {
                         })
                         .catch(err => {
                             Logger.error(err);
-                            reject(err);
-                        });
+                            reject(err)
+                        })
                 })
                 .catch(err => {
                     // TOOD: firebaseに依存しない業務例外を返却する
                     Logger.error(err);
                     reject(err);
-                });
-        });
+                })
+        })
     }
 
     // TODO group対応をする。Rootと分ける必要ないかも。
-    listDocument(document: Collection): Observable<{}[]> {
-        const collectionName = document['collectionName'];
+    public listDocument(document: Collection): Observable<{}[]> {
+        let collectionName = document['collectionName'];
 
         let docRef: any = this.afStore;
         // 親参照があれば、サブコレクションとして登録
         if (document['parentRef']) {
             docRef = this.afStore.doc(document['parentRef']);
         }
-        const collection = docRef.collection(
+        let collection = docRef.collection(
             collectionName,
             ref => ref
                 //  .where('groupId', '==', document['groupId'])
@@ -117,19 +116,19 @@ export class StoreService {
     }
 
     // TODO 作りかけ。メンテ必要
-    updateDocument<T extends Collection>(document: T): Promise<any> {
+    public updateDocument<T extends Collection>(document: T): Promise<any> {
         return new Promise<any>((resolve, reject) => {
-            const data = this.convertPlainObject(document);
+            let data = this.convertPlainObject(document);
             this.beforeUpdateConvert(document);
-            const collectionName = data['collectionName'];
+            let collectionName = data['collectionName'];
             Logger.debug(data);
             this.afStore.collection(collectionName).doc((data['ref'])['id']).update(data)
                 .then(res => resolve(res))
                 .catch(err => {
                     // TOOD: firebaseに依存しない業務例外を返却する
-                    reject(err);
-                });
-        });
+                    reject(err)
+                })
+        })
     }
 
     /**
@@ -139,7 +138,7 @@ export class StoreService {
      * @returns
      * @memberof StoreService
      */
-    findDocument(docRef: any) {
+    public findDocument(docRef: any) {
         return this.afStore.doc(docRef).valueChanges();
     }
 
@@ -152,8 +151,8 @@ export class StoreService {
     }
 
     private convertCustomObject<T>(obj): T[] {
-        let c: new() => T;
-        return {...c, ...obj};
+        let c: { new(): T };
+        return Object.assign(c, obj);
     }
 
     private beforeAddConvert(data): void {

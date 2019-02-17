@@ -1,8 +1,6 @@
 import { Injectable, Injector } from '@angular/core';
+import { Task } from "../models/task";
 import { Observable } from 'rxjs';
-
-import { Task } from '../models/task';
-
 import { BaseRepository } from './base.repository';
 
 @Injectable()
@@ -12,19 +10,19 @@ export class TaskRepository extends BaseRepository {
         super(injector);
     }
 
-    add(task: Task): Promise<any> {
+    public add(task: Task): Promise<any> {
         return super.addDocument(task);
     }
 
-    update(task: Task): void {
+    public update(task: Task): void {
         throw new Error('not implemented');
     }
 
-    delete(task: Task): void {
+    public delete(task: Task): void {
         throw new Error('not implemented');
     }
 
-    list(task: Task): Observable<Task[]> {
+    public list(task: Task): Observable<Task[]> {
         return super.listDocument(task) as Observable<Task[]>;
     }
 }

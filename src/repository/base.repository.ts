@@ -1,8 +1,7 @@
 import { Injectable, Injector } from '@angular/core';
-import { Observable } from 'rxjs';
-
-import { Collection } from '../models/collection';
 import { StoreService } from '../providers/store.service';
+import { Observable } from "rxjs";
+import { Collection } from '../models/collection';
 
 @Injectable()
 export abstract class BaseRepository {
@@ -49,10 +48,10 @@ export abstract class BaseRepository {
     }
 
     protected listDocument(model: Collection): Observable<{}[]> {
-        return this.store.listDocument(model);
+        return this.store.listDocument(model)
     }
 
-    protected findDocument(docRef: any): Observable<{}> {
+    protected findDocument(docRef: any): Observable<{}>{
         return this.store.findDocument(docRef);
     }
 }

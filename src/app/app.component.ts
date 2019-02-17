@@ -1,24 +1,24 @@
-import { Component } from '@angular/core';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { StatusBar } from '@ionic-native/status-bar';
-import { Storage } from '@ionic/storage';
-import { Config, Platform } from 'ionic-angular';
 import { timer } from 'rxjs/observable/timer';
-
-import { Logger } from '../logger';
-import { AccountConfirmationCodePage } from '../pages/account-confirmation-code/account-confirmation-code';
 import { AccountSigninPage } from '../pages/account-signin/account-signin';
-import { TabRootPage } from '../pages/menu/tab-root';
-import { AppInitializerService } from '../providers/app-initializer.service';
+import { Component } from '@angular/core';
+import { Config, Platform } from 'ionic-angular';
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
+
+import { AccountConfirmationCodePage } from '../pages/account-confirmation-code/account-confirmation-code';
+import { Logger } from '../logger';
+import { Storage } from '@ionic/storage';
 import { AuthService } from '../providers/auth.service';
+import { AppInitializerService } from '../providers/app-initializer.service';
+import { TabRootPage } from '../pages/menu/tab-root';
 
 @Component({
-  templateUrl: 'app.html',
+  templateUrl: 'app.html'
 })
 export class MyApp {
   rootPage: any = null;
 
-  showSplash = true;
+  public showSplash: boolean = true;
 
   constructor(
     private platform: Platform,
@@ -28,9 +28,9 @@ export class MyApp {
     private appInitializer: AppInitializerService,
     private splashScreen: SplashScreen
   ) {
-    Logger.debug('application started. app.component.ts constructor called.');
-    const globalActions = () => {
-      Logger.debug('@ globalActions function');
+    Logger.debug("application started. app.component.ts constructor called.");
+    let globalActions = () => {
+      Logger.debug("@ globalActions function");
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();

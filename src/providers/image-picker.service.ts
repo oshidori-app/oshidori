@@ -1,22 +1,21 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import { AngularFireStorage } from '@angular/fire/storage';
+import { Observable } from "rxjs";
+import { Logger } from "../logger";
+import { ImagePicker } from "@ionic-native/image-picker";
 import { File, FileEntry, IFile } from '@ionic-native/file';
-import { ImagePicker } from '@ionic-native/image-picker';
-import { Observable } from 'rxjs';
-
-import { PermissionError } from '../error/permission-error';
-import { Logger } from '../logger';
+import { PermissionError } from "../error/permission-error";
 
 @Injectable()
 export class ImagePickerService {
 
     private readonly OPTIONS = {
-            quality: 50, // TODO でかいのだけリサイズするように
-            maximumImagesCount: 10,
-          };
+            quality: 50, //TODO でかいのだけリサイズするように
+            maximumImagesCount: 10
+          }
 
     private readonly MESSAGE = '設定画面でアプリに権限を追加してください。';
-
+    
     constructor(private imagePicker: ImagePicker, private file: File) {
     }
 
@@ -38,16 +37,16 @@ export class ImagePickerService {
         });
         const cordovaFiles: IFile[] = await Promise.all(CordovaFilePromises);
         const filePromises: Promise<File>[] = cordovaFiles.map(cordovaFile => {
-            return this.convertCordovaFileToBlob(cordovaFile);
+            return this.convertCordovaFileToBlob(cordovaFile)
         });
 
-        return Promise.all(filePromises);
+        return await Promise.all(filePromises);
     }
 
     private convertFileEntryToCordovaFile(fileEntry: FileEntry): Promise<IFile> {
         return new Promise<IFile>((resolve, reject) => {
             fileEntry.file(resolve, reject);
-        });
+        })
     }
     private convertCordovaFileToBlob(cordovaFile: IFile): Promise<File> {
         return new Promise<File>((resolve, reject) => {
