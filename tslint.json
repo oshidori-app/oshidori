@@ -5,7 +5,20 @@
   ],
   "rules": {
     "no-duplicate-variable": true,
-    "no-unused-variable": true
+    "no-redundant-jsdoc": false,
+    "no-console": false,
+    "no-null-keyword": false,
+    "ban-types": false,
+    "no-shadowed-variable": false,
+    "triple-equals": false,
+    "align": false,
+    "prefer-conditional-expression": false,
+    "no-duplicate-imports": false,
+    "ordered-imports": false,
+    "ban-comma-operator": false,
+    "variable-name": false,
+    "no-empty": false,
+    "prefer-const": false
   },
   "rulesDirectory": [
     "node_modules/tslint-eslint-rules/dist/rules"
