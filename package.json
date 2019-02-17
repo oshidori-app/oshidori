@@ -10,8 +10,9 @@
     "lint": "ionic-app-scripts lint",
     "repair": "/bin/bash -c 'ionic repair && ionic cordova platform add ios android browser'",
     "ios:device": "ionic cordova run ios -lc --device -- --buildFlag='-UseModernBuildSystem=0'",
-    "ios:emu": "ionic cordova run ios -lc --emulator -- --buildFlag='-UseModernBuildSystem=0'",
-    "android:emu": "/bin/bash -c 'source .env && ionic cordova run android -lc --emulator -- --buildFlag=\"-UseModernBuildSystem=0\"'"
+    "ios:emu:live": "ionic cordova run ios -lc --emulator -- --buildFlag='-UseModernBuildSystem=0'",
+    "ios:emu": "ionic cordova run ios --emulator -- --buildFlag='-UseModernBuildSystem=0'",
+    "android:emu": "/bin/bash -c 'ionic cordova run android -lc --emulator -- --buildFlag=\"-UseModernBuildSystem=0\"'"
   },
   "dependencies": {
     "@angular/common": "5.0.0",

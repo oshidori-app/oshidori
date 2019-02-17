@@ -46,16 +46,17 @@ $colors: (
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
+// タブ用スタイル
 
-
-
+$tabs-ios-tab-icon-color:#8e8e8e;
+$tabs-ios-tab-icon-color-active: #333333;
 
 // App Material Design Variables
 // --------------------------------------------------
 // Material Design only Sass variables can go here
-
-
-
+// タブ用スタイル
+$tabs-md-tab-icon-color: #8e8e8e;
+$tabs-md-tab-icon-color-active: #333333;
 
 // App Windows Variables
 // --------------------------------------------------

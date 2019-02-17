@@ -23,11 +23,10 @@ import { DevMenuPage } from '../pages/develop/develop-menu';
 import { HomePageModule } from '../pages/home/home.module';
 import { InputKeepPage } from '../pages/input-keep/input-keep';
 import { InputTaskPage } from '../pages/input-task/input-task';
-import { KeepAddDevPage } from '../pages/keep-add-dev/keep-add-dev';
 import { KeepListPage } from '../pages/keep-list/keep-list';
 import { KeepPage } from '../pages/keep/keep';
+import { TabRootPage } from '../pages/menu/tab-root';
 import { RankingPage } from '../pages/ranking/ranking';
-import { TabsPage } from '../pages/tabs/tabs';
 import { TasksCreatePage } from '../pages/tasks-create/tasks-create';
 import { TestListPage } from '../pages/test-list/test-list';
 import { SubTestRegistrationPage } from '../pages/test-registration/sub-test-registration';
@@ -55,16 +54,15 @@ import { MyApp } from './app.component';
 @NgModule({
     declarations: [
         MyApp,
+        TabRootPage,
         AccountPage,
         AccountSignupPage,
         AccountSigninPage,
         AccountConfirmationCodePage,
         AccountChangePasswordPage,
         AccountForgotPasswordPage,
-        KeepAddDevPage,
         TasksCreatePage,
         RankingPage,
-        TabsPage,
         KeepPage,
         KeepListPage,
         InputKeepPage,
@@ -92,16 +90,15 @@ import { MyApp } from './app.component';
     bootstrap: [IonicApp],
     entryComponents: [
         MyApp,
+        TabRootPage,
         AccountPage,
         AccountSignupPage,
         AccountSigninPage,
         AccountConfirmationCodePage,
         AccountChangePasswordPage,
         AccountForgotPasswordPage,
-        KeepAddDevPage,
         TasksCreatePage,
         RankingPage,
-        TabsPage,
         KeepPage,
         KeepListPage,
         InputKeepPage,
