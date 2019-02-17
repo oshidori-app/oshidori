@@ -28,11 +28,7 @@ jobs:
 
       - run:
           name: Exec Lint
-          command: |
-            mkdir -p /tmp/test/result/tslint
-            npm run lint --format junit --output-file /tmp/test/result/tslint/results.xml
-      - store_test_results:
-          path: /tmp/test/result
+          command: npm run lint
 
       - run:
           name: 'Deploy to Hosting'
