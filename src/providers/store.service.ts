@@ -153,7 +153,7 @@ export class StoreService {
 
     private convertCustomObject<T>(obj): T[] {
         let c: new() => T;
-        return {...c, ...obj};
+        return { ...c, ...obj };
     }
 
     private beforeAddConvert(data): void {

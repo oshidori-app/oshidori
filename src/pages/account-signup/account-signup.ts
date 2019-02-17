@@ -1,15 +1,16 @@
 import { Component, NgModule } from '@angular/core';
+import { Storage } from '@ionic/storage';
 import { NavController } from 'ionic-angular';
-import { AccountConfirmationCodePage } from '../account-confirmation-code/account-confirmation-code';
+import { v4 as uuid } from 'uuid';
+
+import { Logger } from '../../logger';
+import { Group } from '../../models/group';
+import { Gender, User } from '../../models/user';
 import { AuthService } from '../../providers/auth.service';
 import { DisplayUtilService } from '../../providers/display-util.service';
-import { User, Gender } from "../../models/user";
-import { UserRepository } from '../../repository/user.repository';
-import { Logger } from '../../logger';
 import { GroupRepository } from '../../repository/group.repository';
-import { Group } from '../../models/group';
-import { Storage } from '@ionic/storage';
-import { v4 as uuid } from 'uuid';
+import { UserRepository } from '../../repository/user.repository';
+import { AccountConfirmationCodePage } from '../account-confirmation-code/account-confirmation-code';
 export class UserDetails {
   username: string;
   password: string;
@@ -20,11 +21,11 @@ export class UserDetails {
 
 @Component({
   selector: 'account-signup',
-  templateUrl: 'account-signup.html'
+  templateUrl: 'account-signup.html',
 })
 export class AccountSignupPage {
 
-  public userDetails: UserDetails;
+  userDetails: UserDetails;
 
   private user: User;
 
@@ -39,20 +40,20 @@ export class AccountSignupPage {
     this.userDetails = new UserDetails();
   }
 
-  public genderList = [
+  genderList = [
     {
       value: Gender.Male,
-      text: Gender[Gender.Male]
+      text: Gender[Gender.Male],
     }, {
       value: Gender.Female,
-      text: Gender[Gender.Female]
+      text: Gender[Gender.Female],
     }, {
       value: Gender.Other,
-      text: Gender[Gender.Other]
-    }
-  ]
+      text: Gender[Gender.Other],
+    },
+  ];
 
-  public submitted: boolean = false;
+  submitted = false;
 
   onSignUp(form) {
 
@@ -62,34 +63,34 @@ export class AccountSignupPage {
 
       this.dutil.showLoader('登録しています...');
 
-      let details = this.userDetails;
+      const details = this.userDetails;
 
       this.auth.signUp({ email: details.username, password: details.password })
         .then(res => {
-          let uid = res.user.uid;
+          const uid = res.user.uid;
 
           // モデル生成
-          let group = new Group({
+          const group = new Group({
             name: '未設定',
-            connectCode: uuid()
+            connectCode: uuid(),
           });
 
-          let user = new User({
+          const user = new User({
             userId: uid,
             gender: details.gender,
-            birthdate: details.birthdate
+            birthdate: details.birthdate,
           });
 
           // GroupとUserを同時に作成する
           this.groupRepo.add(group, uid)
-            .then((groupRef) => {
+            .then(groupRef => {
               Logger.debug(groupRef);
               // group登録が完了したらuserの登録
               user.parentRef = groupRef;
               // groupへの参照は自身の初期グループ
               user.groupRef = groupRef;
               this.userRepo.add(user, uid)
-              .then((userRef) => {
+              .then(userRef => {
                 Logger.debug('groupRefを追加します：' + groupRef.path);
                 // storageにgroup情報を保存
                 this.clientStorage.set('groupRef', groupRef.path)
@@ -121,7 +122,7 @@ export class AccountSignupPage {
             .catch(err => {
               this.dutil.showToast(err);
               Logger.error(err);
-            })
+            });
         })
         .catch(err => {
           this.dutil.showAlert('登録失敗', err.message);

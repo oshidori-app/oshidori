@@ -1,11 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController } from 'ionic-angular';
-import { AccountChangePasswordPage } from '../account-change-password/account-change-password';
 import { Camera, CameraOptions } from '@ionic-native/camera';
-import { DisplayUtilService } from '../../providers/display-util.service';
-import { AuthService } from '../../providers/auth.service';
-import { AccountSigninPage } from '../account-signin/account-signin';
+import { NavController } from 'ionic-angular';
 
+import { AuthService } from '../../providers/auth.service';
+import { DisplayUtilService } from '../../providers/display-util.service';
+import { AccountChangePasswordPage } from '../account-change-password/account-change-password';
+import { AccountSigninPage } from '../account-signin/account-signin';
 
 @Component({
   selector: 'page-account',
@@ -15,18 +15,18 @@ export class AccountPage {
 
   @ViewChild('avatar') avatarInput;
 
-  public avatarPhoto: string;
-  public selectedPhoto: Blob;
-  public userId: string;
-  public username: string;
-  public attributes: any;
+  avatarPhoto: string;
+  selectedPhoto: Blob;
+  userId: string;
+  username: string;
+  attributes: any;
 
   viewAdminFeatures = false;
   accountChangePasswordPage = AccountChangePasswordPage;
 
   imageUploadEventListenerAttached = false;
   profileImageDisplay = false;
-  submitted: boolean = false;
+  submitted = false;
 
   constructor(private navCtrl: NavController, private camera: Camera, private auth: AuthService, private dutil: DisplayUtilService) {
     this.attributes = [];
@@ -72,15 +72,15 @@ export class AccountPage {
       targetWidth: 200,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
-    }
+      mediaType: this.camera.MediaType.PICTURE,
+    };
 
-    this.camera.getPicture(options).then((imageData) => {
+    this.camera.getPicture(options).then(imageData => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64:
       this.selectedPhoto  = this.dataURItoBlob('data:image/jpeg;base64,' + imageData);
       this.upload();
-    }, (err) => {
+    }, err => {
       this.avatarInput.nativeElement.click();
       // Handle error
     });
@@ -88,13 +88,13 @@ export class AccountPage {
 
   dataURItoBlob(dataURI) {
     // code adapted from: http://stackoverflow.com/questions/33486352/cant-upload-image-to-aws-s3-from-ionic-camera
-    let binary = atob(dataURI.split(',')[1]);
-    let array = [];
+    const binary = atob(dataURI.split(',')[1]);
+    const array = [];
     for (let i = 0; i < binary.length; i++) {
       array.push(binary.charCodeAt(i));
     }
     return new Blob([new Uint8Array(array)], { type: 'image/jpeg' });
-  };
+  }
 
   uploadFromFile(event) {
     // const files = event.target.files;

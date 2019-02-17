@@ -1,16 +1,16 @@
-import { environment } from "./environments/environment";
+import { environment } from './environments/environment';
 
 export enum LogLevel {
   Error,
   Warning,
-  Info
+  Info,
 }
 export class Logger {
 
   /**
    * Same as info
    */
-  public static debug(...objects: any[]) {
+  static debug(...objects: any[]) {
     this.log(console.info, LogLevel.Info, objects);
   }
 
@@ -18,7 +18,7 @@ export class Logger {
    * Logs messages or objects  with the info level.
    * Works the same as console.info().
    */
-  public static info(...objects: any[]) {
+  static info(...objects: any[]) {
     this.log(console.info, LogLevel.Info, objects);
   }
 
@@ -26,7 +26,7 @@ export class Logger {
    * Logs messages or objects  with the warning level.
    * Works the same as console.warn().
    */
-  public static warn(...objects: any[]) {
+  static warn(...objects: any[]) {
     this.log(console.warn, LogLevel.Warning, objects);
   }
 
@@ -34,7 +34,7 @@ export class Logger {
    * Logs messages or objects  with the error level.
    * Works the same as console.error().
    */
-  public static error(...objects: any[]) {
+  static error(...objects: any[]) {
     this.log(console.error, LogLevel.Error, objects);
   }
 

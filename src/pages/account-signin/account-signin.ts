@@ -1,14 +1,15 @@
 import { Component, NgModule } from '@angular/core';
-import { HomePage } from '../home/home';
-import { AccountForgotPasswordPage } from '../account-forgot-password/account-forgot-password';
-import { AccountConfirmationCodePage } from '../account-confirmation-code/account-confirmation-code';
-import { AccountSignupPage } from '../account-signup/account-signup';
-import { NavController, LoadingController } from 'ionic-angular';
+import { LoadingController, NavController } from 'ionic-angular';
+import { Subscription } from 'rxjs';
+
+import { Logger } from '../../logger';
+import { AppInitializerService } from '../../providers/app-initializer.service';
 import { AuthService } from '../../providers/auth.service';
 import { DisplayUtilService } from '../../providers/display-util.service';
-import { Logger } from '../../logger';
-import { Subscription } from 'rxjs';
-import { AppInitializerService } from '../../providers/app-initializer.service';
+import { AccountConfirmationCodePage } from '../account-confirmation-code/account-confirmation-code';
+import { AccountForgotPasswordPage } from '../account-forgot-password/account-forgot-password';
+import { AccountSignupPage } from '../account-signup/account-signup';
+import { HomePage } from '../home/home';
 export class SignInDetails {
   username: string;
   password: string;
@@ -20,20 +21,20 @@ export class SignInDetails {
 })
 export class AccountSigninPage {
 
-  public signInDetails: SignInDetails;
+  signInDetails: SignInDetails;
   private subscription: Subscription;
 
   constructor(private navCtrl: NavController,
-    private auth: AuthService,
-    private appInitializer: AppInitializerService,
-    private dutil: DisplayUtilService) {
+              private auth: AuthService,
+              private appInitializer: AppInitializerService,
+              private dutil: DisplayUtilService) {
     this.signInDetails = new SignInDetails();
   }
 
   allowButtonPresses = true; // 複数ボタン押下抑制用
 
-  signInButtonClicked: boolean = false;
-  forgotPasswordButtonClicked: boolean = false;
+  signInButtonClicked = false;
+  forgotPasswordButtonClicked = false;
 
   onSignIn(form) {
     this.signInButtonClicked = true;
@@ -70,7 +71,7 @@ export class AccountSigninPage {
     this.allowButtonPresses = false;
     this.dutil.showLoader('ログインしています...');
 
-    let details = this.signInDetails;
+    const details = this.signInDetails;
     this.auth.signIn({ email: details.username, password: details.password })
       .then(res => {
         // メール未検証
@@ -86,11 +87,11 @@ export class AccountSigninPage {
           .catch(err => Logger.error(err));
       })
       .catch(err => {
-        let message = ''
+        let message = '';
         if (err.code === 'auth/wrong-password') {
           message = 'メールアドレスかパスワードが間違っています';
         } else {
-          message = 'ログインできませんでした。もう一度お試しください。'
+          message = 'ログインできませんでした。もう一度お試しください。';
         }
         this.dutil.showAlert('ログイン失敗', message);
         Logger.debug(err);
@@ -109,6 +110,6 @@ export class AccountSigninPage {
   }
 
   ionViewDidLeave() {
-    if (this.subscription) this.subscription.unsubscribe();
+    if (this.subscription) { this.subscription.unsubscribe(); }
   }
 }

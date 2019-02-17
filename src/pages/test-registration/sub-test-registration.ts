@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { DisplayUtilService } from '../../providers/display-util.service';
-import { AuthService } from '../../providers/auth.service';
+
 import { Logger } from '../../logger';
 import { SubTest } from '../../models/sub-test';
+import { AuthService } from '../../providers/auth.service';
+import { DisplayUtilService } from '../../providers/display-util.service';
 import { SubTestRepository } from '../../repository/sub-test.repository';
 
 @Component({
@@ -12,13 +13,13 @@ import { SubTestRepository } from '../../repository/sub-test.repository';
 })
 export class SubTestRegistrationPage {
 
-  public subTestRegistrationVm: {
+  subTestRegistrationVm: {
     title?: string,
     description?: string,
-    uploadPercent?: string
+    uploadPercent?: string,
   } = {};
 
-  public testRef: any;
+  testRef: any;
 
   constructor(
     private navParams: NavParams,
@@ -33,17 +34,17 @@ export class SubTestRegistrationPage {
     if (form && form.valid) {
       Logger.debug(form);
 
-      let user = this.auth.getUser();
-      let test = new SubTest({
+      const user = this.auth.getUser();
+      const test = new SubTest({
         groupId: user.uid,
         userId: user.uid,
         title: this.subTestRegistrationVm.title,
         description: this.subTestRegistrationVm.description,
-        parentRef: this.testRef // 引き渡された親参照を設定する
+        parentRef: this.testRef, // 引き渡された親参照を設定する
       });
 
       this.subTestRepo.add(test)
-        .then((ref) => {
+        .then(ref => {
           this.dutil.showToast('登録しました');
         })
         .catch(err => {
@@ -55,6 +56,6 @@ export class SubTestRegistrationPage {
   }
 
   ionViewDidEnter() {
-    Logger.debug("ionViewDidEnter: SubTestRegistrationPage")
+    Logger.debug('ionViewDidEnter: SubTestRegistrationPage');
   }
 }
