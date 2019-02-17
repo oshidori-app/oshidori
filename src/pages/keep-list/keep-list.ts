@@ -1,15 +1,14 @@
 import { Component, NgModule } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { IonicPageModule } from 'ionic-angular';
-import { IonicImageLoader } from 'ionic-image-loader';
-import { Observable, Subscription } from 'rxjs';
-
-import { Logger } from '../../logger';
-import { Keep } from '../../models/keep';
 import { DisplayUtilService } from '../../providers/display-util.service';
-import { StorageService } from '../../providers/storage.service';
 import { KeepRepository } from '../../repository/keep.repository';
+import { Keep } from '../../models/keep';
+import { Logger } from '../../logger';
+import { StorageService } from '../../providers/storage.service';
+import { Observable, Subscription } from 'rxjs';
+import { IonicImageLoader } from 'ionic-image-loader';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { KeepPage } from '../keep/keep';
+import { IonicPageModule } from 'ionic-angular';
 
 /**
  * Generated class for the KeepListPage page.
@@ -19,12 +18,12 @@ import { KeepPage } from '../keep/keep';
  */
 
 export class KeepVm {
-  title?: string;
-  imgUrl?: string;
-  downloadUrl?: Observable<string>;
+  title?: string
+  imgUrl?: string
+  downloadUrl?: Observable<string>
 }
 
-// @IonicPage()
+//@IonicPage()
 @Component({
   selector: 'page-keep-list',
   templateUrl: 'keep-list.html',
@@ -32,20 +31,20 @@ export class KeepVm {
 
 @NgModule({
   declarations: [
-    KeepListPage,
+    KeepListPage
   ],
   imports: [
     IonicPageModule.forChild(KeepListPage),
-    IonicImageLoader,
-  ],
+    IonicImageLoader
+  ]
 })
 
 export class KeepListPage {
 
-  task;
+  public task;
 
-  keepVmInDL: KeepVm[];
-  keepListVm: (KeepVm[])[];
+  public keepVmInDL: KeepVm[];
+  public keepListVm: (KeepVm[])[];
 
   private listSubscription: Subscription;
 
@@ -54,18 +53,18 @@ export class KeepListPage {
     public navParams: NavParams,
     private keepRepo: KeepRepository,
     private storage: StorageService,
-    private dutil: DisplayUtilService
+    private dutil: DisplayUtilService,
   ) {
     this.task = navParams.get('task');
   }
 
   private addkeeps() {
-    const keepReg = new Keep({
+    let keepReg = new Keep({
       title: 'dress',
-      imgUrl: 'content/image01.jpg',
+      imgUrl: 'content/image01.jpg'
     });
     this.keepRepo.add(keepReg)
-      .then(ref => {
+      .then((ref) => {
       })
       .catch(err => {
         this.dutil.showToast(err);
@@ -76,11 +75,11 @@ export class KeepListPage {
 
   private getKeeps() {
 
-    const keep = new Keep({
-      parentRef: this.task,
+    let keep = new Keep({
+      parentRef: this.task
     });
 
-    Logger.debug('keep  一覧');
+    Logger.debug('keep 　一覧');
     Logger.debug(keep);
     this.listSubscription = this.keepRepo.list(keep).subscribe(keepList => {
       Logger.debug(keepList);
@@ -88,15 +87,15 @@ export class KeepListPage {
       // 一旦keepVmInDLに格納して、downloadUrlを付与
       this.keepVmInDL = keepList;
       keepList.forEach((keep, i) => {
-        const imageURL = this.storage.getDownloadURL(keep.imgUrl);
+        let imageURL = this.storage.getDownloadURL(keep.imgUrl);
         this.keepVmInDL[i].downloadUrl = imageURL;
       });
 
       // 表示用に配列を整形
-      const xNum = 2;
-      const ret = [];
+      let xNum = 2;
+      let ret = [];
       for (let i = 0; i < Math.ceil(this.keepVmInDL.length / xNum); i++) {
-        const index = i * xNum;
+        var index = i * xNum;
         ret.push(this.keepVmInDL.slice(index, index + xNum));
       }
       this.keepListVm = ret;
@@ -105,13 +104,13 @@ export class KeepListPage {
   }
 
   ionViewWillEnter() {
-    this.dutil.showLoader('データを読み込んでいます...');
-    // this.addkeeps();
+    this.dutil.showLoader("データを読み込んでいます...");
+    //this.addkeeps();
     this.getKeeps();
   }
 
   ionViewDidLeave() {
-    if (this.listSubscription) { this.listSubscription.unsubscribe(); }
+    if (this.listSubscription) this.listSubscription.unsubscribe();
   }
 
   goToKeep(task) {
@@ -119,3 +118,4 @@ export class KeepListPage {
   }
 
 }
+

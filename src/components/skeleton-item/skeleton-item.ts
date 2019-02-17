@@ -1,14 +1,14 @@
 import { Component, Input } from '@angular/core';
 
 /**
- * sleleton loader.
+ * sleleton loader. 
  * https://github.com/mrhieu/ionic-skeleton-loader
  * @export
  * @class SkeletonItemComponent
  */
 @Component({
   selector: 'skeleton-item',
-  templateUrl: 'skeleton-item.html',
+  templateUrl: 'skeleton-item.html'
 })
 export class SkeletonItemComponent {
   @Input() width: any;
@@ -19,8 +19,8 @@ export class SkeletonItemComponent {
   ngOnInit() {
     this.styles = {
       width: this.width ? this.width : '100%',
-      height: this.height ? this.height : '16px',
-    };
+      height: this.height ? this.height : '16px'
+    }
 
     if (typeof this.radius !== 'undefined' && this.radius !== '') {
       this.styles.borderRadius = this.radius;

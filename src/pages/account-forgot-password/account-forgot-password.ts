@@ -1,19 +1,18 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-
-import { Logger } from '../../logger';
 import { AuthService } from '../../providers/auth.service';
 import { DisplayUtilService } from '../../providers/display-util.service';
+import { Logger } from '../../logger';
 @Component({
   templateUrl: 'account-forgot-password.html',
 })
 export class AccountForgotPasswordPage {
 
-  formData: {
-    email?: string,
+  public formData: {
+    email?: string
   } = {};
-  resetSubmitted = false;
-  reseted = false;
+  public resetSubmitted: boolean = false;
+  public reseted: boolean = false;
 
   constructor(private navCtrl: NavController, private auth: AuthService, private dutil: DisplayUtilService) {
   }

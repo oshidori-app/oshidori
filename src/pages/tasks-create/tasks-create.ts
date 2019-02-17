@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Platform, ViewController } from 'ionic-angular';
+import { NavController, NavParams, ViewController, Platform } from 'ionic-angular';
 
 @Component({
   selector: 'page-tasks-create',
-  templateUrl: 'tasks-create.html',
+  templateUrl: 'tasks-create.html'
 })
 export class TasksCreatePage {
 
@@ -13,6 +13,7 @@ export class TasksCreatePage {
 
   isAndroid: boolean;
 
+
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public viewCtrl: ViewController,
@@ -20,7 +21,7 @@ export class TasksCreatePage {
     this.isAndroid = platform.is('android');
     this.item = {
       'taskId': navParams.get('id'),
-      'category': 'Todo',
+      'category': 'Todo'
     };
     this.isReadyToSave = true;
   }
@@ -33,7 +34,7 @@ export class TasksCreatePage {
     this.viewCtrl.dismiss();
   }
 
-  done() {
+  done() { 
     this.viewCtrl.dismiss(this.item);
   }
 }

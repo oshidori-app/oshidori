@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-
 import { DisplayUtilService } from '../../providers/display-util.service';
 @Component({
   templateUrl: 'account-change-password.html',
@@ -10,10 +9,10 @@ export class AccountChangePasswordPage {
 
   formData: {
     currentPassword?: string,
-    newPassword?: string,
+    newPassword?: string
   } = {};
 
-  submitted = false;
+  submitted: boolean = false;
 
   constructor(private navCtrl: NavController, private dutil: DisplayUtilService) {
   }

@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
-
 import { DevMenuPage } from '../develop/develop-menu';
 import { HomePage } from '../home/home';
+import { Component } from '@angular/core';
 
 @Component({
     selector: 'tab-root',
@@ -9,9 +8,9 @@ import { HomePage } from '../home/home';
   })
 export class TabRootPage {
 
-    homeTab: any ;
-    activityTab: any ;
-    settingTab: any ;
+    public homeTab:any ;
+    public activityTab:any ;
+    public settingTab:any ;
 
     constructor() {
         this.homeTab = HomePage;

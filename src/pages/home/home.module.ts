@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { IonicImageLoader } from 'ionic-image-loader';
-
-import { ComponentsModule } from '../../components/components.module';
-
 import { HomePage } from './home';
+import { ComponentsModule } from '../../components/components.module';
+import { IonicImageLoader } from 'ionic-image-loader';
 @NgModule({
     declarations: [
-        HomePage,
+        HomePage
     ],
     imports: [
         ComponentsModule,
