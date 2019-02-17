@@ -22,7 +22,7 @@ export class AccountConfirmationCodePage {
         .catch(err => {
           this.dutil.showAlert('エラー', err.message);
           Logger.error(err);
-        })
+        });
     }
   }
 
@@ -30,7 +30,7 @@ export class AccountConfirmationCodePage {
   confirmVerify(form) {
     if (form && form.valid) {
       this.auth.getUser().reload().then(user => {
-        if(this.auth.getUser().emailVerified) {
+        if (this.auth.getUser().emailVerified) {
           this.navCtrl.setRoot(HomePage);
         } else {
           Logger.error('verification not completed');

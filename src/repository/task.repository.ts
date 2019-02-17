@@ -1,5 +1,5 @@
 import { Injectable, Injector } from '@angular/core';
-import { Task } from "../models/task";
+import { Task } from '../models/task';
 import { Observable } from 'rxjs';
 import { BaseRepository } from './base.repository';
 

@@ -1,9 +1,9 @@
-import {Injectable} from "@angular/core";
+import { Injectable } from '@angular/core';
 import {
   Http, Headers, Response, Request, BaseRequestOptions, RequestMethod, RequestOptions,
   ResponseContentType, RequestOptionsArgs
-} from "@angular/http";
-import {Observable} from "rxjs";
+} from '@angular/http';
+import { Observable } from 'rxjs';
 
 /**
  * We dont extend from Http since by doing that, it requires binding
@@ -18,8 +18,8 @@ export class HttpService {
   protected _backend;
   protected _defaultOptions;
   constructor(public http: Http) {
-    this._backend = (<any>http)._backend;
-    this._defaultOptions = (<any>http)._defaultOptions;
+    this._backend = (http as any)._backend;
+    this._defaultOptions = (http as any)._defaultOptions;
   }
 
   /**
@@ -69,12 +69,12 @@ export class HttpService {
     this.interceptor = cb;
   }
 
-  requestImpl(url:string, method:RequestMethod, opt?: RequestOptionsArgs):Observable<Response>{
+  requestImpl(url: string, method: RequestMethod, opt?: RequestOptionsArgs): Observable<Response> {
     let headers = new Headers();
     let options: RequestOptions = new BaseRequestOptions();
     if (!opt) {
       options.url = url;
-      options.method =  method;
+      options.method = method;
       options.headers = options.headers || headers;
       options.withCredentials = false;
     } else {
@@ -95,7 +95,7 @@ export class HttpService {
   request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
     if (typeof url === 'string') {
       if (options && options.method) {
-        return this.requestImpl(url, <RequestMethod> options.method, options);
+        return this.requestImpl(url, options.method as RequestMethod, options);
       } else if (options) {
         return this.requestImpl(url, RequestMethod.Get, options);
       } else {

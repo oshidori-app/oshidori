@@ -13,31 +13,31 @@ export class DisplayUtilService {
 
   showAlert(title: string, message: string, okCallbackFunction = null): void {
     let _callback = () => {};
-    if(okCallbackFunction != null) {
+    if (okCallbackFunction != null) {
         _callback = okCallbackFunction;
     }
     let alert = this.alertCtrl.create({
-      title: title,
+      title,
       subTitle: message,
-      buttons: [{ text: 'OK', handler: _callback }]
+      buttons: [{ text: 'OK', handler: _callback }],
     });
     alert.present();
   }
 
-  showToast(message: string, duration: number = 3000): void {
+  showToast(message: string, duration = 3000): void {
     let toast = this.toastCtrl.create({
-      message: message,
-      duration: duration,
-      position: 'bottom'
+      message,
+      duration,
+      position: 'bottom',
     });
     toast.present();
   }
 
-  showLoader(message: string, duration: number = 3000): void {
+  showLoader(message: string, duration = 3000): void {
     this.loader = this.loadingCtrl.create({
       content: message,
-      duration: duration,
-      dismissOnPageChange: true
+      duration,
+      dismissOnPageChange: true,
     });
     this.loader.present();
   }

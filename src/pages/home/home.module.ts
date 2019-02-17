@@ -5,7 +5,7 @@ import { ComponentsModule } from '../../components/components.module';
 import { IonicImageLoader } from 'ionic-image-loader';
 @NgModule({
     declarations: [
-        HomePage
+        HomePage,
     ],
     imports: [
         ComponentsModule,

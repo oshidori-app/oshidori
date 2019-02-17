@@ -8,9 +8,9 @@ import { Component } from '@angular/core';
   })
 export class TabRootPage {
 
-    public homeTab:any ;
-    public activityTab:any ;
-    public settingTab:any ;
+    public homeTab: any ;
+    public activityTab: any ;
+    public settingTab: any ;
 
     constructor() {
         this.homeTab = HomePage;

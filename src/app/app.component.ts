@@ -13,12 +13,12 @@ import { AppInitializerService } from '../providers/app-initializer.service';
 import { TabRootPage } from '../pages/menu/tab-root';
 
 @Component({
-  templateUrl: 'app.html'
+  templateUrl: 'app.html',
 })
 export class MyApp {
   rootPage: any = null;
 
-  public showSplash: boolean = true;
+  public showSplash = true;
 
   constructor(
     private platform: Platform,
@@ -28,9 +28,9 @@ export class MyApp {
     private appInitializer: AppInitializerService,
     private splashScreen: SplashScreen
   ) {
-    Logger.debug("application started. app.component.ts constructor called.");
+    Logger.debug('application started. app.component.ts constructor called.');
     let globalActions = () => {
-      Logger.debug("@ globalActions function");
+      Logger.debug('@ globalActions function');
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();

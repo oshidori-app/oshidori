@@ -14,7 +14,7 @@ import { BackdropProvider } from '../../providers/backdrop/backdrop';
 export class InputTaskPage {
 
     public taskVm: {
-        title?: string
+        title?: string,
     } = {};
 
     constructor(
@@ -39,7 +39,7 @@ export class InputTaskPage {
 
                 let task = new Task({
                     title: this.taskVm.title,
-                    parentRef: val
+                    parentRef: val,
                 });
                 Logger.debug('groupRef:' + task.parentRef);
                 this.taskRepository.add(task)

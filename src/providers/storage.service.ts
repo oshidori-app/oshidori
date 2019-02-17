@@ -1,7 +1,7 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { Observable } from "rxjs";
-import { Logger } from "../logger";
+import { Observable } from 'rxjs';
+import { Logger } from '../logger';
 
 @Injectable()
 export class StorageService {
@@ -15,18 +15,18 @@ export class StorageService {
         fullPath: string,
         ref: any,
         percentageChanges: any,
-        snapshotChanges: any
+        snapshotChanges: any,
     } {
         let fullPath = this.APP_ROOT_PREFIX + '/' + fileName;
         const ref = this.afStorage.ref(fullPath);
         const task = ref.put(blob);
         let ret = {
             fullPath: 'content/' + fileName,
-            ref: ref,
+            ref,
             percentageChanges: task.percentageChanges,
-            snapshotChanges: task.snapshotChanges
-        }
-        Logger.debug("StorageService:uploadBlob:" + fullPath);
+            snapshotChanges: task.snapshotChanges,
+        };
+        Logger.debug('StorageService:uploadBlob:' + fullPath);
         return ret;
     }
 
@@ -34,25 +34,25 @@ export class StorageService {
         fullPath: string,
         ref: any,
         percentageChanges: any,
-        snapshotChanges: any
+        snapshotChanges: any,
     } {
         let fullPath = this.APP_ROOT_PREFIX + '/' + fileName;
 
         const ref = this.afStorage.ref(fullPath);
         const task = this.afStorage.upload(fullPath, file);
         let ret = {
-            fullPath: fullPath,
-            ref: ref,
+            fullPath,
+            ref,
             percentageChanges: task.percentageChanges,
-            snapshotChanges: task.snapshotChanges
-        }
-        Logger.debug("StorageService:uploadFile:" + fullPath);
+            snapshotChanges: task.snapshotChanges,
+        };
+        Logger.debug('StorageService:uploadFile:' + fullPath);
         return ret;
     }
 
     public getDownloadURL(fullPath: string): Observable<string> {
-        if(!fullPath) {
-            Logger.debug("file not exist.")
+        if (!fullPath) {
+            Logger.debug('file not exist.');
             return;
         }
         const downloadUrl = this.afStorage.ref(fullPath);
