@@ -1,5 +1,5 @@
-import { Document } from "./document";
-import { Collection } from "./collection";
+import { Collection } from './collection';
+import { Document } from './document';
 
 /**
  * 開発用：commentコレクションのドキュメント
@@ -11,14 +11,14 @@ import { Collection } from "./collection";
 export class Comment extends Document implements Collection {
 
     // meta field
-    public readonly collectionName: string = 'cba_chat';
-    public ref: any;
-    public parentRef:any = null; // ルートドキュメントはnullを入れてもらう必要あり。頑張ってもいいけどとりあえずこれで...
-    
+    readonly collectionName: string = 'cba_chat';
+    ref: any;
+    parentRef: any = null; // ルートドキュメントはnullを入れてもらう必要あり。頑張ってもいいけどとりあえずこれで...
+
     // field
-    public groupId: string   
-    public userId: string
-    public comment: string
+    groupId: string;
+    userId: string;
+    comment: string;
 
     constructor(init?: Partial<Comment>) {
         super();

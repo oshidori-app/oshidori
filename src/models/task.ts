@@ -1,5 +1,5 @@
-import { Document } from "./document";
-import { Collection } from "./collection";
+import { Collection } from './collection';
+import { Document } from './document';
 
 /**
  * tasksコレクションのドキュメント
@@ -11,14 +11,14 @@ import { Collection } from "./collection";
 export class Task extends Document implements Collection {
 
     // meta field
-    public readonly collectionName: string = 'tasks';
-    public ref: any;
-    public parentRef: any;
+    readonly collectionName: string = 'tasks';
+    ref: any;
+    parentRef: any;
 
     // field
-    public title: string;
-    public done: boolean;
-    public imgUrl: string;
+    title: string;
+    done: boolean;
+    imgUrl: string;
 
     constructor(init?: Partial<Task>) {
         super();

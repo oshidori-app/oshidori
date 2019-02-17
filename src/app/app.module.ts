@@ -1,9 +1,9 @@
 import { ErrorHandler, NgModule } from '@angular/core';
-import { AngularFireModule } from "@angular/fire";
-import { AngularFireAuthModule } from "@angular/fire/auth";
-import { AngularFirestoreModule, FirestoreSettingsToken } from "@angular/fire/firestore";
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
-import { HttpModule } from "@angular/http";
+import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Camera } from '@ionic-native/camera';
@@ -13,8 +13,9 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { IonicStorageModule } from '@ionic/storage';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { IonicImageLoader } from 'ionic-image-loader';
+
 import { ComponentsModule } from '../components/components.module';
-import { environment } from "../environments/environment";
+import { environment } from '../environments/environment';
 import { AccountConfirmationCodePage } from '../pages/account-confirmation-code/account-confirmation-code';
 import { AccountSignupPage } from '../pages/account-signup/account-signup';
 import { AccountPage } from '../pages/account/account';
@@ -47,6 +48,7 @@ import { SubTestRepository } from '../repository/sub-test.repository';
 import { TaskRepository } from '../repository/task.repository';
 import { TestRepository } from '../repository/test.repository';
 import { UserRepository } from '../repository/user.repository';
+
 import { AccountChangePasswordPage } from './../pages/account-change-password/account-change-password';
 import { AccountForgotPasswordPage } from './../pages/account-forgot-password/account-forgot-password';
 import { AccountSigninPage } from './../pages/account-signin/account-signin';
@@ -72,7 +74,7 @@ import { MyApp } from './app.component';
         TestListPage,
         SubTestRegistrationPage,
         ConnectPartnerPage,
-        DevMenuPage
+        DevMenuPage,
     ],
     imports: [
         HttpModule,
@@ -85,7 +87,7 @@ import { MyApp } from './app.component';
         AngularFireStorageModule,
         IonicImageLoader.forRoot(),
         IonicStorageModule.forRoot(),
-        ComponentsModule
+        ComponentsModule,
     ],
     bootstrap: [IonicApp],
     entryComponents: [
@@ -108,7 +110,7 @@ import { MyApp } from './app.component';
         TestListPage,
         SubTestRegistrationPage,
         ConnectPartnerPage,
-        DevMenuPage
+        DevMenuPage,
     ],
     providers: [
         StatusBar,
@@ -132,8 +134,8 @@ import { MyApp } from './app.component';
         CommentRepository,
         BackdropProvider,
         { provide: HttpService, useClass: HttpService },
-        { provide: FirestoreSettingsToken, useValue: {} }
-    ]
+        { provide: FirestoreSettingsToken, useValue: {} },
+    ],
 })
 
 export class AppModule { }

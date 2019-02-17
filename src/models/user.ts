@@ -1,19 +1,19 @@
-import { Document } from "./document";
-import { SubCollection } from "./sub-collection";
-import { Collection } from "./collection";
+import { Collection } from './collection';
+import { Document } from './document';
+import { SubCollection } from './sub-collection';
 
 export class User extends Document implements Collection {
 
     // meta field
-    public readonly collectionName: string = 'users';
-    public ref: any;
-    public parentRef: any;
+    readonly collectionName: string = 'users';
+    ref: any;
+    parentRef: any;
 
     // field
-    public userId: string
-    public gender: string
-    public birthdate: string
-    public groupRef: any
+    userId: string;
+    gender: string;
+    birthdate: string;
+    groupRef: any;
 
     constructor(init?: Partial<User>) {
         super();
@@ -21,12 +21,12 @@ export class User extends Document implements Collection {
     }
 }
 
-export var Gender = {
+export let Gender = {
     Male: 0,
     Female: 1,
     Other: 2,
-    [0]: "男性",
-    [1]: "女性",
-    [2]: "その他"
-  }
-  
+    [0]: '男性',
+    [1]: '女性',
+    [2]: 'その他',
+  };
+

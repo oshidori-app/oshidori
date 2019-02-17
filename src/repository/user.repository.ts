@@ -1,7 +1,9 @@
 import { Injectable, Injector } from '@angular/core';
-import { User } from "../models/user";
-import { BaseRepository } from './base.repository';
 import { Observable } from 'rxjs';
+
+import { User } from '../models/user';
+
+import { BaseRepository } from './base.repository';
 
 @Injectable()
 export class UserRepository extends BaseRepository {

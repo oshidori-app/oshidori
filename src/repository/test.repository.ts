@@ -1,6 +1,8 @@
 import { Injectable, Injector } from '@angular/core';
-import { Test } from "../models/test";
 import { Observable } from 'rxjs';
+
+import { Test } from '../models/test';
+
 import { BaseRepository } from './base.repository';
 
 @Injectable()
@@ -10,19 +12,19 @@ export class TestRepository extends BaseRepository {
         super(injector);
      }
 
-    public add(test: Test): Promise<any> {
+    add(test: Test): Promise<any> {
         return super.addDocument(test);
     }
 
-    public update(test: Test): Promise<any> {
+    update(test: Test): Promise<any> {
         return super.updateDocument(test);
     }
 
-    public delete(test: Test): void {
+    delete(test: Test): void {
         throw new Error('not implemented');
     }
 
-    public list(test: Test): Observable<Test[]> {
+    list(test: Test): Observable<Test[]> {
         return super.listDocument(test) as Observable<Test[]>;
     }
 }
