@@ -113,8 +113,8 @@ export class KeepListPage {
     if (this.listSubscription) this.listSubscription.unsubscribe();
   }
 
-  goToKeep(task) {
-    this.navCtrl.push(KeepPage, { keep: task });
+  goToKeep(keep) {
+    this.navCtrl.push(KeepPage, { keep: keep });
   }
 
 }

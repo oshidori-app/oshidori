@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { DisplayUtilService } from '../../providers/display-util.service';
+import { KeepRepository } from '../../repository/keep.repository';
+import { Keep } from '../../models/keep';
 import { CommentRepository } from '../../repository/comment.repository';
 import { Comment } from '../../models/comment';
 import { AuthService } from '../../providers/auth.service';
@@ -8,6 +10,10 @@ import { KeepListPage } from '../keep-list/keep-list'
 import { HomePage } from '../home/home'
 import { InputKeepPage } from '../input-keep/input-keep';
 import { Logger } from '../../logger';
+import { StorageService } from '../../providers/storage.service';
+import { Observable, Subscription } from 'rxjs';
+import { IonicImageLoader } from 'ionic-image-loader';
+import { IonicPageModule } from 'ionic-angular';
 
 /**
  * Generated class for the KeepPage page.
@@ -16,7 +22,7 @@ import { Logger } from '../../logger';
  * Ionic pages and navigation.
  */
 
- //チャット表示用
+//チャット表示用
 export class CommentListVm {
   comment?: string
   createUser?: string
@@ -28,13 +34,30 @@ export class CommentListVm {
   templateUrl: 'keep.html',
 })
 
+@NgModule({
+  declarations: [
+    KeepPage
+  ],
+  imports: [
+    IonicPageModule.forChild(KeepPage),
+    IonicImageLoader
+  ]
+})
+
 export class KeepPage {
 
+  public KeepVm: {
+    title?: string
+    imgUrl?: string
+    downloadUrl?: Observable<string>
+  } = {};
+  
   public commentRegistrationVm: {
     comment?: string
   } = {};
+  
+  public keep;
 
-  public keep = {};
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -42,12 +65,26 @@ export class KeepPage {
     public alertCtrl: AlertController,
     private commentRepo: CommentRepository,
     private dutil: DisplayUtilService,
+
+    private storage: StorageService,
+    private keepRepo: KeepRepository,
     private auth: AuthService
   ) {
-//    this.keep = navParams.get('keep');
-   this.keep['title'] = 'キープ詳細'
-   this.keep['src'] = 'hoge'
-   this.keep['description'] = '色は暖色系の色味ではなかったけれど、家族・旦那さんが好きな色味でデザインとボリュームが今まで着たドレスの中で1番'
+    this.keep = navParams.get('keep');
+  }
+
+  private getKeeps() {
+    let keep = new Keep({
+      parentRef: this.keep
+    });
+
+    Logger.debug('keepの内容from');
+    Logger.debug(this.keep);
+
+    this.KeepVm.downloadUrl = this.storage.getDownloadURL(this.keep.imgUrl);
+
+    Logger.debug('imageURLの内容from');
+    Logger.debug(this.KeepVm.downloadUrl);
   }
 
   //firebaseへコメントを登録
@@ -137,6 +174,7 @@ export class KeepPage {
     //firebaseからチャットを読み込む
     Logger.debug("ionViewWillEnter: Keep");
     this.dutil.showLoader("データを読み込んでいます...");
+    this.getKeeps();    
     this.getComment();
 
     //ローカルストレージから読み込む(あとで消す)

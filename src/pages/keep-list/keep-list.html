@@ -15,16 +15,15 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content class="KeepList">
-  <ion-grid no-padding>
-    <ion-row *ngFor="let keeps of keepListVm">
+<ion-content class="KeepList" id="home">
+  <ion-grid no-padding responsive-sm>
+    <ion-row responsive-sm *ngFor="let keeps of keepListVm">
       <ion-col *ngFor="let keep of keeps" (click)="goToKeep(keep)">
         <ion-icon class="ribbon" name="ios-ribbon" color="danger"></ion-icon>
         <div *ngIf="keep.downloadUrl | async as url" class="img">
             <img-loader [src]="url" useImg ></img-loader><br>
-          </div>
+        </div>
       </ion-col>
-
     </ion-row>
   </ion-grid>
   <ion-fab right bottom>
