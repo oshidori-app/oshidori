@@ -14,7 +14,7 @@ import { DisplayUtilService } from '../../providers/display-util.service';
  */
 @Component({
   selector: 'input-keep-button',
-  templateUrl: 'input-keep-button.html'
+  templateUrl: 'input-keep-button.html',
 })
 export class InputKeepButtonComponent {
   @Input() task: string;
@@ -38,11 +38,11 @@ export class InputKeepButtonComponent {
           handler: () => {
             fileInput.click();
             fileInput.onchange = (event) => {
-              const files = (<HTMLInputElement>event.target).files;
+              const files = (event.target as HTMLInputElement).files;
               const file = files[0];
-          
+
               let uploadTask = this.storage.uploadFile(file, uuid());
-              this.dutil.showLoader("アップロード中...");
+              this.dutil.showLoader('アップロード中...');
               uploadTask.snapshotChanges().pipe(
                 finalize(() => {
                   this.imgRef = uploadTask.fullPath;
@@ -51,7 +51,7 @@ export class InputKeepButtonComponent {
                 })
               ).subscribe();
             };
-          }
+          },
         },
         {
           text: 'カメラで撮影する',
@@ -59,21 +59,21 @@ export class InputKeepButtonComponent {
             // revisit: await したい...
             const next = () => this.navCtrl.push(InputKeepPage, { selectedTask: this.task, imgUrl: this.imgRef });
             this.takePhotoAndUpload(next);
-          }
+          },
         }, {
           text: 'ライブラリから選択する',
           handler: () => {
             const next = () => this.navCtrl.push(InputKeepPage, { selectedTask: this.task, imgUrl: this.imgRef });
             this.getFromLibraryAndUpload(next);
-          }
+          },
         }, {
           text: 'キャンセル',
-          role: 'cancel'
-        }
-      ]
+          role: 'cancel',
+        },
+      ],
     });
     actionSheet.present();
-  };
+  }
 
   takePhotoAndUpload(callback) {
     this.getAndUpload(this.camera.PictureSourceType.CAMERA, callback);
@@ -91,8 +91,8 @@ export class InputKeepButtonComponent {
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
-      sourceType: number
-    }
+      sourceType: number,
+    };
 
     this.camera.getPicture(options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
@@ -107,7 +107,7 @@ export class InputKeepButtonComponent {
           callback();
         })
       ).subscribe();
-      this.dutil.showLoader("アップロード中...");
+      this.dutil.showLoader('アップロード中...');
 
     }, (err) => {
       alert(JSON.stringify(err));
@@ -123,5 +123,5 @@ export class InputKeepButtonComponent {
       array.push(binary.charCodeAt(i));
     }
     return new Blob([new Uint8Array(array)], { type: 'image/jpeg' });
-  };
+  }
 }

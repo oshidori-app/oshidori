@@ -5,17 +5,17 @@ import { DevMenuPage } from '../../pages/develop/develop-menu';
 
 @Component({
   selector: 'dev-button',
-  templateUrl: 'dev-button.html'
+  templateUrl: 'dev-button.html',
 })
 export class DevButtonComponent {
 
-  constructor(private navCtrl: NavController){}
+  constructor(private navCtrl: NavController) {}
 
   goDevMenu() {
     this.navCtrl.push(DevMenuPage);
-  };
+  }
 
-  ionViewDidLoad(){
-    Logger.debug("This is testing button For Development.")
+  ionViewDidLoad() {
+    Logger.debug('This is testing button For Development.');
   }
 }

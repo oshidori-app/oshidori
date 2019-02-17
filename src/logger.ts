@@ -1,9 +1,9 @@
-import { environment } from "./environments/environment";
+import { environment } from './environments/environment';
 
 export enum LogLevel {
   Error,
   Warning,
-  Info
+  Info,
 }
 export class Logger {
 

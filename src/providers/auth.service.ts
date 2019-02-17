@@ -1,7 +1,7 @@
-import { Injectable } from "@angular/core";
-import { AngularFireAuth } from "@angular/fire/auth";
-import { Storage } from "@ionic/storage";
-import { Logger } from "../logger";
+import { Injectable } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Storage } from '@ionic/storage';
+import { Logger } from '../logger';
 
 @Injectable()
 export class AuthService {
@@ -10,7 +10,6 @@ export class AuthService {
     private afAuth: AngularFireAuth,
     private clientStorage: Storage) {
   }
-
 
   /**
    * emailとpasswordでユーザを登録します
@@ -27,9 +26,8 @@ export class AuthService {
         }).catch(err => {
           reject(err);
         });
-    })
+    });
   }
-
 
   /**
    * ユーザ存在確認のeメールを送信します
@@ -45,9 +43,8 @@ export class AuthService {
         }).catch(err => {
           reject(err);
         });
-    })
+    });
   }
-
 
   /**
    * emailでのユーザ存在確認が完了しているか否かを返却します
@@ -58,7 +55,6 @@ export class AuthService {
   isVerified(): boolean {
     return this.afAuth.auth.currentUser.emailVerified;
   }
-
 
   /**
    * emailとpasswordを使用してユーザ認証を行います
@@ -75,9 +71,8 @@ export class AuthService {
         }).catch(err => {
           reject(err);
         });
-    })
+    });
   }
-
 
   /**
    * ユーザ認証情報を削除します
@@ -100,7 +95,7 @@ export class AuthService {
             reject(err);
           });
       }
-    })
+    });
   }
 
   /**
@@ -118,9 +113,8 @@ export class AuthService {
         }).catch(err => {
           reject(err);
         });
-    })
+    });
   }
-
 
   /**
    * 認証情報の確認を行います

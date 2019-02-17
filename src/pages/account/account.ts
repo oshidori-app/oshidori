@@ -6,7 +6,6 @@ import { DisplayUtilService } from '../../providers/display-util.service';
 import { AuthService } from '../../providers/auth.service';
 import { AccountSigninPage } from '../account-signin/account-signin';
 
-
 @Component({
   selector: 'page-account',
   templateUrl: 'account.html',
@@ -26,7 +25,7 @@ export class AccountPage {
 
   imageUploadEventListenerAttached = false;
   profileImageDisplay = false;
-  submitted: boolean = false;
+  submitted = false;
 
   constructor(private navCtrl: NavController, private camera: Camera, private auth: AuthService, private dutil: DisplayUtilService) {
     this.attributes = [];
@@ -47,13 +46,13 @@ export class AccountPage {
 
   signOut() {
     this.auth.signOut()
-     .then(() => {
-       this.navCtrl.setRoot(AccountSigninPage);
-       this.dutil.showToast('サインアウトしました。');
+      .then(() => {
+        this.navCtrl.setRoot(AccountSigninPage);
+        this.dutil.showToast('サインアウトしました。');
       })
-     .catch(err => {
-       this.dutil.showToast('失敗しました。もう一度お試しください。');
-       console.log(err);
+      .catch(err => {
+        this.dutil.showToast('失敗しました。もう一度お試しください。');
+        console.log(err);
     });
   }
 
@@ -72,13 +71,13 @@ export class AccountPage {
       targetWidth: 200,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
-    }
+      mediaType: this.camera.MediaType.PICTURE,
+    };
 
     this.camera.getPicture(options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64:
-      this.selectedPhoto  = this.dataURItoBlob('data:image/jpeg;base64,' + imageData);
+      this.selectedPhoto = this.dataURItoBlob('data:image/jpeg;base64,' + imageData);
       this.upload();
     }, (err) => {
       this.avatarInput.nativeElement.click();
@@ -94,7 +93,7 @@ export class AccountPage {
       array.push(binary.charCodeAt(i));
     }
     return new Blob([new Uint8Array(array)], { type: 'image/jpeg' });
-  };
+  }
 
   uploadFromFile(event) {
     // const files = event.target.files;

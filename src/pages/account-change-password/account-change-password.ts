@@ -9,10 +9,10 @@ export class AccountChangePasswordPage {
 
   formData: {
     currentPassword?: string,
-    newPassword?: string
+    newPassword?: string,
   } = {};
 
-  submitted: boolean = false;
+  submitted = false;
 
   constructor(private navCtrl: NavController, private dutil: DisplayUtilService) {
   }

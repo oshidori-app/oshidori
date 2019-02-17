@@ -1,6 +1,6 @@
-import { Document } from "./document";
-import { SubCollection } from "./sub-collection";
-import { Collection } from "./collection";
+import { Document } from './document';
+import { SubCollection } from './sub-collection';
+import { Collection } from './collection';
 
 export class Group extends Document implements Collection {
 
@@ -10,8 +10,8 @@ export class Group extends Document implements Collection {
     public parentRef: any = null;
 
     // field
-    public name: string
-    public connectCode: string
+    public name: string;
+    public connectCode: string;
 
     constructor(init?: Partial<Group>) {
         super();

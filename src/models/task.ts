@@ -1,5 +1,5 @@
-import { Document } from "./document";
-import { Collection } from "./collection";
+import { Document } from './document';
+import { Collection } from './collection';
 
 /**
  * tasksコレクションのドキュメント

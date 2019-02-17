@@ -18,12 +18,12 @@ import { IonicPageModule } from 'ionic-angular';
  */
 
 export class KeepVm {
-  title?: string
-  imgUrl?: string
-  downloadUrl?: Observable<string>
+  title?: string;
+  imgUrl?: string;
+  downloadUrl?: Observable<string>;
 }
 
-//@IonicPage()
+// @IonicPage()
 @Component({
   selector: 'page-keep-list',
   templateUrl: 'keep-list.html',
@@ -31,12 +31,12 @@ export class KeepVm {
 
 @NgModule({
   declarations: [
-    KeepListPage
+    KeepListPage,
   ],
   imports: [
     IonicPageModule.forChild(KeepListPage),
-    IonicImageLoader
-  ]
+    IonicImageLoader,
+  ],
 })
 
 export class KeepListPage {
@@ -53,7 +53,7 @@ export class KeepListPage {
     public navParams: NavParams,
     private keepRepo: KeepRepository,
     private storage: StorageService,
-    private dutil: DisplayUtilService,
+    private dutil: DisplayUtilService
   ) {
     this.task = navParams.get('task');
   }
@@ -61,7 +61,7 @@ export class KeepListPage {
   private addkeeps() {
     let keepReg = new Keep({
       title: 'dress',
-      imgUrl: 'content/image01.jpg'
+      imgUrl: 'content/image01.jpg',
     });
     this.keepRepo.add(keepReg)
       .then((ref) => {
@@ -76,10 +76,10 @@ export class KeepListPage {
   private getKeeps() {
 
     let keep = new Keep({
-      parentRef: this.task
+      parentRef: this.task,
     });
 
-    Logger.debug('keep 　一覧');
+    Logger.debug('keep  一覧');
     Logger.debug(keep);
     this.listSubscription = this.keepRepo.list(keep).subscribe(keepList => {
       Logger.debug(keepList);
@@ -95,7 +95,7 @@ export class KeepListPage {
       let xNum = 2;
       let ret = [];
       for (let i = 0; i < Math.ceil(this.keepVmInDL.length / xNum); i++) {
-        var index = i * xNum;
+        let index = i * xNum;
         ret.push(this.keepVmInDL.slice(index, index + xNum));
       }
       this.keepListVm = ret;
@@ -104,13 +104,13 @@ export class KeepListPage {
   }
 
   ionViewWillEnter() {
-    this.dutil.showLoader("データを読み込んでいます...");
-    //this.addkeeps();
+    this.dutil.showLoader('データを読み込んでいます...');
+    // this.addkeeps();
     this.getKeeps();
   }
 
   ionViewDidLeave() {
-    if (this.listSubscription) this.listSubscription.unsubscribe();
+    if (this.listSubscription) { this.listSubscription.unsubscribe(); }
   }
 
   goToKeep(keep) {
@@ -118,4 +118,3 @@ export class KeepListPage {
   }
 
 }
-

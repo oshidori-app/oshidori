@@ -39,7 +39,7 @@ export class TestRegistrationPage {
       let test = new Test({
         title: this.testRegistrationVm.title ? this.testRegistrationVm.title : null,
         description: this.testRegistrationVm.description ? this.testRegistrationVm.description : null,
-        imgUrl: this.imgRef
+        imgUrl: this.imgRef,
       });
 
       // データ登録
@@ -66,7 +66,7 @@ export class TestRegistrationPage {
         this.testRegistrationVm.downloadUrl = uploadTask.ref.getDownloadURL();
         this.imgRef = uploadTask.fullPath;
         this.dutil.dismissLoader();
-        Logger.debug("登録完了");
+        Logger.debug('登録完了');
       })
     ).subscribe();
   }
@@ -79,9 +79,9 @@ export class TestRegistrationPage {
       array.push(binary.charCodeAt(i));
     }
     return new Blob([new Uint8Array(array)], { type: 'image/jpeg' });
-  };
+  }
 
   ionViewDidEnter() {
-    Logger.debug("ionViewDidEnter: TestRegistrationPage")
+    Logger.debug('ionViewDidEnter: TestRegistrationPage');
   }
 }

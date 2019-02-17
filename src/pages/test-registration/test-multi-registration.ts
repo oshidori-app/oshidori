@@ -9,8 +9,8 @@ import { Logger } from '../../logger';
 import { ImagePickerService } from '../../providers/image-picker.service';
 
 export class ImageVm {
-  uploadPercent?: Observable<number>
-  downloadUrl?: Observable<string>
+  uploadPercent?: Observable<number>;
+  downloadUrl?: Observable<string>;
 }
 
 @Component({
@@ -35,8 +35,8 @@ export class TestMultiRegistrationPage {
 
   async onClickSelectPhotoButton() {
 
-    if (!this.platform.is("cordova")) {
-      this.dutil.showLoader("動くのはnative環境のみです。")
+    if (!this.platform.is('cordova')) {
+      this.dutil.showLoader('動くのはnative環境のみです。');
       return;
     }
 
@@ -60,14 +60,14 @@ export class TestMultiRegistrationPage {
           finalize(() => {
             this.imageVms[i].downloadUrl = uploadTask.ref.getDownloadURL();
             this.imgRef = uploadTask.fullPath,
-              Logger.debug("upload completed.:" + this.imgRef);
+              Logger.debug('upload completed.:' + this.imgRef);
           })
         ).subscribe();
       }
-    })
+    });
   }
 
   ionViewDidEnter() {
-    Logger.debug("ionViewDidEnter: TestMultiRegistrationPage")
+    Logger.debug('ionViewDidEnter: TestMultiRegistrationPage');
   }
 }

@@ -25,10 +25,10 @@ import { StorageService } from '../../providers/storage.service';
 export class InputKeepPage {
   public tasks = [];
   public selectedTask;
-  public memo = "";
+  public memo = '';
   public imgUrl: Observable<string>;
   private fullPath: string;
-  public imgLoaded: boolean = false;
+  public imgLoaded = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private keepRepository: KeepRepository, private taskRepository: TaskRepository, private clientStorage: Storage, private storage: StorageService, private toastCtrl: ToastController) {
     this.selectedTask = navParams.get('selectedTask');
@@ -41,15 +41,15 @@ export class InputKeepPage {
     this.clientStorage.get('groupRef')
       .then(val => {
         let task = new Task({
-          parentRef: val
+          parentRef: val,
         });
-        this.taskRepository.list(task).subscribe(result =>{
+        this.taskRepository.list(task).subscribe(result => {
           this.tasks = result;
-        })
+        });
       })
-      .catch(err =>{
+      .catch(err => {
         Logger.error(err);
-      })
+      });
   }
 
   input() {
@@ -66,7 +66,7 @@ export class InputKeepPage {
   }
 
   public onImageLoaded(index) {
-    Logger.debug("loaded: " + index);
+    Logger.debug('loaded: ' + index);
     this.imgLoaded = true;
   }
 

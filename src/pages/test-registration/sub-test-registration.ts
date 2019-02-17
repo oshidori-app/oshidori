@@ -15,7 +15,7 @@ export class SubTestRegistrationPage {
   public subTestRegistrationVm: {
     title?: string,
     description?: string,
-    uploadPercent?: string
+    uploadPercent?: string,
   } = {};
 
   public testRef: any;
@@ -39,7 +39,7 @@ export class SubTestRegistrationPage {
         userId: user.uid,
         title: this.subTestRegistrationVm.title,
         description: this.subTestRegistrationVm.description,
-        parentRef: this.testRef // 引き渡された親参照を設定する
+        parentRef: this.testRef, // 引き渡された親参照を設定する
       });
 
       this.subTestRepo.add(test)
@@ -55,6 +55,6 @@ export class SubTestRegistrationPage {
   }
 
   ionViewDidEnter() {
-    Logger.debug("ionViewDidEnter: SubTestRegistrationPage")
+    Logger.debug('ionViewDidEnter: SubTestRegistrationPage');
   }
 }
