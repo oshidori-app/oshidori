@@ -1,14 +1,11 @@
 {
   "rules": {
-    "defaultSeverity": "error",
     "extends": [
       "tslint:recommended",
-      "tslint-ionic-rules/strict",
+      "tslint-ionic-rules/strict"
     ],
     "no-duplicate-variable": true,
-    "no-unused-variable": [
-      true
-    ]
+    "no-unused-variable": true
   },
   "rulesDirectory": [
     "node_modules/tslint-eslint-rules/dist/rules"
