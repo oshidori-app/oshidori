@@ -74,7 +74,7 @@ export class HttpService {
     const options: RequestOptions = new BaseRequestOptions();
     if (!opt) {
       options.url = url;
-      options.method =  method;
+      options.method = method;
       options.headers = options.headers || headers;
       options.withCredentials = false;
     } else {

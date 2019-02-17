@@ -47,13 +47,13 @@ export class AccountPage {
 
   signOut() {
     this.auth.signOut()
-     .then(() => {
-       this.navCtrl.setRoot(AccountSigninPage);
-       this.dutil.showToast('サインアウトしました。');
+      .then(() => {
+        this.navCtrl.setRoot(AccountSigninPage);
+        this.dutil.showToast('サインアウトしました。');
       })
-     .catch(err => {
-       this.dutil.showToast('失敗しました。もう一度お試しください。');
-       console.log(err);
+      .catch(err => {
+        this.dutil.showToast('失敗しました。もう一度お試しください。');
+        console.log(err);
     });
   }
 
@@ -78,7 +78,7 @@ export class AccountPage {
     this.camera.getPicture(options).then(imageData => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64:
-      this.selectedPhoto  = this.dataURItoBlob('data:image/jpeg;base64,' + imageData);
+      this.selectedPhoto = this.dataURItoBlob('data:image/jpeg;base64,' + imageData);
       this.upload();
     }, err => {
       this.avatarInput.nativeElement.click();
