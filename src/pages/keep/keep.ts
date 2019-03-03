@@ -22,8 +22,8 @@ import { IonicPageModule } from 'ionic-angular';
  * Ionic pages and navigation.
  */
 
-//チャット表示用
-export class CommentListVm {
+// チャット表示用
+ export class CommentListVm {
   comment?: string;
   createUser?: string;
 }
@@ -36,12 +36,12 @@ export class CommentListVm {
 
 @NgModule({
   declarations: [
-    KeepPage
+    KeepPage,
   ],
   imports: [
     IonicPageModule.forChild(KeepPage),
-    IonicImageLoader
-  ]
+    IonicImageLoader,
+  ],
 })
 
 export class KeepPage {
@@ -49,13 +49,13 @@ export class KeepPage {
   public KeepVm: {
     title?: string
     imgUrl?: string
-    downloadUrl?: Observable<string>
+    downloadUrl?: Observable<string>,
   } = {};
-  
+
   public commentRegistrationVm: {
     comment?: string,
   } = {};
-  
+
   public keep;
 
   constructor(
@@ -75,7 +75,7 @@ export class KeepPage {
 
   private getKeeps() {
     let keep = new Keep({
-      parentRef: this.keep
+      parentRef: this.keep,
     });
 
     Logger.debug('keepの内容from');
@@ -161,11 +161,11 @@ export class KeepPage {
     this.chat = '';
   }
 
- ionViewWillEnter(){
-    //firebaseからチャットを読み込む
-    Logger.debug("ionViewWillEnter: Keep");
-    this.dutil.showLoader("データを読み込んでいます...");
-    this.getKeeps();    
+ ionViewWillEnter() {
+    // firebaseからチャットを読み込む
+    Logger.debug('ionViewWillEnter: Keep');
+    this.dutil.showLoader('データを読み込んでいます...');
+    this.getKeeps();
     this.getComment();
 
     // ローカルストレージから読み込む(あとで消す)

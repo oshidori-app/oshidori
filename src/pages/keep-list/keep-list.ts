@@ -114,7 +114,7 @@ export class KeepListPage {
   }
 
   goToKeep(keep) {
-    this.navCtrl.push(KeepPage, { keep: keep });
+    this.navCtrl.push(KeepPage, { keep });
   }
 
 }
