@@ -1,3 +1,4 @@
+import { Task } from './../../models/task';
 import { Component, NgModule } from '@angular/core';
 import { DisplayUtilService } from '../../providers/display-util.service';
 import { KeepRepository } from '../../repository/keep.repository';
@@ -114,7 +115,10 @@ export class KeepListPage {
   }
 
   goToKeep(keep) {
-    this.navCtrl.push(KeepPage, { keep });
+    this.navCtrl.push(KeepPage, {
+      keep,
+      task: this.task,
+    });
   }
 
 }
