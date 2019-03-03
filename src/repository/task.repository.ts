@@ -14,8 +14,8 @@ export class TaskRepository extends BaseRepository {
         return super.addDocument(task);
     }
 
-    public update(task: Task): void {
-        throw new Error('not implemented');
+    public update(task: Task): Promise<any> {
+        return super.updateDocument(task);
     }
 
     public delete(task: Task): void {

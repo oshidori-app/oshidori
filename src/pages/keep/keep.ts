@@ -1,6 +1,8 @@
+import { Task } from './../../models/task';
 import { Component, NgModule } from '@angular/core';
 import { DisplayUtilService } from '../../providers/display-util.service';
 import { KeepRepository } from '../../repository/keep.repository';
+import { TaskRepository } from '../../repository/task.repository';
 import { Keep } from '../../models/keep';
 import { CommentRepository } from '../../repository/comment.repository';
 import { Comment } from '../../models/comment';
@@ -56,7 +58,12 @@ export class KeepPage {
     comment?: string,
   } = {};
 
+  public taskRegistrationVm: {
+    task?: string,
+  } = {};
+
   public keep;
+  public task;
 
   constructor(
     public navCtrl: NavController,
@@ -68,23 +75,22 @@ export class KeepPage {
 
     private storage: StorageService,
     private keepRepo: KeepRepository,
+    private taskRepo: TaskRepository,
     private auth: AuthService
   ) {
     this.keep = navParams.get('keep');
+    this.task = navParams.get('task');
   }
 
-  private getKeeps() {
+  private getKeep() {
     let keep = new Keep({
       parentRef: this.keep,
     });
-
-    Logger.debug('keepの内容from');
-    Logger.debug(this.keep);
-
     this.KeepVm.downloadUrl = this.storage.getDownloadURL(this.keep.imgUrl);
 
-    Logger.debug('imageURLの内容from');
-    Logger.debug(this.KeepVm.downloadUrl);
+    let task = new Task({
+      parentRef: this.task,
+    });
   }
 
   // firebaseへコメントを登録
@@ -142,45 +148,21 @@ export class KeepPage {
 
   decidestatus: Boolean;
   decideStatusChange() {
-    if (this.decidestatus == true) {
-      this.decidestatus = false;
-    } else {
-      this.decidestatus = true;
-    }
-    localStorage.setItem('decidestatus', JSON.stringify(this.decidestatus));
-  }
-
-  // ローカルストレージに保持(あとで消す)
-  chats: { name: string }[] = [];
-  chat: string;
-  addChat() {
-    this.chats.push({
-      name: this.chat,
+    let task = new Task({
+      parentRef: this.task,
     });
-    localStorage.setItem('chats', JSON.stringify(this.chats));
-    this.chat = '';
+    task.imgUrl = this.keep.imgUrl;
+    Logger.debug('taskの内容');
+    Logger.debug(task);
+    this.taskRepo.update(task);
   }
 
  ionViewWillEnter() {
     // firebaseからチャットを読み込む
     Logger.debug('ionViewWillEnter: Keep');
     this.dutil.showLoader('データを読み込んでいます...');
-    this.getKeeps();
+    this.getKeep();
     this.getComment();
-
-    // ローカルストレージから読み込む(あとで消す)
-    if (localStorage.getItem('chats')) {
-      this.chats = JSON.parse(localStorage.getItem('chats'));
-    }
-    if (localStorage.getItem('manfav')) {
-      this.manfav = JSON.parse(localStorage.getItem('manfav'));
-    }
-    if (localStorage.getItem('womanfav')) {
-      this.womanfav = JSON.parse(localStorage.getItem('womanfav'));
-    }
-    if (localStorage.getItem('decidestatus')) {
-      this.decidestatus = JSON.parse(localStorage.getItem('decidestatus'));
-    }
   }
 
   // ローカルストレージ版チャットの編集(あとで消す)
@@ -191,7 +173,7 @@ export class KeepPage {
           text: '削除',
           role: 'destructive',
           handler: () => {
-            this.chats.splice(index, 1);
+//            this.chats.splice(index, 1);
 //            localStorage.setItem('chats', JSON.stringify(this.chats));
           },
         }, {
@@ -216,7 +198,7 @@ export class KeepPage {
         {
           name: 'chat',
           placeholder: 'チャット',
-          value: this.chats[index].name,
+//          value: this.chats[index].name,
         },
       ],
       buttons: [
@@ -243,8 +225,8 @@ export class KeepPage {
           text: '削除',
           role: 'destructive',
           handler: () => {
-            this.chats.splice(index, 1);
-            localStorage.setItem('chats', JSON.stringify(this.chats));
+//            this.chats.splice(index, 1);
+//            localStorage.setItem('chats', JSON.stringify(this.chats));
           },
         }, {
           text: '変更',
@@ -269,7 +251,7 @@ export class KeepPage {
         {
           name: 'chat',
           placeholder: 'チャット',
-          value: this.chats[index].name,
+//          value: this.chats[index].name,
         },
       ],
       buttons: [
@@ -279,8 +261,8 @@ export class KeepPage {
         {
           text: '保存',
           handler: data => {
-            this.chats[index] = { name: data.chat };
-          localStorage.setItem('chats', JSON.stringify(this.chats));
+//          this.chats[index] = { name: data.chat };
+//          localStorage.setItem('chats', JSON.stringify(this.chats));
           },
         },
       ],
