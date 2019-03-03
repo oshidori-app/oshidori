@@ -12,17 +12,14 @@
 </ion-header>
 
 <ion-content>
-  <ion-card>
-        <img src="{{keep.src}}" />
-        <ion-item>
-            <p class="right" (click)="showMenu()"><ion-icon name="more"></ion-icon></p>
-        </ion-item>
-    <ion-card-content>
-        {{keep.description}}
-    </ion-card-content>
-
+  <ion-item>
+    <p class="right" (click)="showMenu()"><ion-icon name="more"></ion-icon></p>
+    <div *ngIf="KeepVm.downloadUrl | async as url">
+        <img [src]="url"><br>
+    </div>
+  </ion-item>
   <button ion-button icon-only color="danger" clear (click)="manFavChange()">
-        <ion-icon name="heart" ></ion-icon>
+    <ion-icon name="heart" ></ion-icon>
   </button>
   <button ion-button icon-only color="danger" clear (click)="womanFavChange()">
       <ion-icon name="heart"></ion-icon>
@@ -32,35 +29,16 @@
   <ion-list>
     <ion-item *ngFor="let t of commentListVms;let i = index" (tap)="changeComment(i)">太郎：{{t.comment}}(user:{{t.createUser}})</ion-item>
   </ion-list>
-  
-  <!-- <br>
-  <p> ▼旧チャット</p>
-  <br>
-
-  <ion-list>
-      <ion-item *ngFor="let t of chats;let i = index" (tap)="changeChat(i)">{{t.name}}</ion-item>
-  </ion-list>
-
-  <form (submit)="addChat()">
-    <ion-list>
-      <ion-item>
-        <ion-label floating>チャット</ion-label>
-        <ion-input type="text" [(ngModel)]="chat" name="chat"></ion-input>
-      </ion-item>
-    </ion-list>
-    <button type="submit" ion-button block>追加</button>
-  </form>-->
-</ion-card> 
 </ion-content>
-
+  
 <ion-footer>
   <ion-toolbar>
-      <form #registrationForm="ngForm" novalidate>
-        <ion-input [(ngModel)]="commentRegistrationVm.comment" type="text" name="comment" placeholder="コメント"></ion-input>
-          <ion-buttons slot="end">
-            <button ion-button (click)="onClickRegistration(registrationForm)" type="submit">
-            <ion-icon name="send"></ion-icon>
-          </button>
+    <form #registrationForm="ngForm" novalidate>
+      <ion-input [(ngModel)]="commentRegistrationVm.comment" type="text" name="comment" placeholder="コメント"></ion-input>
+      <ion-buttons slot="end">
+        <button ion-button slot="end" (click)="onClickRegistration(registrationForm)" type="submit">
+          <ion-icon name="send"></ion-icon>
+        </button>
       </ion-buttons>
     </form>
   </ion-toolbar>
